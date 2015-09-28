@@ -48,14 +48,18 @@ headers = [
 extData = json.loads(open(sources[0].srcnode().abspath, 'r').read())
 extVersion = extData['version']
 
-extensionFiles = env.Install(STAGE_DIR, [env.File(extName+'.fpm.json')] + env.Glob('*.kl'))
+extStageDir = STAGE_DIR.Dir('Exts').Dir(extName)
+presetStageDir = STAGE_DIR.Dir('Presets').Dir('DFG').Dir('ThirdParty').Dir(extName)
+extensionFiles = env.Install(extStageDir, [env.File(extName+'.fpm.json')] + env.Glob('*.kl'))
+kl2dfgLogFile = presetStageDir.File('kl2dfg.log')
 kl2edkResults = env.RunKL2EDK(headers, sources)
+kl2dfgResults = env.RunKL2DFG([kl2dfgLogFile], extensionFiles)
 
 extLibFileName = env.File(extName + '-' + extSuffix)
 libraryFiles = Flatten([env.SharedLibrary(extLibFileName, cppFiles)])
 env.Depends(cppFiles, kl2edkResults)
 
-extensionFiles += env.Install(STAGE_DIR, libraryFiles[0])
+extensionFiles += env.Install(extStageDir, libraryFiles[0])
 extensionFiles = Flatten(extensionFiles)
 
 if os.environ.has_key('FABRIC_EXTS_INSTALL_DIR'):

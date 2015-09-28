@@ -21,6 +21,7 @@ void ContextCallback(bool opening, void const *contextPtr)
   {
     WriteLock w_lock(gLock);
     printf("Oculus Rift starting...\n");
+    OVR::System::Init();
     ovr_Initialize();
     printf("Oculus Rift initialized.\n");
   }
@@ -28,6 +29,7 @@ void ContextCallback(bool opening, void const *contextPtr)
   {
     WriteLock w_lock(gLock);
     ovr_Shutdown();
+    OVR::System::Destroy();
     printf("Oculus Rift finalized.\n");
   }
 }
@@ -41,12 +43,22 @@ FABRIC_EXT_EXPORT void ovrDevice_Construct(
 
   WriteLock w_lock(gLock);
 
-  this_->handle = (void*)ovrHmd_Create(index);
+  ovrHmd HMD;
+  ovrGraphicsLuid luid;
+  ovrResult result = ovr_Create(&HMD, &luid);
+  if(!OVR_SUCCESS(result))
+    return;
+
+  this->handle = HMD;
   if(!this_->handle)
-  {
-    report("Using debug device of type ovrHmd_DK2.");
-    this_->handle = (void*)ovrHmd_CreateDebug(ovrHmd_DK2);
-  }
+    return;
+
+  ovrHmdDesc hmdDesc = ovr_GetHmdDesc(HMD);
+  ovrSizei windowSize = { hmdDesc.Resolution.w / 2, hmdDesc.Resolution.h / 2 };
+
+  if (!Platform.InitDevice(windowSize.w, windowSize.h, reinterpret_cast<LUID*>(&luid)))
+    return;
+
   this_->configured = false;
   this_->stereoEnabled = true;
 }
@@ -239,7 +251,6 @@ FABRIC_EXT_EXPORT void ovrDevice_GetLastError(
 // Defined at src\ovrDevice.kl:114:1
 FABRIC_EXT_EXPORT KL::Boolean ovrDevice_ConfigureRendering(
   KL::Traits< KL::ovrDevice >::IOParam this_,
-  KL::Traits< KL::ovrGLConfig >::INParam config,
   KL::Traits< KL::SInt32 >::INParam distortionCaps,
   KL::Traits< KL::FixedArray< KL::ovrFovPort, 2 > >::INParam eyeFovIn,
   KL::Traits< KL::FixedArray< KL::ovrEyeRenderDesc, 2 > >::INParam eyeRenderDescOut

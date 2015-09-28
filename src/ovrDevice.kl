@@ -179,7 +179,7 @@ function ovrDevice.setEnabledCaps(UInt32 hmdCaps) = "ovrDevice_SetEnabledCaps";
 ///    to shutdown rendering and release all resources.
 ///  - distortionCaps describe desired distortion settings.
 ///
-function Boolean ovrDevice.configureRendering!(ovrGLConfig config, Integer distortionCaps, ovrFovPort eyeFovIn[2], ovrEyeRenderDesc eyeRenderDescOut[2] ) = "ovrDevice_ConfigureRendering";
+function Boolean ovrDevice.configureRendering!(Integer distortionCaps, ovrFovPort eyeFovIn[2], ovrEyeRenderDesc eyeRenderDescOut[2] ) = "ovrDevice_ConfigureRendering";
 
 /// disable SDK based rendering
 function Boolean ovrDevice.disableRendering!() = "ovrDevice_DisableRendering";

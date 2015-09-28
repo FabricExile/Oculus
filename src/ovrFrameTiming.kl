@@ -3,28 +3,20 @@
  */
 
 struct ovrFrameTiming {
-  /// The amount of time that has passed since the previous frame's
-  /// ThisFrameSeconds value (usable for movement scaling).
-  /// This will be clamped to no more than 0.1 seconds to prevent
-  /// excessive movement after pauses due to loading or initialization.
-  Float32 DeltaSeconds;
+  /// A point in time when the middle of the screen will be displayed. For global shutter,
+  /// this will be the display time. For rolling shutter this is a point at which half the image has
+  /// been displayed. This value can be passed as an absolute time to ovr_GetTrackingState
+  /// to get the best predicted pose for rendering the scene.
+  Float64      DisplayMidpointSeconds;
 
-  /// It is generally expected that the following holds:
-  /// ThisFrameSeconds < TimewarpPointSeconds < NextFrameSeconds < 
-  /// EyeScanoutSeconds[EyeOrder[0]] <= ScanoutMidpointSeconds <= EyeScanoutSeconds[EyeOrder[1]].
+  /// Display interval between the frames. This will generally be 1 / RefreshRate of the HMD;
+  /// however, it may vary slightly during runtime based on video cart scan-out timing.
+  Float64      FrameIntervalSeconds;
 
-  /// Absolute time value when rendering of this frame began or is expected to
-  /// begin. Generally equal to NextFrameSeconds of the previous frame. Can be used
-  /// for animation timing.
-  Float64 ThisFrameSeconds;
-  /// Absolute point when IMU expects to be sampled for this frame.
-  Float64 TimewarpPointSeconds;
-  /// Absolute time when frame Present followed by GPU Flush will finish and the next frame begins.
-  Float64 NextFrameSeconds;
+  /// Application frame index for which we requested timing.
+  UInt32    AppFrameIndex;
 
-  /// Time when when half of the screen will be scanned out. Can be passed as an absolute time
-  /// to ovrDevice.getTrackingState() to get the predicted general orientation.
-  Float64 ScanoutMidpointSeconds;
-  /// Timing points when each eye will be scanned out to display. Used when rendering each eye.
-  Float64 EyeScanoutSeconds[2];
+  /// HW display frame index that we expect this application frame will hit; this is the frame that
+  /// will be displayed at DisplayMidpointSeconds. This value is monotonically increasing with each v-sync.
+  UInt32    DisplayFrameIndex;
 };

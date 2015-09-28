@@ -15,7 +15,6 @@ object ovrViewportCallback : ViewportCallback {
   UInt32 fb_tex[];
   UInt32 fb_depth[];
   ovrGLTexture fb_ovr_tex[2];
-  ovrGLConfig cfg;
   ovrEyeRenderDesc eye_rdesc[2];
   ovrPose poses[2];
 
@@ -147,7 +146,7 @@ function Boolean ovrViewportCallback.invoke!(ViewportDrawPhase phase, io Viewpor
       // Integer dcaps = ovrDistortionCap_Chromatic | ovrDistortionCap_Vignette | ovrDistortionCap_Overdrive;
       Integer dcaps = ovrDistortionCap_Vignette | ovrDistortionCap_TimeWarp | ovrDistortionCap_Overdrive;
       // Integer dcaps = 0;
-      if(!this.device.configureRendering(this.cfg, dcaps, this.desc.DefaultEyeFov, this.eye_rdesc)) {
+      if(!this.device.configureRendering(dcaps, this.desc.DefaultEyeFov, this.eye_rdesc)) {
         setError("Failed to configure distortion renderer.");
       }
 

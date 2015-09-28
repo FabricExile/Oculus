@@ -6,11 +6,11 @@
 #define __conversion_h__
 
 #include "Oculus.h"
-#include <OVR.h>
-#include <../Src/OVR_CAPI.h>
-#include <../Src/OVR_CAPI_GL.h>
-// #include <../Src/CAPI/CAPI_HSWDisplay.h>
-// #include <../Src/Net/OVR_Win32_Socket.h>
+
+#include <Kernel/OVR_System.h>
+
+// Include the Oculus SDK
+#include "OVR_CAPI_GL.h"
 
 namespace Fabric
 {
@@ -30,7 +30,6 @@ namespace Fabric
     void convert(KL::ovrTrackingState a, ovrTrackingState & b);
     void convert(KL::ovrEyeRenderDesc a, ovrEyeRenderDesc & b);
     void convert(KL::ovrGLTexture a, ovrTexture & b);
-    void convert(KL::ovrGLConfig a, ovrRenderAPIConfig & b);
     void convert(KL::ovrFrameTiming a, ovrFrameTiming & b);
 
     //------------------------------------------------------------------------------------------------------
@@ -49,7 +48,6 @@ namespace Fabric
     void convert(ovrTrackingState a, KL::ovrTrackingState & b);
     void convert(ovrEyeRenderDesc a, KL::ovrEyeRenderDesc & b);
     void convert(const ovrTexture & a, KL::ovrGLTexture & b);
-    void convert(ovrRenderAPIConfig a, KL::ovrGLConfig & b);
     void convert(ovrFrameTiming a, KL::ovrFrameTiming & b);
   }
 }

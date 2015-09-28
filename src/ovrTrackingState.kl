@@ -36,7 +36,7 @@ struct ovrTrackingState {
 
   //// 0.4.1
   /// Time spent processing the last vision frame
-  Float64 LastVisionProcessingTime;
+  UInt32 LastCameraFrameCounter;
 };
 
 function Boolean ovrTrackingState.hasTrackedPose() {

@@ -26,7 +26,7 @@ building
 ========
 
 A scons (http://www.scons.org/) build script is provided. Oculus depends on
-* The Oculus Rift SDK (0.4.3 or higher)
+* The Oculus Rift SDK (0.7.0 or higher)
 * A static build of boost (1.55.0 or higher)
 
 To inform scons where to find the Fabric Engine includes as well as the thirdparty libraries, you need to set the following environment variables:
