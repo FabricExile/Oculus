@@ -22,7 +22,7 @@ void ContextCallback(bool opening, void const *contextPtr)
     WriteLock w_lock(gLock);
     printf("Oculus Rift starting...\n");
     OVR::System::Init();
-    ovr_Initialize();
+    ovr_Initialize(NULL);
     printf("Oculus Rift initialized.\n");
   }
   else
