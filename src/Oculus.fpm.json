@@ -10,11 +10,9 @@
     "ovrFovPort.kl",
     "ovrRect.kl",
     "ovrEyeRenderDesc.kl",
-    "ovrGLTexture.kl",
-    "ovrDescription.kl",
     "ovrSensorData.kl",
     "ovrTrackingState.kl",
-    "ovrDevice.kl",
-    "ovrViewportCallback.kl"
+    "ovrDescription.kl",
+    "ovrDevice.kl"
   ]
 }

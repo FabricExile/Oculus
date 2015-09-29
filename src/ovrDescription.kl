@@ -4,49 +4,57 @@
 
 require Math;
 
+alias Integer ovrHmdType;
+
+const Integer ovrHmd_None      = 0;
+const Integer ovrHmd_DK1       = 3;
+const Integer ovrHmd_DKHD      = 4;
+const Integer ovrHmd_DK2       = 6;
+const Integer ovrHmd_CB        = 8;
+const Integer ovrHmd_Other     = 9;
+const Integer ovrHmd_E3_2015   = 10;
+const Integer ovrHmd_ES06      = 11;
+const Integer ovrHmd_EnumSize  = 0x7fffffff; ///< \internal Force type int32_t.
+
 struct ovrDescription {
-  /// Type of the HMD, such as ovrHmd_DK1 orovrHmd_DK2.
-  String ORType;
-  /// Name describing the product, such as “Oculus Rift DK1”.
-  String ProductName;
-  /// Name of the manufacturer.
-  String Manufacturer;
-  /// Vendor ID reported by the headset USB device.
-  Integer VendorId;
-  ///  Product ID reported by the headset USB device.
-  Integer ProductId;
-  /// Serial number string reported by the headset USB device.
-  String SerialNumber;
-  /// The major version of the sensor firmware.
-  Integer FirmwareMajor;
-  ///  The minor version of the sensor firmware.
-  Integer FirmwareMinor;
-  ///  The horizontal FOV of the position tracking camera frustum.
-  Scalar CameraFrustumHFovInRadians;
-  ///  The vertical FOV of the position tracking camera frustum.
-  Scalar CameraFrustumVFovInRadians;
-  ///  The distance from the position tracking camera to the near frustum bounds.
-  Scalar CameraFrustumNearZInMeters;
-  ///  The distance from the position tracking camera to the far frustum bounds.
-  Scalar CameraFrustumFarZInMeters;
-  ///  HMD capability bits described by ovrHmdCaps.
-  Size HmdCaps;
-  ///  Tracking capability bits describing whether orientation, position tracking, and yaw drift correction are supported.
-  Size TrackingCaps;
-  ///  Distortion capability bits describing whether timewarp and chromatic aberration correction are supported.
-  Size DistortionCaps;
-  ///  Resolution of the full HMD screen (both eyes) in pixels.
-  ovrSize Resolution;
-  ///  Location of the monitor window on the screen. Set to (0,0) if not supported.
-  ovrVec2 WindowsPos;
-  ///  Recommended optical field of view for each eye.
-  ovrFovPort DefaultEyeFov[2];
-  ///  Maximum optical field of view that can be practically rendered for each eye.
-  ovrFovPort MaxEyeFov[2];
-  ///  Preferred eye rendering order for best performance. Using this value can help reduce latency on sideways scanned screens.
-  ovrEyeType EyeRenderOrder[2];
-  ///  System specific name of the display device.
-  String DisplayDeviceName;
-  ///  System specific ID of the display device.
-  Integer DisplayId;
+  ///< The type of HMD.
+  ovrHmdType   Type;
+  ///< UTF8-encoded product identification string (e.g. "Oculus Rift DK1").
+  String       ProductName;
+  ///< UTF8-encoded HMD manufacturer identification string.
+  String       Manufacturer;
+  ///< HID (USB) vendor identifier of the device.
+  SInt8        VendorId;
+  ///< HID (USB) product identifier of the device.
+  SInt8        ProductId;
+  ///< Sensor (and display) serial number.
+  String       SerialNumber;
+  ///< Sensor firmware major version.
+  SInt8        FirmwareMajor;
+  ///< Sensor firmware minor version.
+  SInt8        FirmwareMinor;
+  ///< External tracking camera frustum horizontal field-of-view (if present).
+  Float32      CameraFrustumHFovInRadians;
+  ///< External tracking camera frustum vertical field-of-view (if present).
+  Float32      CameraFrustumVFovInRadians;
+  ///< External tracking camera frustum near Z (if present).
+  Float32      CameraFrustumNearZInMeters;
+  ///< External tracking camera frustum far Z (if present).
+  Float32      CameraFrustumFarZInMeters;
+  ///< Capability bits described by ovrHmdCaps which the HMD currently supports.
+  UInt32       AvailableHmdCaps;
+  ///< Capability bits described by ovrHmdCaps which are default for the current Hmd.
+  UInt32       DefaultHmdCaps;
+  ///< Capability bits described by ovrTrackingCaps which the system currently supports.
+  UInt32       AvailableTrackingCaps;
+  ///< Capability bits described by ovrTrackingCaps which are default for the current system.
+  UInt32       DefaultTrackingCaps;
+  ///< Defines the recommended FOVs for the HMD.
+  ovrFovPort   DefaultEyeFov[2];
+  ///< Defines the maximum FOVs for the HMD.
+  ovrFovPort   MaxEyeFov[2];
+  ///< Resolution of the full HMD screen (both eyes) in pixels.
+  ovrSize      Resolution;
+  ///< Nominal refresh rate of the display in cycles per second at the time of HMD creation.
+  Float32      DisplayRefreshRate;
 };

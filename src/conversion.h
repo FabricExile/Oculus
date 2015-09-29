@@ -29,8 +29,8 @@ namespace Fabric
     void convert(KL::ovrSensorData a, ovrSensorData & b);
     void convert(KL::ovrTrackingState a, ovrTrackingState & b);
     void convert(KL::ovrEyeRenderDesc a, ovrEyeRenderDesc & b);
-    void convert(KL::ovrGLTexture a, ovrTexture & b);
     void convert(KL::ovrFrameTiming a, ovrFrameTiming & b);
+    // void convert(KL::ovrGLTexture a, ovrTexture & b);
 
     //------------------------------------------------------------------------------------------------------
 
@@ -47,8 +47,9 @@ namespace Fabric
     void convert(ovrSensorData a, KL::ovrSensorData & b);
     void convert(ovrTrackingState a, KL::ovrTrackingState & b);
     void convert(ovrEyeRenderDesc a, KL::ovrEyeRenderDesc & b);
-    void convert(const ovrTexture & a, KL::ovrGLTexture & b);
     void convert(ovrFrameTiming a, KL::ovrFrameTiming & b);
+    void convert(ovrHmdDesc a, KL::ovrDescription & b);
+    // void convert(const ovrTexture & a, KL::ovrGLTexture & b);
   }
 }
 

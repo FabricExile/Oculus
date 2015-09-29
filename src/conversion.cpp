@@ -93,6 +93,8 @@ namespace Fabric
       convert(a.HeadPose, b.HeadPose);
       convert(a.CameraPose, b.CameraPose);
       convert(a.LeveledCameraPose, b.LeveledCameraPose);
+      convert(a.HandPoses[0], b.HandPoses[0]);
+      convert(a.HandPoses[1], b.HandPoses[1]);
       convert(a.RawSensorData, b.RawSensorData);
       b.StatusFlags = a.StatusFlags;
       b.LastCameraFrameCounter = a.LastCameraFrameCounter;
@@ -104,14 +106,6 @@ namespace Fabric
       convert(a.DistortedViewport, b.DistortedViewport);
       convert(a.PixelsPerTanAngleAtCenter, b.PixelsPerTanAngleAtCenter);
       convert(a.HmdToEyeViewOffset, b.HmdToEyeViewOffset);
-    }
-
-    void convert(KL::ovrGLTexture a, ovrTexture & b) {
-      b.Header.API = (ovrRenderAPIType)a.API;
-      convert(a.TextureSize, b.Header.TextureSize);
-
-      ovrGLTexture * bGL = (ovrGLTexture*)&b;
-      bGL->OGL.TexId = a.TexId;
     }
 
     void convert(KL::ovrFrameTiming a, ovrFrameTiming & b) {
@@ -208,6 +202,8 @@ namespace Fabric
       convert(a.HeadPose, b.HeadPose);
       convert(a.CameraPose, b.CameraPose);
       convert(a.LeveledCameraPose, b.LeveledCameraPose);
+      convert(a.HandPoses[0], b.HandPoses[0]);
+      convert(a.HandPoses[1], b.HandPoses[1]);
       convert(a.RawSensorData, b.RawSensorData);
       b.StatusFlags = a.StatusFlags;
       b.LastCameraFrameCounter = a.LastCameraFrameCounter;
@@ -221,19 +217,44 @@ namespace Fabric
       convert(a.HmdToEyeViewOffset, b.HmdToEyeViewOffset);
     }
 
-    void convert(const ovrTexture & a, KL::ovrGLTexture & b) {
-      b.API = a.Header.API;
-      convert(a.Header.TextureSize, b.TextureSize);
-
-      ovrGLTexture * aGL = (ovrGLTexture*)&a;
-      b.TexId = aGL->OGL.TexId;
-    }
-
     void convert(ovrFrameTiming a, KL::ovrFrameTiming & b) {
       b.DisplayMidpointSeconds = a.DisplayMidpointSeconds;
       b.FrameIntervalSeconds = a.FrameIntervalSeconds;
       b.AppFrameIndex = a.AppFrameIndex;
       b.DisplayFrameIndex = a.DisplayFrameIndex;
     }
+
+    void convert(ovrHmdDesc a, KL::ovrDescription & b) {
+      b.Type = (int)a.Type;
+      b.ProductName = a.ProductName;
+      b.Manufacturer = a.Manufacturer;
+      b.VendorId = (short)a.VendorId;
+      b.ProductId = (short)a.ProductId;
+      b.SerialNumber = a.SerialNumber;
+      b.FirmwareMajor = (int)a.FirmwareMajor;
+      b.FirmwareMinor = (int)a.FirmwareMinor;
+      b.CameraFrustumHFovInRadians = (float)a.CameraFrustumHFovInRadians;
+      b.CameraFrustumVFovInRadians = (float)a.CameraFrustumVFovInRadians;
+      b.CameraFrustumNearZInMeters = (float)a.CameraFrustumNearZInMeters;
+      b.CameraFrustumFarZInMeters = (float)a.CameraFrustumFarZInMeters;
+      b.AvailableHmdCaps = (unsigned int)a.AvailableHmdCaps;
+      b.DefaultHmdCaps = (unsigned int)a.DefaultHmdCaps;
+      b.AvailableTrackingCaps = (unsigned int)a.AvailableTrackingCaps;
+      b.DefaultTrackingCaps = (unsigned int)a.DefaultTrackingCaps;
+      convert(a.DefaultEyeFov[0], b.DefaultEyeFov[0]);
+      convert(a.DefaultEyeFov[1], b.DefaultEyeFov[1]);
+      convert(a.MaxEyeFov[0], b.MaxEyeFov[0]);
+      convert(a.MaxEyeFov[1], b.MaxEyeFov[1]);
+      convert(a.Resolution, b.Resolution);
+      b.DisplayRefreshRate = (float)a.DisplayRefreshRate;
+    }
+
+    // void convert(const ovrTexture & a, KL::ovrGLTexture & b) {
+    //   b.API = a.Header.API;
+    //   convert(a.Header.TextureSize, b.TextureSize);
+
+    //   ovrGLTexture * aGL = (ovrGLTexture*)&a;
+    //   b.TexId = aGL->OGL.TexId;
+    // }
   }
 }

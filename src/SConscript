@@ -8,7 +8,7 @@ extName = 'Oculus'
 
 env = parentEnv.Clone()
 env.Append(CPPPATH = [env.Dir('.').abspath])
-env.Append(LIBS = ['libovr64'])
+env.Append(LIBS = ['libovr'])
 env.Append(LIBS = ['libboost_thread-vc100-mt-s-1_55'])
 env.Append(CCFLAGS = ['/EHsc'])
 
@@ -36,7 +36,20 @@ sources = [
 ]
 sources += env.Glob('*.kl')
 
-cppFiles = [
+env.VariantDir(
+  env.Dir('LibOVRKernel').Dir('src').Dir('Kernel'), 
+  os.path.join(os.environ['OCULUS_DIR'], 'LibOVRKernel', 'src', 'Kernel')
+)
+env.VariantDir(
+  env.Dir('LibOVRKernel').Dir('src').Dir('Util'), 
+  os.path.join(os.environ['OCULUS_DIR'], 'LibOVRKernel', 'src', 'Util')
+)
+
+# directly link against the Oculus source files from lib kernel
+cppFiles = env.Glob(os.path.join(env.Dir('LibOVRKernel').Dir('src').Dir('Kernel').abspath, '*.cpp'))
+cppFiles += [env.Dir('LibOVRKernel').Dir('src').Dir('Util').File('Util_SystemGUI.cpp')]
+
+cppFiles += [
   env.File('conversion.cpp'),
   env.File('ovrDevice_functions.cpp')
 ]
