@@ -1,0 +1,22 @@
+/*
+ *  Copyright 2010-2014 Fabric Software Inc. All rights reserved.
+ */
+
+alias Integer ovrButton;
+
+const ovrButton ovrButton_A         = 0x00000001;
+const ovrButton ovrButton_B         = 0x00000002;
+const ovrButton ovrButton_RThumb    = 0x00000004;
+const ovrButton ovrButton_RShoulder = 0x00000008;
+const ovrButton ovrButton_X         = 0x00000100;
+const ovrButton ovrButton_Y         = 0x00000200;
+const ovrButton ovrButton_LThumb    = 0x00000400;  
+const ovrButton ovrButton_LShoulder = 0x00000800;
+const ovrButton ovrButton_Up        = 0x00010000;
+const ovrButton ovrButton_Down      = 0x00020000;
+const ovrButton ovrButton_Left      = 0x00040000;
+const ovrButton ovrButton_Right     = 0x00080000;
+const ovrButton ovrButton_Enter     = 0x00100000; // Start on XBox controller.
+const ovrButton ovrButton_Back      = 0x00200000; // Back on Xbox controller.     
+const ovrButton ovrButton_EnumSize  = 0x7fffffff; ///< \internal Force type int32_t.
+

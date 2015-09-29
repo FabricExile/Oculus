@@ -6,15 +6,15 @@ require Math;
 
 alias Integer ovrHmdType;
 
-const Integer ovrHmd_None      = 0;
-const Integer ovrHmd_DK1       = 3;
-const Integer ovrHmd_DKHD      = 4;
-const Integer ovrHmd_DK2       = 6;
-const Integer ovrHmd_CB        = 8;
-const Integer ovrHmd_Other     = 9;
-const Integer ovrHmd_E3_2015   = 10;
-const Integer ovrHmd_ES06      = 11;
-const Integer ovrHmd_EnumSize  = 0x7fffffff; ///< \internal Force type int32_t.
+const ovrHmdType ovrHmd_None      = 0;
+const ovrHmdType ovrHmd_DK1       = 3;
+const ovrHmdType ovrHmd_DKHD      = 4;
+const ovrHmdType ovrHmd_DK2       = 6;
+const ovrHmdType ovrHmd_CB        = 8;
+const ovrHmdType ovrHmd_Other     = 9;
+const ovrHmdType ovrHmd_E3_2015   = 10;
+const ovrHmdType ovrHmd_ES06      = 11;
+const ovrHmdType ovrHmd_EnumSize  = 0x7fffffff; ///< \internal Force type int32_t.
 
 struct ovrDescription {
   ///< The type of HMD.

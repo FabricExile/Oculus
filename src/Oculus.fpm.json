@@ -2,6 +2,12 @@
   "version": "1.0.0",
   "libs": "Oculus",
   "code": [
+    "ovrLogLevel.kl",
+    "ovrButton.kl",
+    "ovrCaps.kl",
+    "ovrTouch.kl",
+    "ovrControllerType.kl",
+    "ovrHandType.kl",
     "ovrSize.kl",
     "ovrVec2.kl",
     "ovrFrameTiming.kl",
@@ -12,6 +18,10 @@
     "ovrEyeRenderDesc.kl",
     "ovrSensorData.kl",
     "ovrTrackingState.kl",
+    "ovrInputState.kl",
+    "ovrTimewarpProjectionDesc.kl",
+    "ovrViewScaleDesc.kl",
+    "ovrTextureHeader.kl",
     "ovrDescription.kl",
     "ovrDevice.kl"
   ]

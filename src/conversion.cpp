@@ -100,12 +100,42 @@ namespace Fabric
       b.LastCameraFrameCounter = a.LastCameraFrameCounter;
     }
 
+    void convert(KL::ovrInputState a, ovrInputState & b) {
+      b.TimeInSeconds = a.TimeInSeconds;
+      b.ConnectedControllerTypes = a.ConnectedControllerTypes;
+      b.Buttons = a.Buttons;
+      b.Touches = a.Touches;
+      b.IndexTrigger[0] = a.IndexTrigger[0];
+      b.IndexTrigger[1] = a.IndexTrigger[1];
+      b.HandTrigger[0] = a.HandTrigger[0];
+      b.HandTrigger[1] = a.HandTrigger[1];
+      convert(a.Thumbstick[0], b.Thumbstick[0]);
+      convert(a.Thumbstick[1], b.Thumbstick[1]);
+    }
+
     void convert(KL::ovrEyeRenderDesc a, ovrEyeRenderDesc & b) {
       b.Eye = (ovrEyeType)a.Eye;
       convert(a.Fov, b.Fov);
       convert(a.DistortedViewport, b.DistortedViewport);
       convert(a.PixelsPerTanAngleAtCenter, b.PixelsPerTanAngleAtCenter);
       convert(a.HmdToEyeViewOffset, b.HmdToEyeViewOffset);
+    }
+
+    void convert(KL::ovrTimewarpProjectionDesc a, ovrTimewarpProjectionDesc & b) {
+      b.Projection22 = a.Projection22;
+      b.Projection23 = a.Projection23;
+      b.Projection32 = a.Projection32;
+    }
+
+    void convert(KL::ovrViewScaleDesc a, ovrViewScaleDesc & b) {
+      convert(a.HmdToEyeViewOffset[0], b.HmdToEyeViewOffset[0]);
+      convert(a.HmdToEyeViewOffset[1], b.HmdToEyeViewOffset[1]);
+      b.HmdSpaceToWorldScaleInMeters = a.HmdSpaceToWorldScaleInMeters;
+    }
+
+    void convert(KL::ovrTextureHeader a, ovrTextureHeader & b) {
+      b.API = (ovrRenderAPIType)(int)a.API;
+      convert(a.TextureSize, b.TextureSize);
     }
 
     void convert(KL::ovrFrameTiming a, ovrFrameTiming & b) {
@@ -209,12 +239,43 @@ namespace Fabric
       b.LastCameraFrameCounter = a.LastCameraFrameCounter;
     }
 
+    void convert(ovrInputState a, KL::ovrInputState & b) {
+      b.TimeInSeconds = a.TimeInSeconds;
+      b.ConnectedControllerTypes = a.ConnectedControllerTypes;
+      b.Buttons = a.Buttons;
+      b.Touches = a.Touches;
+      b.IndexTrigger[0] = a.IndexTrigger[0];
+      b.IndexTrigger[1] = a.IndexTrigger[1];
+      b.HandTrigger[0] = a.HandTrigger[0];
+      b.HandTrigger[1] = a.HandTrigger[1];
+      convert(a.Thumbstick[0], b.Thumbstick[0]);
+      convert(a.Thumbstick[1], b.Thumbstick[1]);
+    }
+
     void convert(ovrEyeRenderDesc a, KL::ovrEyeRenderDesc & b) {
       b.Eye = a.Eye;
       convert(a.Fov, b.Fov);
       convert(a.DistortedViewport, b.DistortedViewport);
       convert(a.PixelsPerTanAngleAtCenter, b.PixelsPerTanAngleAtCenter);
       convert(a.HmdToEyeViewOffset, b.HmdToEyeViewOffset);
+    }
+
+    void convert(ovrTimewarpProjectionDesc a, KL::ovrTimewarpProjectionDesc & b) {
+      b.Projection22 = a.Projection22;
+      b.Projection23 = a.Projection23;
+      b.Projection32 = a.Projection32;
+    }
+
+
+    void convert(ovrViewScaleDesc a, KL::ovrViewScaleDesc & b) {
+      convert(a.HmdToEyeViewOffset[0], b.HmdToEyeViewOffset[0]);
+      convert(a.HmdToEyeViewOffset[1], b.HmdToEyeViewOffset[1]);
+      b.HmdSpaceToWorldScaleInMeters = a.HmdSpaceToWorldScaleInMeters;
+    }
+
+    void convert(ovrTextureHeader a, KL::ovrTextureHeader & b) {
+      b.API = (int)a.API;
+      convert(a.TextureSize, b.TextureSize);
     }
 
     void convert(ovrFrameTiming a, KL::ovrFrameTiming & b) {

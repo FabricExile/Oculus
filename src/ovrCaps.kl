@@ -1,0 +1,10 @@
+/*
+ *  Copyright 2010-2014 Fabric Software Inc. All rights reserved.
+ */
+
+alias Integer ovrCaps;
+
+const ovrCaps ovrCap_DebugDevice         = 0x0010; ///< <B>(read only)</B> Specifies that the HMD is a virtual debug device.
+const ovrCaps ovrCap_Writable_Mask       = 0x0000;
+const ovrCaps ovrCap_Service_Mask        = 0x0000;
+const ovrCaps ovrCap_EnumSize            = 0x7fffffff; ///< \internal Force type int32_t.

@@ -37,3 +37,18 @@ function ~ovrDevice() = "ovrDevice_Destruct";
 /// returns the full description of this device
 function ovrDescription ovrDevice.getDescription() = "ovrDevice_GetDescription";
 
+/// Provides information about the last error.
+function String ovrDevice.getLastError() = "ovrDevice_GetLastError";
+
+/// Returns the version string representing the LibOVRRT version.
+function String ovrDevice.getVersionString() = "ovrDevice_GetVersionString";
+
+/// Writes a message string to the LibOVR tracing mechanism (if enabled).
+function ovrDevice.traceMessage(ovrLogLevel level, String message) = "ovrDevice_TraceMessage";
+
+/// Returns ovrHmdCaps bits that are currently enabled.
+function ovrCaps ovrDevice.getEnabledCaps() = "ovrDevice_GetEnabledCaps";
+
+/// Modifies capability bits described by ovrHmdCaps that can be modified,
+/// such as ovrHmdCap_LowPersistance.
+function ovrDevice.setEnabledCaps(ovrCaps caps) = "ovrDevice_SetEnabledCaps";

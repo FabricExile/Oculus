@@ -86,3 +86,50 @@ FABRIC_EXT_EXPORT void ovrDevice_GetDescription(
   convert(desc, _result);
 }
 
+// Defined at src\\ovrDevice.kl:41:1
+FABRIC_EXT_EXPORT void ovrDevice_GetLastError(
+  KL::Traits< KL::String >::Result _result,
+  KL::Traits< KL::ovrDevice >::INParam this_
+) {
+  ovrErrorInfo errorInfo;
+  ovr_GetLastErrorInfo(&errorInfo);
+  _result = errorInfo.ErrorString;
+}
+
+// Defined at src\\ovrDevice.kl:44:1
+FABRIC_EXT_EXPORT void ovrDevice_GetVersionString(
+  KL::Traits< KL::String >::Result _result,
+  KL::Traits< KL::ovrDevice >::INParam this_
+) {
+  _result = ovr_GetVersionString();
+}
+
+// Defined at src\\ovrDevice.kl:47:1
+FABRIC_EXT_EXPORT void ovrDevice_TraceMessage(
+  KL::Traits< KL::ovrDevice >::INParam this_,
+  KL::Traits< KL::SInt32 >::INParam level,
+  KL::Traits< KL::String >::INParam message
+) {
+  ovr_TraceMessage(level, message.getCString());
+}
+
+// Defined at src\\ovrDevice.kl:50:1
+FABRIC_EXT_EXPORT KL::SInt32 ovrDevice_GetEnabledCaps(
+  KL::Traits< KL::ovrDevice >::INParam this_
+) {
+  if(!this_->handle)
+    return 0;
+  ovrHmd hmd = (ovrHmd)this_->handle;
+  return ovr_GetEnabledCaps(hmd);  
+}
+
+// Defined at src\\ovrDevice.kl:54:1
+FABRIC_EXT_EXPORT void ovrDevice_SetEnabledCaps(
+  KL::Traits< KL::ovrDevice >::INParam this_,
+  KL::Traits< KL::SInt32 >::INParam caps
+) {
+  if(!this_->handle)
+    return;
+  ovrHmd hmd = (ovrHmd)this_->handle;
+  ovr_SetEnabledCaps(hmd, caps);
+}

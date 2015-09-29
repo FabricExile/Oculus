@@ -1,0 +1,10 @@
+/*
+ *  Copyright 2010-2014 Fabric Software Inc. All rights reserved.
+ */
+
+struct ovrViewScaleDesc {
+  ///< Translation of each eye.
+  Vec3 HmdToEyeViewOffset[2];
+  ///< Ratio of viewer units to meter units.
+  Float32 HmdSpaceToWorldScaleInMeters;
+};
