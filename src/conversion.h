@@ -33,6 +33,7 @@ namespace Fabric
     void convert(KL::ovrTimewarpProjectionDesc a, ovrTimewarpProjectionDesc & b);
     void convert(KL::ovrViewScaleDesc a, ovrViewScaleDesc & b);
     void convert(KL::ovrTextureHeader a, ovrTextureHeader & b);
+    void convert(KL::ovrLayerHeader a, ovrLayerHeader & b);
     void convert(KL::ovrFrameTiming a, ovrFrameTiming & b);
     // void convert(KL::ovrGLTexture a, ovrTexture & b);
 
@@ -56,6 +57,8 @@ namespace Fabric
     void convert(ovrTimewarpProjectionDesc a, KL::ovrTimewarpProjectionDesc & b);
     void convert(ovrViewScaleDesc a, KL::ovrViewScaleDesc & b);
     void convert(ovrTextureHeader a, KL::ovrTextureHeader & b);
+    void convert(ovrLayerHeader a, KL::ovrLayerHeader & b);
+    void convert(ovrFrameTiming a, KL::ovrFrameTiming & b);
     void convert(ovrHmdDesc a, KL::ovrDescription & b);
     // void convert(const ovrTexture & a, KL::ovrGLTexture & b);
   }

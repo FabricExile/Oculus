@@ -1,0 +1,11 @@
+/*
+ *  Copyright 2010-2014 Fabric Software Inc. All rights reserved.
+ */
+
+alias Integer ovrLayerFlags;
+
+/// ovrLayerFlag_HighQuality mode costs performance, but looks better.
+const ovrLayerFlags ovrLayerFlag_HighQuality               = 0x01;
+/// ovrLayerFlag_TextureOriginAtBottomLeft: the opposite is TopLeft.
+/// Generally this is false for D3D, true for OpenGL.
+const ovrLayerFlags ovrLayerFlag_TextureOriginAtBottomLeft = 0x02;

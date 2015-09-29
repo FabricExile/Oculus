@@ -138,6 +138,11 @@ namespace Fabric
       convert(a.TextureSize, b.TextureSize);
     }
 
+    void convert(KL::ovrLayerHeader a, ovrLayerHeader & b) {
+      b.Type = (ovrLayerType)(int)a.Type;
+      b.Flags = a.Flags;
+    }
+
     void convert(KL::ovrFrameTiming a, ovrFrameTiming & b) {
       b.DisplayMidpointSeconds = a.DisplayMidpointSeconds;
       b.FrameIntervalSeconds = a.FrameIntervalSeconds;
@@ -276,6 +281,11 @@ namespace Fabric
     void convert(ovrTextureHeader a, KL::ovrTextureHeader & b) {
       b.API = (int)a.API;
       convert(a.TextureSize, b.TextureSize);
+    }
+
+    void convert(ovrLayerHeader a, KL::ovrLayerHeader & b) {
+      b.Type = (int)a.Type;
+      b.Flags = a.Flags;
     }
 
     void convert(ovrFrameTiming a, KL::ovrFrameTiming & b) {

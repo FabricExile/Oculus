@@ -52,3 +52,120 @@ function ovrCaps ovrDevice.getEnabledCaps() = "ovrDevice_GetEnabledCaps";
 /// Modifies capability bits described by ovrHmdCaps that can be modified,
 /// such as ovrHmdCap_LowPersistance.
 function ovrDevice.setEnabledCaps(ovrCaps caps) = "ovrDevice_SetEnabledCaps";
+
+/// Starts sensor sampling, enabling specified capabilities, described by ovrTrackingCaps.
+///
+/// Use 0 for both requestedTrackingCaps and requiredTrackingCaps to disable tracking.
+/// ovr_ConfigureTracking can be called multiple times with the same or different values
+/// for a given ovrHmd.
+function Boolean ovrDevice.configureTracking(ovrTrackingCaps requestedTrackingCaps, ovrTrackingCaps requiredTrackingCaps) = "ovrDevice_ConfigureTracking";
+
+/// Re-centers the sensor position and orientation.
+///
+/// This resets the (x,y,z) positional components and the yaw orientation component.
+/// The Roll and pitch orientation components are always determined by gravity and cannot
+/// be redefined. All future tracking will report values relative to this new reference position.
+function ovrDevice.recenterPose() = "ovrDevice_RecenterPose";
+
+/// Returns tracking state reading based on the specified absolute system time.
+///
+/// Pass an absTime value of 0.0 to request the most recent sensor reading. In this case
+/// both PredictedPose and SamplePose will have the same value.
+///
+/// This may also be used for more refined timing of front buffer rendering logic, and so on.
+function ovrTrackingState ovrDevice.getTrackingState(Float64 absTime) = "ovrDevice_GetTrackingState";
+
+/// Returns the most recent input state for controllers, without positional tracking info.
+/// Developers can tell whether the same state was returned by checking the PacketNumber.
+function Boolean ovrDevice.getInputState(ovrControllerType controllerTypeMask, io ovrInputState state) = "ovrDevice_GetInputState";
+
+/// Turns on vibration of the given controller.
+///
+/// To disable vibration, call ovr_SetControllerVibration with an amplitude of 0.
+/// Vibration automatically stops after a nominal amount of time, so if you want vibration 
+/// to be continuous over multiple seconds then you need to call this function periodically.
+function Boolean ovrDevice.setControllerVibration(ovrControllerType controllerTypeMask, Float32 frequency, Float32 amplitude) = "ovrDevice_SetControllerVibration";
+
+/// Calculates the recommended viewport size for rendering a given eye within the HMD
+/// with a given FOV cone.
+///
+/// Higher FOV will generally require larger textures to maintain quality.
+/// Apps packing multiple eye views together on the same texture should ensure there are
+/// at least 8 pixels of padding between them to prevent texture filtering and chromatic
+/// aberration causing images to leak between the two eye views.
+function ovrSize ovrDevice.getFovTextureSize(ovrEyeType eye, ovrFovPort fov, Float32 pixelsPerDisplayPixel) = "ovrDevice_GetFovTextureSize";
+
+/// Computes the distortion viewport, view adjust, and other rendering parameters for
+/// the specified eye.
+///
+function ovrEyeRenderDesc ovrDevice.getRenderDesc(ovrEyeType eye, ovrFovPort fov) = "ovrDevice_GetRenderDesc";
+
+/// Submits layers for distortion and display.
+///
+/// ovr_SubmitFrame triggers distortion and processing which might happen asynchronously.
+/// The function will return when there is room in the submission queue and surfaces
+/// are available. Distortion might or might not have completed.
+function Boolean ovrDevice.submitFrame(UInt32 frameIndex, ovrViewScaleDesc scale, ovrLayerHeader layers[]) = "ovrDevice_SubmitFrame";
+
+/// Gets the ovrFrameTiming for the given frame index.
+///
+/// The application should increment frameIndex for each successively targeted frame,
+/// and pass that index to any relevent OVR functions that need to apply to the frame
+/// identified by that index.
+///
+/// This function is thread-safe and allows for multiple application threads to target
+/// their processing to the same displayed frame.
+function ovrFrameTiming ovrDevice.getFrameTiming(UInt32 frameIndex) = "ovrDevice_GetFrameTiming";
+
+/// Returns global, absolute high-resolution time in seconds.
+///
+/// The time frame of reference for this function is not specified and should not be
+/// depended upon.
+function Float64 ovrDevice.getTimeInSeconds() = "ovrDevice_GetTimeInSeconds";
+
+/// Should be called when the headset is placed on a new user.
+/// Previously named ovrHmd_ResetOnlyBackOfHeadTrackingForConnectConf.
+///
+/// This may be removed in a future SDK version.
+function ovrDevice.resetBackOfHeadTracking() = "ovrDevice_ResetBackOfHeadTracking";
+
+/// Should be called when a tracking camera is moved.
+///
+/// This may be removed in a future SDK version.
+function ovrDevice.resetMulticameraTracking() = "ovrDevice_ResetMulticameraTracking";
+
+/// Reads a boolean property.
+function Boolean ovrDevice.getBool(String propertyName, Boolean defaultValue) = "ovrDevice_GetBool";
+
+/// Writes or creates a boolean property.
+/// If the property wasn't previously a boolean property, it is changed to a boolean property.
+function ovrDevice.setBool(String propertyName, Boolean value) = "ovrDevice_SetBool";
+
+/// Reads an integer property.
+function SInt32 ovrDevice.getInt(String propertyName, SInt32 defaultValue) = "ovrDevice_GetInt";
+
+/// Writes or creates an integer property.
+/// If the property wasn't previously an integer property, it is changed to an integer property.
+function ovrDevice.setInt(String propertyName, SInt32 value) = "ovrDevice_SetInt";
+
+/// Reads a float property.
+function Float32 ovrDevice.getFloat(String propertyName, Float32 defaultValue) = "ovrDevice_GetFloat";
+
+/// Writes or creates a float property.
+/// If the property wasn't previously a float property, it is changed to a float property.
+function ovrDevice.setFloat(String propertyName, Float32 value) = "ovrDevice_SetFloat";
+
+/// Reads a float array property.
+/// valuesCapacity Specifies the maximum number of elements to write to the values array.
+function Float32[] ovrDevice.getFloatArray(String propertyName, UInt32 valuesCapacity) = "ovrDevice_GetFloatArray";
+
+/// Writes or creates a float array property.
+function ovrDevice.setFloatArray(String propertyName, Float32 values[]) = "ovrDevice_SetFloatArray";
+
+/// Reads a string property.
+/// Strings are UTF8-encoded and null-terminated.
+function String ovrDevice.getString(String propertyName, String defaultValue) = "ovrDevice_GetString";
+
+/// Writes or creates a string property.
+/// Strings are UTF8-encoded and null-terminated.
+function ovrDevice.setString(String propertyName, String value) = "ovrDevice_SetString";

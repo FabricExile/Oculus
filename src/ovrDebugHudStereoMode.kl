@@ -1,0 +1,12 @@
+/*
+ *  Copyright 2010-2014 Fabric Software Inc. All rights reserved.
+ */
+
+alias Integer ovrDebugHudStereoMode;
+
+const ovrDebugHudStereoMode ovrDebugHudStereo_Off                 = 0;  ///< Turns off the Stereo Debug HUD
+const ovrDebugHudStereoMode ovrDebugHudStereo_Quad                = 1;  ///< Renders Quad in world for Stereo Debugging
+const ovrDebugHudStereoMode ovrDebugHudStereo_QuadWithCrosshair   = 2;  ///< Renders Quad+crosshair in world for Stereo Debugging
+const ovrDebugHudStereoMode ovrDebugHudStereo_CrosshairAtInfinity = 3;  ///< Renders screen-space crosshair at infinity for Stereo Debugging
+const ovrDebugHudStereoMode ovrDebugHudStereo_Count               = 4;  ///< \internal Count of enumerated elements
+const ovrDebugHudStereoMode ovrDebugHudStereo_EnumSize = 0x7fffffff;    ///< \internal Force type int32_t
