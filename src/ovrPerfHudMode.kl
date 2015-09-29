@@ -9,5 +9,5 @@ const ovrPerfHudMode ovrPerfHud_LatencyTiming      = 1;  ///< Shows latency rela
 const ovrPerfHudMode ovrPerfHud_RenderTiming       = 2;  ///< Shows CPU & GPU timing info
 const ovrPerfHudMode ovrPerfHud_PerfHeadroom       = 3;  ///< Shows available performance headroom in a "consumer-friendly" way
 const ovrPerfHudMode ovrPerfHud_VersionInfo        = 4;  ///< Shows SDK Version Info
-const ovrPerfHudMode ovrDebugHudStereo_Count       = 5;  ///< \internal Count of enumerated elements
+const ovrPerfHudMode ovrPerfHud_Count              = 5;  ///< \internal Count of enumerated elements
 const ovrPerfHudMode ovrPerfHud_EnumSize = 0x7fffffff;   ///< \internal Force type int32_t.
