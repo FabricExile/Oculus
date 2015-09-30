@@ -2,15 +2,6 @@
  *  Copyright 2010-2014 Fabric Software Inc. All rights reserved.
  */
 
-alias Integer ovrRenderAPIType;
-
-const ovrRenderAPIType ovrRenderAPI_None         = 0;          ///< No API
-const ovrRenderAPIType ovrRenderAPI_OpenGL       = 1;          ///< OpenGL
-const ovrRenderAPIType ovrRenderAPI_Android_GLES = 2;          ///< OpenGL ES
-const ovrRenderAPIType ovrRenderAPI_D3D11        = 5;          ///< DirectX 11.
-const ovrRenderAPIType ovrRenderAPI_Count        = 4;          ///< \internal Count of enumerated elements.
-const ovrRenderAPIType ovrRenderAPI_EnumSize     = 0x7fffffff; ///< \internal Force type int32_t.
-
 struct ovrTextureHeader {
   ///< The API type to which this texture belongs.
   ovrRenderAPIType API;

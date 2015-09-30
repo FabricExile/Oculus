@@ -13,3 +13,14 @@ struct ovrPoseState {
   /// Absolute time of this state sample.
   Float64 TimeInSeconds;
 };
+
+function Xfo ovrPoseState.getPoseAsXfo(Scalar scale) {
+  Xfo result;
+  result.tr = this.ThePose.Position * scale;
+  result.ori = this.ThePose.Orientation;
+  return result;
+}
+
+function Mat44 ovrPoseState.getPoseAsMat44(Scalar scale) {
+  return this.getPoseAsXfo(scale).toMat44();
+}

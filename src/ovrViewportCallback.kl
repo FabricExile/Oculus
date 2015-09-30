@@ -5,6 +5,7 @@
 require InlineDrawing:">1.0.0";
 require Singletons;
 
+/// \dfgPresetOmit
 object ovrViewportCallback : ViewportCallback {
   ovrDevice device;
   ovrDescription desc;
@@ -35,8 +36,11 @@ function ovrViewportCallback(ovrDevice device) {
 
 function ovrViewportCallback.init!(ovrDevice device) {
   this.device = device;
-  if(device)
+  if(device) {
     this.desc = device.getDescription();
+    this.eye_rdesc[ovrEye_Left] = device.getRenderDesc(ovrEye_Left, this.desc.DefaultEyeFov[ovrEye_Left]);
+    this.eye_rdesc[ovrEye_Right] = device.getRenderDesc(ovrEye_Right, this.desc.DefaultEyeFov[ovrEye_Right]);
+  }
   this.fbo.push(0);
   this.fb_tex.push(0);
   this.fb_depth.push(0);
@@ -82,8 +86,8 @@ function Boolean ovrViewportCallback.invoke!(ViewportDrawPhase phase, io Viewpor
       this.requiresSetup = false;
 
       ovrSize eyeRes[2];
-      eyeRes[0] = this.device.getFovTextureSize(ovrEye_Left);
-      eyeRes[1] = this.device.getFovTextureSize(ovrEye_Right);
+      eyeRes[0] = this.device.getFovTextureSize(ovrEye_Left, this.desc.DefaultEyeFov[ovrEye_Left], 1);
+      eyeRes[1] = this.device.getFovTextureSize(ovrEye_Right, this.desc.DefaultEyeFov[ovrEye_Right], 1);
       this.fb_width = eyeRes[0].w + eyeRes[1].w;
       this.fb_height = eyeRes[0].h > eyeRes[1].h ? eyeRes[0].h : eyeRes[1].h;
 
@@ -127,53 +131,31 @@ function Boolean ovrViewportCallback.invoke!(ViewportDrawPhase phase, io Viewpor
         this.fb_ovr_tex[i].TexId = this.fb_tex[0]; /* both eyes will use the same texture id */
       } 
 
-      this.cfg.API = ovrRenderAPI_OpenGL;
-      this.cfg.RTSize.w = vp.dimensions.x;
-      this.cfg.RTSize.h = vp.dimensions.y;
-      this.cfg.Multisample = 1;      
-      this.cfg.Window = vp.windowId;
+      // this.cfg.API = ovrRenderAPI_OpenGL;
+      // this.cfg.RTSize.w = vp.dimensions.x;
+      // this.cfg.RTSize.h = vp.dimensions.y;
+      // this.cfg.Multisample = 1;      
+      // this.cfg.Window = vp.windowId;
 
-      /// on windows this will perform direct rendering
-      this.device.attachToWindow(this.cfg.Window);
+      // /// on windows this will perform direct rendering
+      // this.device.attachToWindow(this.cfg.Window);
 
-      /* enable low-persistence display and dynamic prediction for lattency compensation */
-      this.device.setEnabledCaps(ovrHmdCap_LowPersistence | ovrHmdCap_DynamicPrediction);
-      
       /* configure SDK-rendering and enable chromatic abberation correction, vignetting, and
       * timewrap, which shifts the image before drawing to counter any lattency between the call
       * to ovrDevice.getEyePose and ovrDevice.endFrame.
       */
       // Integer dcaps = ovrDistortionCap_Chromatic | ovrDistortionCap_Vignette | ovrDistortionCap_Overdrive;
-      Integer dcaps = ovrDistortionCap_Vignette | ovrDistortionCap_TimeWarp | ovrDistortionCap_Overdrive;
+      // Integer dcaps = ovrDistortionCap_Vignette | ovrDistortionCap_TimeWarp | ovrDistortionCap_Overdrive;
       // Integer dcaps = 0;
-      if(!this.device.configureRendering(dcaps, this.desc.DefaultEyeFov, this.eye_rdesc)) {
-        setError("Failed to configure distortion renderer.");
-      }
+      // if(!this.device.configureRendering(dcaps, this.desc.DefaultEyeFov, this.eye_rdesc)) {
+      //   setError("Failed to configure distortion renderer.");
+      // }
 
-      /* disable the retarded "health and safety warning" */
-      this.device.enableHSWDisplaySDKRender(false);
+      // // disable the retarded "health and safety warning" 
+      // this.device.enableHSWDisplaySDKRender(false);
       
       glEnable(GL_DEPTH_TEST);
       glClearColor(this.bgColor.r, this.bgColor.g, this.bgColor.b, this.bgColor.a);
-
-      // if(!vp.gridInstance)
-      // {
-      //   // setup the grid
-      //   InlineDrawing drawing = OGLInlineDrawing_GetInstance();
-
-      //   InlineDebugShape grid = drawing.registerShape(InlineDebugShape('StandaloneGrid'));
-
-      //   Scalar scale = 2.0;
-      //   for(Integer x=-10;x<11;x++)
-      //     grid.drawLine(Vec3(x, 0, -10) * scale, Vec3(x, 0, 10) * scale);
-      //   for(Integer z=-10;z<11;z++)
-      //     grid.drawLine(Vec3(-10, 0, z) * scale, Vec3(10, 0, z) * scale);
-
-      //   InlineShader shader = drawing.registerShader(OGLFlatShader());
-      //   InlineMaterial mat = shader.getOrCreateMaterial('grey');
-      //   mat.setUniform('u_color', Color(0.1, 0.1, 0.1));
-      //   vp.gridInstance = InlineInstance('StandaloneGrid', drawing.getRoot(), grid, mat);
-      // }
 
       return phase == ViewportDrawPhase_Setup;
     }
@@ -181,7 +163,7 @@ function Boolean ovrViewportCallback.invoke!(ViewportDrawPhase phase, io Viewpor
 
       /* the drawing starts with a call to ovrDevice.beginFrame */
       if(this.device.isStereoEnabled()) {
-        this.device.beginFrame(0);
+        // this.device.beginFrame(0);
 
         /* start drawing onto our texture render target */
         glBindFramebuffer(GL_FRAMEBUFFER, this.fbo[0]);
@@ -198,7 +180,14 @@ function Boolean ovrViewportCallback.invoke!(ViewportDrawPhase phase, io Viewpor
     case ViewportDrawPhase_Draw: {
 
       InlineDrawing drawing = OGLInlineDrawing_GetInstance();
-      this.poses = this.device.getEyePoses();
+
+      Vec3 viewOffset[2];
+      viewOffset[ovrEye_Left] = this.eye_rdesc[ovrEye_Left].HmdToEyeViewOffset;
+      viewOffset[ovrEye_Right] = this.eye_rdesc[ovrEye_Right].HmdToEyeViewOffset;
+
+      ovrFrameTiming ftiming = this.device.getFrameTiming(0);
+      ovrTrackingState tstate = this.device.getTrackingState(ftiming.DisplayMidpointSeconds);
+      this.poses = this.device.calcEyePoses(tstate.HeadPose.ThePose, viewOffset);
 
       glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
       glMatrixMode(GL_PROJECTION);
@@ -207,9 +196,7 @@ function Boolean ovrViewportCallback.invoke!(ViewportDrawPhase phase, io Viewpor
       glLoadIdentity();
 
       /* for each eye ... */
-      for(ovrEyeType i=0; i<ovrEye_Count; i++) {
-
-        ovrEyeType eye = this.desc.EyeRenderOrder[i];
+      for(ovrEyeType eye=0; eye<ovrEye_Count; eye++) {
 
         if(this.device.isStereoEnabled())
           glViewport(eye == ovrEye_Left ? 0 : this.fb_width / 2, 0, this.fb_width / 2, this.fb_height);
@@ -232,9 +219,6 @@ function Boolean ovrViewportCallback.invoke!(ViewportDrawPhase phase, io Viewpor
           Quat angularDelta;
           angularDelta.setFromAxisAndAngle(Vec3(0.0, 1.0, 0.0), camera.currAngularVelocity.x);
           this.turnOffset = angularDelta * this.turnOffset;
-          // let's not adjust along the x axis
-          // angularDelta.setFromAxisAndAngle(Vec3(1.0, 0.0, 0.0), camera.currAngularVelocity.y);
-          // this.turnOffset = this.turnOffset * angularDelta;
         }
 
         camXfo.tr = this.turnOffset.rotateVector(this.poses[eye].Position) * this.poseScale + this.walkOffset;
@@ -244,7 +228,7 @@ function Boolean ovrViewportCallback.invoke!(ViewportDrawPhase phase, io Viewpor
         
         camera.xfo = camXfo;
         if(this.device.isStereoEnabled())
-          camera.projection = this.device.getProjection(eye, camera.nearDistance, camera.farDistance, true);
+          camera.projection = this.device.getProjectionMat44(this.desc.DefaultEyeFov[eye], camera.nearDistance, camera.farDistance, ovrProjection_RightHanded);
         else
           camera.projection.setNull();
 
@@ -261,7 +245,7 @@ function Boolean ovrViewportCallback.invoke!(ViewportDrawPhase phase, io Viewpor
     case ViewportDrawPhase_PostDraw: {
 
       vp.responsibleForSwappingBuffers = this.device.isStereoEnabled();
-      if(!this.device.isStereoEnabled())
+      if(!vp.responsibleForSwappingBuffers)
         return false;
 
       glBindFramebuffer(GL_FRAMEBUFFER, 0);
@@ -270,7 +254,7 @@ function Boolean ovrViewportCallback.invoke!(ViewportDrawPhase phase, io Viewpor
       glClearColor(this.bgColor.r, this.bgColor.g, this.bgColor.b, this.bgColor.a);
       glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-      this.device.endFrame(this.poses, this.fb_ovr_tex);
+      // this.device.endFrame(this.poses, this.fb_ovr_tex);
 
       return true;
 

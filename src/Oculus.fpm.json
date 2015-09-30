@@ -11,6 +11,8 @@
     "ovrTrackingCaps.kl",
     "ovrPerfHudMode.kl",
     "ovrDebugHudStereoMode.kl",
+    "ovrRenderAPI.kl",
+    "ovrProjectionModifier.kl",
     "ovrLayerType.kl",
     "ovrLayerFlags.kl",
     "ovrLayerHeader.kl",
@@ -29,8 +31,10 @@
     "ovrViewScaleDesc.kl",
     "ovrTextureHeader.kl",
     "ovrTexture.kl",
+    "ovrGLTexture.kl",
     "ovrSwapTextureSet.kl",
     "ovrDescription.kl",
-    "ovrDevice.kl"
+    "ovrDevice.kl",
+    "ovrViewportCallback.kl"
   ]
 }

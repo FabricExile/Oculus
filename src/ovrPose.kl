@@ -8,3 +8,14 @@ struct ovrPose {
   Quat Orientation;
   Vec3 Position;    
 };
+
+function Xfo ovrPose.getPoseAsXfo(Scalar scale) {
+  Xfo result;
+  result.tr = this.Position * scale;
+  result.ori = this.Orientation;
+  return result;
+}
+
+function Mat44 ovrPose.getPoseAsMat44(Scalar scale) {
+  return this.getPoseAsXfo(scale).toMat44();
+}

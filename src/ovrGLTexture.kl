@@ -2,15 +2,6 @@
  *  Copyright 2010-2014 Fabric Software Inc. All rights reserved.
  */
 
-alias Integer ovrRenderAPIType;
-const Integer ovrRenderAPI_None = 0;
-const Integer ovrRenderAPI_OpenGL = 1;
-const Integer ovrRenderAPI_Android_GLES = 2;
-const Integer ovrRenderAPI_D3D9 = 3;
-const Integer ovrRenderAPI_D3D10 = 4;
-const Integer ovrRenderAPI_D3D11 = 5;
-const Integer ovrRenderAPI_Count = 6;
-
 /// Contains platform-specific information about a texture.
 struct ovrGLTexture
 {

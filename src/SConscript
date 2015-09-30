@@ -71,21 +71,10 @@ kl2dfgResults = env.RunKL2DFG([kl2dfgLogFile], extensionFiles)
 extLibFileName = env.File(extName + '-' + extSuffix)
 libraryFiles = Flatten([env.SharedLibrary(extLibFileName, cppFiles)])
 env.Depends(cppFiles, kl2edkResults)
-
+env.Depends(kl2dfgResults, sources + cppFiles)
 extensionFiles += env.Install(extStageDir, libraryFiles[0])
+extensionFiles += Flatten(kl2dfgResults)
 extensionFiles = Flatten(extensionFiles)
-
-if os.environ.has_key('FABRIC_EXTS_INSTALL_DIR'):
-  INSTALL_DIR = os.environ['FABRIC_EXTS_INSTALL_DIR']
-  INSTALL_DIR = os.path.normpath(os.path.join(INSTALL_DIR, extName, extVersion))
-
-  newExtensionFiles = []
-  for sourceFile in extensionFiles:
-    relPath = os.path.relpath(sourceFile.abspath, STAGE_DIR.abspath)
-    targetPath = os.path.join(INSTALL_DIR, relPath)
-    targetFile = env.File(targetPath)
-    newExtensionFiles += env.Install(targetFile.dir, sourceFile)
-  extensionFiles += Flatten(newExtensionFiles)
 
 env.AlwaysBuild(extensionFiles)
 alias = env.Alias(extName, extensionFiles)

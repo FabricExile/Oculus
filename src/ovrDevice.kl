@@ -13,8 +13,11 @@ object ovrDevice {
 alias Integer ovrTrackingCap;
 
 /// constructor given a device index
-function ovrDevice(Index index) {
+/// \dfgPresetDefault configureTracking true
+function ovrDevice(Index index, Boolean configureTracking) {
   this.construct(index);
+  if(configureTracking)
+    this.configureTracking(ovrTrackingCap_Orientation | ovrTrackingCap_MagYawCorrection | ovrTrackingCap_Position, 0);
 }
 
 /// constructor using the first available device
@@ -34,8 +37,17 @@ function Boolean ovrDevice.valid() {
 /// default destructor
 function ~ovrDevice() = "ovrDevice_Destruct";
 
+///----------------------------------------
+/// OVR_CAPI_0_7_0.h
+///-----------------------------------------------------------------------------------------------------------------------------------------------------
+
 /// returns the full description of this device
 function ovrDescription ovrDevice.getDescription() = "ovrDevice_GetDescription";
+
+/// returns true if stereo is enabled on this device
+function Boolean ovrDevice.isStereoEnabled() {
+  return this.stereoEnabled;
+}
 
 /// Provides information about the last error.
 function String ovrDevice.getLastError() = "ovrDevice_GetLastError";
@@ -44,28 +56,28 @@ function String ovrDevice.getLastError() = "ovrDevice_GetLastError";
 function String ovrDevice.getVersionString() = "ovrDevice_GetVersionString";
 
 /// Writes a message string to the LibOVR tracing mechanism (if enabled).
-function ovrDevice.traceMessage(ovrLogLevel level, String message) = "ovrDevice_TraceMessage";
+function ovrDevice.traceMessage!(ovrLogLevel level, String message) = "ovrDevice_TraceMessage";
 
 /// Returns ovrHmdCaps bits that are currently enabled.
 function ovrCaps ovrDevice.getEnabledCaps() = "ovrDevice_GetEnabledCaps";
 
 /// Modifies capability bits described by ovrHmdCaps that can be modified,
 /// such as ovrHmdCap_LowPersistance.
-function ovrDevice.setEnabledCaps(ovrCaps caps) = "ovrDevice_SetEnabledCaps";
+function ovrDevice.setEnabledCaps!(ovrCaps caps) = "ovrDevice_SetEnabledCaps";
 
 /// Starts sensor sampling, enabling specified capabilities, described by ovrTrackingCaps.
 ///
 /// Use 0 for both requestedTrackingCaps and requiredTrackingCaps to disable tracking.
 /// ovr_ConfigureTracking can be called multiple times with the same or different values
 /// for a given ovrHmd.
-function Boolean ovrDevice.configureTracking(ovrTrackingCaps requestedTrackingCaps, ovrTrackingCaps requiredTrackingCaps) = "ovrDevice_ConfigureTracking";
+function Boolean ovrDevice.configureTracking!(ovrTrackingCaps requestedTrackingCaps, ovrTrackingCaps requiredTrackingCaps) = "ovrDevice_ConfigureTracking";
 
 /// Re-centers the sensor position and orientation.
 ///
 /// This resets the (x,y,z) positional components and the yaw orientation component.
 /// The Roll and pitch orientation components are always determined by gravity and cannot
 /// be redefined. All future tracking will report values relative to this new reference position.
-function ovrDevice.recenterPose() = "ovrDevice_RecenterPose";
+function ovrDevice.recenterPose!() = "ovrDevice_RecenterPose";
 
 /// Returns tracking state reading based on the specified absolute system time.
 ///
@@ -84,7 +96,7 @@ function Boolean ovrDevice.getInputState(ovrControllerType controllerTypeMask, i
 /// To disable vibration, call ovr_SetControllerVibration with an amplitude of 0.
 /// Vibration automatically stops after a nominal amount of time, so if you want vibration 
 /// to be continuous over multiple seconds then you need to call this function periodically.
-function Boolean ovrDevice.setControllerVibration(ovrControllerType controllerTypeMask, Float32 frequency, Float32 amplitude) = "ovrDevice_SetControllerVibration";
+function Boolean ovrDevice.setControllerVibration!(ovrControllerType controllerTypeMask, Float32 frequency, Float32 amplitude) = "ovrDevice_SetControllerVibration";
 
 /// Calculates the recommended viewport size for rendering a given eye within the HMD
 /// with a given FOV cone.
@@ -105,7 +117,7 @@ function ovrEyeRenderDesc ovrDevice.getRenderDesc(ovrEyeType eye, ovrFovPort fov
 /// ovr_SubmitFrame triggers distortion and processing which might happen asynchronously.
 /// The function will return when there is room in the submission queue and surfaces
 /// are available. Distortion might or might not have completed.
-function Boolean ovrDevice.submitFrame(UInt32 frameIndex, ovrViewScaleDesc scale, ovrLayerHeader layers[]) = "ovrDevice_SubmitFrame";
+function Boolean ovrDevice.submitFrame!(UInt32 frameIndex, ovrViewScaleDesc scale, ovrLayerHeader layers[]) = "ovrDevice_SubmitFrame";
 
 /// Gets the ovrFrameTiming for the given frame index.
 ///
@@ -127,40 +139,40 @@ function Float64 ovrDevice.getTimeInSeconds() = "ovrDevice_GetTimeInSeconds";
 /// Previously named ovrHmd_ResetOnlyBackOfHeadTrackingForConnectConf.
 ///
 /// This may be removed in a future SDK version.
-function ovrDevice.resetBackOfHeadTracking() = "ovrDevice_ResetBackOfHeadTracking";
+function ovrDevice.resetBackOfHeadTracking!() = "ovrDevice_ResetBackOfHeadTracking";
 
 /// Should be called when a tracking camera is moved.
 ///
 /// This may be removed in a future SDK version.
-function ovrDevice.resetMulticameraTracking() = "ovrDevice_ResetMulticameraTracking";
+function ovrDevice.resetMulticameraTracking!() = "ovrDevice_ResetMulticameraTracking";
 
 /// Reads a boolean property.
 function Boolean ovrDevice.getBool(String propertyName, Boolean defaultValue) = "ovrDevice_GetBool";
 
 /// Writes or creates a boolean property.
 /// If the property wasn't previously a boolean property, it is changed to a boolean property.
-function ovrDevice.setBool(String propertyName, Boolean value) = "ovrDevice_SetBool";
+function ovrDevice.setBool!(String propertyName, Boolean value) = "ovrDevice_SetBool";
 
 /// Reads an integer property.
 function SInt32 ovrDevice.getInt(String propertyName, SInt32 defaultValue) = "ovrDevice_GetInt";
 
 /// Writes or creates an integer property.
 /// If the property wasn't previously an integer property, it is changed to an integer property.
-function ovrDevice.setInt(String propertyName, SInt32 value) = "ovrDevice_SetInt";
+function ovrDevice.setInt!(String propertyName, SInt32 value) = "ovrDevice_SetInt";
 
 /// Reads a float property.
 function Float32 ovrDevice.getFloat(String propertyName, Float32 defaultValue) = "ovrDevice_GetFloat";
 
 /// Writes or creates a float property.
 /// If the property wasn't previously a float property, it is changed to a float property.
-function ovrDevice.setFloat(String propertyName, Float32 value) = "ovrDevice_SetFloat";
+function ovrDevice.setFloat!(String propertyName, Float32 value) = "ovrDevice_SetFloat";
 
 /// Reads a float array property.
 /// valuesCapacity Specifies the maximum number of elements to write to the values array.
 function Float32[] ovrDevice.getFloatArray(String propertyName, UInt32 valuesCapacity) = "ovrDevice_GetFloatArray";
 
 /// Writes or creates a float array property.
-function ovrDevice.setFloatArray(String propertyName, Float32 values[]) = "ovrDevice_SetFloatArray";
+function ovrDevice.setFloatArray!(String propertyName, Float32 values[]) = "ovrDevice_SetFloatArray";
 
 /// Reads a string property.
 /// Strings are UTF8-encoded and null-terminated.
@@ -168,4 +180,30 @@ function String ovrDevice.getString(String propertyName, String defaultValue) = 
 
 /// Writes or creates a string property.
 /// Strings are UTF8-encoded and null-terminated.
-function ovrDevice.setString(String propertyName, String value) = "ovrDevice_SetString";
+function ovrDevice.setString!(String propertyName, String value) = "ovrDevice_SetString";
+
+///----------------------------------------
+/// OVR_CAPI_Util.h
+///-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+/// Used to generate projection from ovrEyeDesc::Fov.
+function Mat44 ovrDevice.getProjectionMat44(ovrFovPort fov, Float32 znear, Float32 zfar, ovrProjectionModifier projectionModFlags) = "ovrDevice_GetProjectionMat44";
+
+/// Extracts the required data from the result of ovrMatrix4f_Projection.
+function ovrTimewarpProjectionDesc ovrDevice.getTimewarpProjectionDescFromProjection(Mat44 projection, ovrProjectionModifier projectionModFlags) = "ovrDevice_GetTimewarpProjectionDescFromProjection";
+
+/// Generates an orthographic sub-projection.
+///
+/// Used for 2D rendering, Y is down.
+function Mat44 ovrDevice.getOrthoSubProjectionMat44(Mat44 projection, Vec2 orthoScale, Float32 orthoDistance, Float32 hmdToEyeViewOffsetX) = "ovrDevice_GetOrthoSubProjectionMat44";
+
+/// Computes offset eye poses based on headPose returned by ovrTrackingState.
+function ovrPose[2] ovrDevice.calcEyePoses(ovrPose headPose, Vec3 hmdToEyeViewOffset[2]) = "ovrDevice_CalcEyePoses";
+
+/// Returns the predicted head pose in outHmdTrackingState and offset eye poses in outEyePoses. 
+///
+/// This is a thread-safe function where caller should increment frameIndex with every frame
+/// and pass that index where applicable to functions called on the rendering thread.
+/// Assuming outEyePoses are used for rendering, it should be passed as a part of ovrLayerEyeFov.
+/// The caller does not need to worry about applying HmdToEyeViewOffset to the returned outEyePoses variables.
+function ovrDevice.getEyePoses(UInt32 frameIndex, Vec3 hmdToEyeViewOffset[2], io ovrPose outEyePoses[2], io ovrTrackingState outHmdTrackingState) = "ovrDevice_GetEyePoses";

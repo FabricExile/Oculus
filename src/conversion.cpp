@@ -320,12 +320,11 @@ namespace Fabric
       b.DisplayRefreshRate = (float)a.DisplayRefreshRate;
     }
 
-    // void convert(const ovrTexture & a, KL::ovrGLTexture & b) {
-    //   b.API = a.Header.API;
-    //   convert(a.Header.TextureSize, b.TextureSize);
-
-    //   ovrGLTexture * aGL = (ovrGLTexture*)&a;
-    //   b.TexId = aGL->OGL.TexId;
-    // }
+    void convert(const ovrTexture & a, KL::ovrGLTexture & b) {
+      b.API = a.Header.API;
+      convert(a.Header.TextureSize, b.TextureSize);
+      ovrGLTexture * aGL = (ovrGLTexture*)&a;
+      b.TexId = aGL->OGL.TexId;
+    }
   }
 }
