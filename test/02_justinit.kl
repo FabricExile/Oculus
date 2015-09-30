@@ -2,5 +2,5 @@ require Oculus;
 
 operator entry() {
   ovrDevice device();
-  report(device.getDescription().Manufacturer);
+  report(device.getVersionString());
 }

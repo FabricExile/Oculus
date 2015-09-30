@@ -1,6 +1,0 @@
-require Oculus;
-
-operator entry() {
-  ovrDevice device();
-  report(device.numDevices());
-}

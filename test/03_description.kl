@@ -1,0 +1,8 @@
+require Oculus;
+
+operator entry() {
+  ovrDevice device();
+  ovrDescription desc = device.getDescription();
+  report(desc.Manufacturer);
+  report(desc.ProductName);
+}
