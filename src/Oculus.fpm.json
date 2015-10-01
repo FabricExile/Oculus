@@ -29,12 +29,12 @@
     "ovrInputState.kl",
     "ovrTimewarpProjectionDesc.kl",
     "ovrViewScaleDesc.kl",
-    "ovrTextureHeader.kl",
-    "ovrTexture.kl",
-    "ovrGLTexture.kl",
-    "ovrSwapTextureSet.kl",
     "ovrDescription.kl",
     "ovrDevice.kl",
+    "ovrGLDepthBuffer.kl",
+    "ovrGLTextureBuffer.kl",
+    "ovrGLMirrorTexture.kl",
+    "ovrLayerEyeFov.kl",
     "ovrViewportCallback.kl"
   ]
 }

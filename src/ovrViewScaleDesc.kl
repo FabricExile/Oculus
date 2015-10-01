@@ -2,6 +2,7 @@
  *  Copyright 2010-2014 Fabric Software Inc. All rights reserved.
  */
 
+/// \dfgPresetOmit
 struct ovrViewScaleDesc {
   ///< Translation of each eye.
   Vec3 HmdToEyeViewOffset[2];

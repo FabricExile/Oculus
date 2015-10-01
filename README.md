@@ -47,6 +47,11 @@ The extension repository also contains a series of unit tests, with which you ca
 
     python test/test_all.py
 
+known issues
+============
+
+The positional tracking sometimes may not work in cases where you have another camera (webcam) setup. In these kind of cases please experiment with disconnecting the camera or changing the USB ports so that the Oculus tracking camera is seen first by the USB controller.
+
 samples
 =======
 

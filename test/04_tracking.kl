@@ -7,8 +7,7 @@ operator entry() {
     ovrTrackingCap_MagYawCorrection |
     ovrTrackingCap_Position, 0);
 
-  while(true) {
-  // for(Size i=0;i<10;i++) {
+  for(Size i=0;i<10;i++) {
     ovrTrackingState ts = device.getTrackingState(device.getTimeInSeconds());
     while(!(ts.StatusFlags & (ovrStatus_OrientationTracked | ovrStatus_PositionTracked))) {
       ts = device.getTrackingState(device.getTimeInSeconds());

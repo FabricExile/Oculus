@@ -15,24 +15,21 @@ using namespace Fabric::EDK;
 typedef boost::shared_mutex Lock;
 typedef boost::unique_lock< Lock >  WriteLock;
 typedef boost::shared_lock< Lock >  ReadLock;
-Lock gLock;
+Lock gDeviceLock;
 
 void ContextCallback(bool opening, void const *contextPtr)
 {
   if ( opening )
   {
-    WriteLock w_lock(gLock);
-    printf("Oculus Rift starting...\n");
+    WriteLock w_lock(gDeviceLock);
     OVR::System::Init();
     ovr_Initialize(NULL);
-    printf("Oculus Rift initialized.\n");
   }
   else
   {
-    WriteLock w_lock(gLock);
+    WriteLock w_lock(gDeviceLock);
     ovr_Shutdown();
     OVR::System::Destroy();
-    printf("Oculus Rift finalized.\n");
   }
 }
 IMPLEMENT_FABRIC_EDK_ENTRIES_WITH_CONTEXT_CALLBACK( Oculus, &ContextCallback )
@@ -43,7 +40,7 @@ FABRIC_EXT_EXPORT void ovrDevice_Construct(
   KL::Traits< KL::UInt32 >::INParam index
 ) {
 
-  WriteLock w_lock(gLock);
+  WriteLock w_lock(gDeviceLock);
 
   ovrHmd HMD;
   ovrGraphicsLuid luid;
@@ -67,11 +64,12 @@ FABRIC_EXT_EXPORT void ovrDevice_Destruct(
   KL::Traits< KL::ovrDevice >::IOParam this_
 ) {
 
-  WriteLock w_lock(gLock);
+  WriteLock w_lock(gDeviceLock);
 
   if(this_->handle)
   {
     ovr_Destroy((ovrHmd)this_->handle);
+    this_->handle = NULL;
   }
 }
 
@@ -113,7 +111,6 @@ FABRIC_EXT_EXPORT void ovrDevice_TraceMessage(
   KL::Traits< KL::String >::INParam message
 ) {
   ovr_TraceMessage(level, message.getCString());
-  printf("ovrDevice_TraceMessage: '%s'\n", message.getCString());
 }
 
 // Defined at src\\ovrDevice.kl:50:1
@@ -146,7 +143,6 @@ FABRIC_EXT_EXPORT KL::Boolean ovrDevice_ConfigureTracking(
   if(!this_->handle)
     return false;
   ovrHmd hmd = (ovrHmd)this_->handle;
-  printf("ovrDevice_ConfigureTracking: '%d' '%d'\n", requestedTrackingCaps, requiredTrackingCaps);
   return OVR_SUCCESS(ovr_ConfigureTracking(hmd, requestedTrackingCaps, requiredTrackingCaps));
 }
 
@@ -158,7 +154,6 @@ FABRIC_EXT_EXPORT void ovrDevice_RecenterPose(
     return;
   ovrHmd hmd = (ovrHmd)this_->handle;
   ovr_RecenterPose(hmd);
-  printf("ovr_RecenterPose\n");
 }
 
 // Defined at src\\ovrDevice.kl:76:1
@@ -170,7 +165,10 @@ FABRIC_EXT_EXPORT void ovrDevice_GetTrackingState(
   if(!this_->handle)
     return;
   ovrHmd hmd = (ovrHmd)this_->handle;
-  ovrTrackingState state = ovr_GetTrackingState(hmd, absTime);
+  double absTime_ = absTime;
+  if(absTime_ < 0.0)
+    absTime_ = ovr_GetTimeInSeconds();
+  ovrTrackingState state = ovr_GetTrackingState(hmd, absTime_);
   convert(state, _result);
 }
 
@@ -238,13 +236,14 @@ FABRIC_EXT_EXPORT void ovrDevice_GetRenderDesc(
   convert(result, _result);
 }
 
-// Defined at src\\ovrDevice.kl:108:1
-FABRIC_EXT_EXPORT KL::Boolean ovrDevice_SubmitFrame(
+// Defined at src\\ovrDevice.kl:130:1
+FABRIC_EXT_EXPORT KL::Boolean ovrDevice_SubmitFrame_ovrLayerEyeFov(
   KL::Traits< KL::ovrDevice >::IOParam this_,
   KL::Traits< KL::UInt32 >::INParam frameIndex,
   KL::Traits< KL::ovrViewScaleDesc >::INParam scale,
-  KL::Traits< KL::VariableArray< KL::ovrLayerHeader > >::INParam layers
+  KL::Traits< KL::ovrLayerEyeFov >::INParam layer
 ) {
+
   if(!this_->handle)
     return false;
   ovrHmd hmd = (ovrHmd)this_->handle;
@@ -252,19 +251,11 @@ FABRIC_EXT_EXPORT KL::Boolean ovrDevice_SubmitFrame(
   ovrViewScaleDesc scale_;
   convert(scale, scale_);
 
-  std::vector<ovrLayerHeader> layers_;
-  std::vector<ovrLayerHeader*> layerPtrs_;
-  layers_.resize(layers.size());
-  layerPtrs_.resize(layers.size());
-  for(size_t i=0;i<layers_.size();i++)
-  {
-    convert(layers[i], layers_[i]);
-    layerPtrs_[i] = &layers_[i];
-  }
+  ovrLayerEyeFov layer_;
+  convert(layer, layer_);
 
-  if(layers_.size() == 0)
-    return OVR_SUCCESS(ovr_SubmitFrame(hmd, 0, &scale_, 0, 0));
-  return OVR_SUCCESS(ovr_SubmitFrame(hmd, 0, &scale_, &layerPtrs_[0], layerPtrs_.size()));
+  ovrLayerHeader * lh = &layer_.Header;
+  return OVR_SUCCESS(ovr_SubmitFrame(hmd, 0, &scale_, &lh, 1));
 }
 
 // Defined at src\\ovrDevice.kl:118:1

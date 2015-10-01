@@ -5,20 +5,18 @@
 require InlineDrawing:">1.0.0";
 require Singletons;
 
-/// \dfgPresetOmit
 object ovrViewportCallback : ViewportCallback {
   ovrDevice device;
   ovrDescription desc;
   Color bgColor;
-  UInt32 fbo[];
-  UInt32 fb_width;
-  UInt32 fb_height;
-  UInt32 fb_tex[];
-  UInt32 fb_depth[];
-  ovrGLTexture fb_ovr_tex[2];
+  ovrGLTextureBuffer tBuffers[];
+  ovrGLDepthBuffer dBuffers[];
+  ovrGLMirrorTexture mirror;
+  ovrSize eyeRes[2];
   ovrEyeRenderDesc eye_rdesc[2];
   ovrPose poses[2];
-
+  ovrViewScaleDesc viewScaleDesc;
+  ovrLayerEyeFov layerEyeFov;
   Float32 poseScale;
   Vec3 walkOffset;
   Quat turnOffset;
@@ -26,6 +24,7 @@ object ovrViewportCallback : ViewportCallback {
   Boolean requiresSetup;
 };
 
+/// \dfgPresetOmit
 function ovrViewportCallback() {
   this.init(null);
 }
@@ -34,21 +33,24 @@ function ovrViewportCallback(ovrDevice device) {
   this.init(device);
 }
 
+/// \dfgPresetOmit
 function ovrViewportCallback.init!(ovrDevice device) {
   this.device = device;
   if(device) {
     this.desc = device.getDescription();
     this.eye_rdesc[ovrEye_Left] = device.getRenderDesc(ovrEye_Left, this.desc.DefaultEyeFov[ovrEye_Left]);
     this.eye_rdesc[ovrEye_Right] = device.getRenderDesc(ovrEye_Right, this.desc.DefaultEyeFov[ovrEye_Right]);
+    this.requiresSetup = true;
   }
-  this.fbo.push(0);
-  this.fb_tex.push(0);
-  this.fb_depth.push(0);
-  this.bgColor = Color(0.7, 0.7, 0.7, 1.0);
+  else
+  {
+    this.requiresSetup = false;
+  }
+  this.bgColor = Color(0.2, 0.2, 0.2, 1.0);
   this.poseScale = 10.0;
-  this.requiresSetup = false;
 }
 
+/// \dfgPresetOmit
 function ovrViewportCallback.registerForViewport!(String viewportName) {
   InlineDrawing drawing = Singleton_get('InlineDrawing');
   Viewport viewport = drawing.getViewport(viewportName);
@@ -58,13 +60,21 @@ function ovrViewportCallback.registerForViewport!(String viewportName) {
     viewport.registerCallback(ViewportDrawPhase_PreDraw, this);
     viewport.registerCallback(ViewportDrawPhase_Draw, this);
     viewport.registerCallback(ViewportDrawPhase_PostDraw, this);
+    report('ovrViewportCallback::registerForViewport succeeded ('+viewportName+').');
+  } else {
+    report('ovrViewportCallback::registerForViewport: viewport "'+viewportName+'" not found!');
   }
 }
 
 function ovrViewportCallback.registerForViewport!() {
-  this.registerForViewport('default');
+  InlineDrawingBase drawing = Singleton_get('InlineDrawing');
+  for(key in drawing.viewports) {
+    this.registerForViewport(key);
+    break;
+  }
 }
 
+/// \dfgPresetOmit
 function Boolean ovrViewportCallback.invoke!(ViewportDrawPhase phase, io Viewport viewport, io DrawContext context) {
   OGLStandaloneViewport vp = viewport;
   if(!vp) {
@@ -73,111 +83,60 @@ function Boolean ovrViewportCallback.invoke!(ViewportDrawPhase phase, io Viewpor
   }
 
   switch(phase) {
-    case ViewportDrawPhase_Resize: {
-      if(!this.requiresSetup)
-        return false;
-    }
+    case ViewportDrawPhase_Resize:
     case ViewportDrawPhase_Setup: {
 
-      if(!this.requiresSetup) {
-        this.requiresSetup = true;
-        break;
+      if(!this.requiresSetup)
+        return false;
+
+      report('ovrViewportCallback:: ViewportDrawPhase_Setup');
+
+      if(this.tBuffers.size() == 0)
+      {
+        this.tBuffers.resize(2);
+        this.dBuffers.resize(2);
+
+        for(ovrEyeType eye=0; eye<ovrEye_Count; eye++) {
+
+          this.eyeRes[eye] = this.device.getFovTextureSize(eye, this.desc.DefaultEyeFov[eye], 1);
+          this.tBuffers[eye] = ovrGLTextureBuffer(this.device, true, true, this.eyeRes[eye], 1, 1);
+          this.dBuffers[eye] = ovrGLDepthBuffer(this.tBuffers[eye].getSize(), 0);
+
+        }
+
+        report('ovrViewportCallback:: Framebuffers created.');
       }
-      this.requiresSetup = false;
 
-      ovrSize eyeRes[2];
-      eyeRes[0] = this.device.getFovTextureSize(ovrEye_Left, this.desc.DefaultEyeFov[ovrEye_Left], 1);
-      eyeRes[1] = this.device.getFovTextureSize(ovrEye_Right, this.desc.DefaultEyeFov[ovrEye_Right], 1);
-      this.fb_width = eyeRes[0].w + eyeRes[1].w;
-      this.fb_height = eyeRes[0].h > eyeRes[1].h ? eyeRes[0].h : eyeRes[1].h;
+      this.viewScaleDesc.HmdSpaceToWorldScaleInMeters = 1.0f;
+      this.viewScaleDesc.HmdToEyeViewOffset[ovrEye_Left] = this.eye_rdesc[ovrEye_Left].HmdToEyeViewOffset;
+      this.viewScaleDesc.HmdToEyeViewOffset[ovrEye_Right] = this.eye_rdesc[ovrEye_Right].HmdToEyeViewOffset;
 
-      glGenFramebuffers(1, this.fbo);
-      glGenTextures(1, this.fb_tex);
-      glGenRenderbuffers(1, this.fb_depth);
-      glBindTexture(GL_TEXTURE_2D, this.fb_tex[0]);
-      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);        
+      this.layerEyeFov.Header.Type  = ovrLayerType_EyeFov;
+      this.layerEyeFov.Header.Flags = ovrLayerFlag_TextureOriginAtBottomLeft;   // Because OpenGL.
 
-      glBindFramebuffer(GL_FRAMEBUFFER, this.fbo[0]);
-
-      Data nullData;
-
-      /* create and attach the texture that will be used as a color buffer */
-      glBindTexture(GL_TEXTURE_2D, this.fb_tex[0]);
-      glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, this.fb_width, this.fb_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullData);
-      glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, this.fb_tex[0], 0);
-
-      /* create and attach the renderbuffer that will serve as our z-buffer */
-      glBindRenderbuffer(GL_RENDERBUFFER, this.fb_depth[0]);
-      glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, this.fb_width, this.fb_height);
-      glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, this.fb_depth[0]);
-      if(glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
-        setError("incomplete framebuffer!");
+      for(ovrEyeType eye=0; eye<ovrEye_Count; eye++) {
+        this.layerEyeFov.ColorTexture[eye] = this.tBuffers[eye];
+        this.layerEyeFov.Viewport[eye]     = this.eyeRes[eye];
+        this.layerEyeFov.Fov[eye]          = this.desc.DefaultEyeFov[eye];
       }
-      glBindFramebuffer(GL_FRAMEBUFFER, 0);
-      report("Created render target: "+this.fb_width+"x"+this.fb_height+", window "+vp.dimensions.x+'x'+vp.dimensions.y);
 
-      /* fill in the ovrGLTexture structures that describe our render target texture */
-      for(ovrEyeType i=0; i<ovrEye_Count; i++) {
-        this.fb_ovr_tex[i].API = ovrRenderAPI_OpenGL;
-        this.fb_ovr_tex[i].TextureSize.w = this.fb_width;
-        this.fb_ovr_tex[i].TextureSize.h = this.fb_height;
+      ovrSize windowSize(vp.dimensions.x, vp.dimensions.y);
+      this.mirror = ovrGLMirrorTexture(this.device, windowSize);
 
-        /* this next field is the only one that differs between the two eyes */
-        this.fb_ovr_tex[i].RenderViewport.Pos.x = i == 0 ? 0 : this.fb_width / 2.0;
-        this.fb_ovr_tex[i].RenderViewport.Pos.y = this.fb_height - this.fb_height;
-        this.fb_ovr_tex[i].RenderViewport.Size.w = this.fb_width / 2.0;
-        this.fb_ovr_tex[i].RenderViewport.Size.h = this.fb_height;
-        this.fb_ovr_tex[i].TexId = this.fb_tex[0]; /* both eyes will use the same texture id */
-      } 
-
-      // this.cfg.API = ovrRenderAPI_OpenGL;
-      // this.cfg.RTSize.w = vp.dimensions.x;
-      // this.cfg.RTSize.h = vp.dimensions.y;
-      // this.cfg.Multisample = 1;      
-      // this.cfg.Window = vp.windowId;
-
-      // /// on windows this will perform direct rendering
-      // this.device.attachToWindow(this.cfg.Window);
-
-      /* configure SDK-rendering and enable chromatic abberation correction, vignetting, and
-      * timewrap, which shifts the image before drawing to counter any lattency between the call
-      * to ovrDevice.getEyePose and ovrDevice.endFrame.
-      */
-      // Integer dcaps = ovrDistortionCap_Chromatic | ovrDistortionCap_Vignette | ovrDistortionCap_Overdrive;
-      // Integer dcaps = ovrDistortionCap_Vignette | ovrDistortionCap_TimeWarp | ovrDistortionCap_Overdrive;
-      // Integer dcaps = 0;
-      // if(!this.device.configureRendering(dcaps, this.desc.DefaultEyeFov, this.eye_rdesc)) {
-      //   setError("Failed to configure distortion renderer.");
-      // }
-
-      // // disable the retarded "health and safety warning" 
-      // this.device.enableHSWDisplaySDKRender(false);
-      
       glEnable(GL_DEPTH_TEST);
       glClearColor(this.bgColor.r, this.bgColor.g, this.bgColor.b, this.bgColor.a);
 
-      return phase == ViewportDrawPhase_Setup;
+      return false;
     }
     case ViewportDrawPhase_PreDraw: {
-
-      /* the drawing starts with a call to ovrDevice.beginFrame */
-      if(this.device.isStereoEnabled()) {
-        // this.device.beginFrame(0);
-
-        /* start drawing onto our texture render target */
-        glBindFramebuffer(GL_FRAMEBUFFER, this.fbo[0]);
-  
-        glViewport(0, 0, this.fb_width, this.fb_height);
-      }
-
-      glClearColor(this.bgColor.r, this.bgColor.g, this.bgColor.b, this.bgColor.a);
-      glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
       return true;
 
     }
     case ViewportDrawPhase_Draw: {
+
+      if(this.tBuffers.size() == 0)
+        return false;
 
       InlineDrawing drawing = OGLInlineDrawing_GetInstance();
 
@@ -185,22 +144,28 @@ function Boolean ovrViewportCallback.invoke!(ViewportDrawPhase phase, io Viewpor
       viewOffset[ovrEye_Left] = this.eye_rdesc[ovrEye_Left].HmdToEyeViewOffset;
       viewOffset[ovrEye_Right] = this.eye_rdesc[ovrEye_Right].HmdToEyeViewOffset;
 
-      ovrFrameTiming ftiming = this.device.getFrameTiming(0);
-      ovrTrackingState tstate = this.device.getTrackingState(ftiming.DisplayMidpointSeconds);
+      // ovrFrameTiming ftiming = this.device.getFrameTiming(0);
+      // ovrTrackingState tstate = this.device.getTrackingState(ftiming.DisplayMidpointSeconds);
+      ovrTrackingState tstate = this.device.getTrackingState(0.0);
       this.poses = this.device.calcEyePoses(tstate.HeadPose.ThePose, viewOffset);
-
-      glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-      glMatrixMode(GL_PROJECTION);
-      glLoadIdentity();
-      glMatrixMode(GL_MODELVIEW);
-      glLoadIdentity();
 
       /* for each eye ... */
       for(ovrEyeType eye=0; eye<ovrEye_Count; eye++) {
 
-        if(this.device.isStereoEnabled())
-          glViewport(eye == ovrEye_Left ? 0 : this.fb_width / 2, 0, this.fb_width / 2, this.fb_height);
-        
+        glClearColor(this.bgColor.r, this.bgColor.g, this.bgColor.b, this.bgColor.a);
+
+        if(this.device.isStereoEnabled()) {
+
+          // Switch to eye render target
+          this.tBuffers[eye].setAndClearRenderSurface(this.dBuffers[eye]);
+
+        }
+
+        glMatrixMode(GL_PROJECTION);
+        glLoadIdentity();
+        glMatrixMode(GL_MODELVIEW);
+        glLoadIdentity();
+
         glLoadIdentity();
 
         Xfo camXfo;
@@ -235,7 +200,9 @@ function Boolean ovrViewportCallback.invoke!(ViewportDrawPhase phase, io Viewpor
         /* finally draw the scene for this eye */
         drawing.draw(context);
 
-        if(!this.device.isStereoEnabled())
+        if(this.device.isStereoEnabled())
+          this.tBuffers[eye].unsetRenderSurface();
+        else
           break;
       }
       
@@ -244,17 +211,24 @@ function Boolean ovrViewportCallback.invoke!(ViewportDrawPhase phase, io Viewpor
     }
     case ViewportDrawPhase_PostDraw: {
 
+      if(this.tBuffers.size() == 0)
+        return false;
+
       vp.responsibleForSwappingBuffers = this.device.isStereoEnabled();
       if(!vp.responsibleForSwappingBuffers)
         return false;
-
-      glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
       glViewport(0, 0, vp.dimensions.x, vp.dimensions.y);
       glClearColor(this.bgColor.r, this.bgColor.g, this.bgColor.b, this.bgColor.a);
       glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-      // this.device.endFrame(this.poses, this.fb_ovr_tex);
+      for(ovrEyeType eye=0; eye<ovrEye_Count; eye++) {
+        this.layerEyeFov.RenderPose[eye]   = this.poses[eye];
+      }
+
+      this.device.submitFrame(0, this.viewScaleDesc, this.layerEyeFov);
+
+      this.mirror.blitTexture();
 
       return true;
 

@@ -3,6 +3,16 @@
  */
 
 #include "conversion.h"
+#include "ovrGLTextureBuffer_impl.h"
+
+#include <boost/thread/locks.hpp>
+#include <boost/thread/shared_mutex.hpp>
+
+typedef boost::shared_mutex Lock;
+typedef boost::unique_lock< Lock >  WriteLock;
+typedef boost::shared_lock< Lock >  ReadLock;
+Lock gTextureBufferLock;
+int gGlewInitCount = 0;
 
 namespace Fabric
 {
@@ -133,11 +143,6 @@ namespace Fabric
       b.HmdSpaceToWorldScaleInMeters = a.HmdSpaceToWorldScaleInMeters;
     }
 
-    void convert(KL::ovrTextureHeader a, ovrTextureHeader & b) {
-      b.API = (ovrRenderAPIType)(int)a.API;
-      convert(a.TextureSize, b.TextureSize);
-    }
-
     void convert(KL::ovrLayerHeader a, ovrLayerHeader & b) {
       b.Type = (ovrLayerType)(int)a.Type;
       b.Flags = a.Flags;
@@ -148,6 +153,19 @@ namespace Fabric
       b.FrameIntervalSeconds = a.FrameIntervalSeconds;
       b.AppFrameIndex = a.AppFrameIndex;
       b.DisplayFrameIndex = a.DisplayFrameIndex;
+    }
+
+    void convert(const KL::ovrLayerEyeFov & a, ovrLayerEyeFov & b)
+    {
+      convert(a.Header, b.Header);
+      b.ColorTexture[0] = ((TextureBuffer*)a.ColorTexture[0]->handle)->TextureSet;
+      b.ColorTexture[1] = ((TextureBuffer*)a.ColorTexture[1]->handle)->TextureSet;
+      convert(a.Viewport[0], b.Viewport[0]);
+      convert(a.Viewport[1], b.Viewport[1]);
+      convert(a.Fov[0], b.Fov[0]);
+      convert(a.Fov[1], b.Fov[1]);
+      convert(a.RenderPose[0], b.RenderPose[0]);
+      convert(a.RenderPose[1], b.RenderPose[1]);
     }
 
     //------------------------------------------------------------------------------------------------------
@@ -278,11 +296,6 @@ namespace Fabric
       b.HmdSpaceToWorldScaleInMeters = a.HmdSpaceToWorldScaleInMeters;
     }
 
-    void convert(ovrTextureHeader a, KL::ovrTextureHeader & b) {
-      b.API = (int)a.API;
-      convert(a.TextureSize, b.TextureSize);
-    }
-
     void convert(ovrLayerHeader a, KL::ovrLayerHeader & b) {
       b.Type = (int)a.Type;
       b.Flags = a.Flags;
@@ -320,11 +333,15 @@ namespace Fabric
       b.DisplayRefreshRate = (float)a.DisplayRefreshRate;
     }
 
-    void convert(const ovrTexture & a, KL::ovrGLTexture & b) {
-      b.API = a.Header.API;
-      convert(a.Header.TextureSize, b.TextureSize);
-      ovrGLTexture * aGL = (ovrGLTexture*)&a;
-      b.TexId = aGL->OGL.TexId;
+    void ensureGlewIsInitialized()
+    {
+      WriteLock w_lock(gTextureBufferLock);
+      if(gGlewInitCount == 0)
+      {
+        glewInit();
+        gGlewInitCount++;
+      }
     }
+
   }
 }

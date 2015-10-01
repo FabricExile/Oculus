@@ -6,3 +6,14 @@ struct ovrRect {
   ovrVec2 Pos;
   ovrSize Size;
 };
+
+function ovrRect(ovrSize size) {
+  this.Pos.x = 0;
+  this.Pos.y = 0;
+  this.Size = size;
+}
+
+function ovrRect(ovrVec2 Pos, ovrSize size) {
+  this.Pos = Pos;
+  this.Size = size;
+}

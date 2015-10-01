@@ -70,6 +70,8 @@ function ovrDevice.setEnabledCaps!(ovrCaps caps) = "ovrDevice_SetEnabledCaps";
 /// Use 0 for both requestedTrackingCaps and requiredTrackingCaps to disable tracking.
 /// ovr_ConfigureTracking can be called multiple times with the same or different values
 /// for a given ovrHmd.
+/// \dfgPresetDefault requestedTrackingCaps 112
+/// \dfgPresetDefault requiredTrackingCaps 0
 function Boolean ovrDevice.configureTracking!(ovrTrackingCaps requestedTrackingCaps, ovrTrackingCaps requiredTrackingCaps) = "ovrDevice_ConfigureTracking";
 
 /// Re-centers the sensor position and orientation.
@@ -85,6 +87,7 @@ function ovrDevice.recenterPose!() = "ovrDevice_RecenterPose";
 /// both PredictedPose and SamplePose will have the same value.
 ///
 /// This may also be used for more refined timing of front buffer rendering logic, and so on.
+/// \dfgPresetDefault absTime -1.0
 function ovrTrackingState ovrDevice.getTrackingState(Float64 absTime) = "ovrDevice_GetTrackingState";
 
 /// Returns the most recent input state for controllers, without positional tracking info.
@@ -113,11 +116,12 @@ function ovrSize ovrDevice.getFovTextureSize(ovrEyeType eye, ovrFovPort fov, Flo
 function ovrEyeRenderDesc ovrDevice.getRenderDesc(ovrEyeType eye, ovrFovPort fov) = "ovrDevice_GetRenderDesc";
 
 /// Submits layers for distortion and display.
+/// Overload taking a single ovrLayerEyeFov
 ///
 /// ovr_SubmitFrame triggers distortion and processing which might happen asynchronously.
 /// The function will return when there is room in the submission queue and surfaces
 /// are available. Distortion might or might not have completed.
-function Boolean ovrDevice.submitFrame!(UInt32 frameIndex, ovrViewScaleDesc scale, ovrLayerHeader layers[]) = "ovrDevice_SubmitFrame";
+function Boolean ovrDevice.submitFrame!(UInt32 frameIndex, ovrViewScaleDesc scale, ovrLayerEyeFov layer) = "ovrDevice_SubmitFrame_ovrLayerEyeFov";
 
 /// Gets the ovrFrameTiming for the given frame index.
 ///
