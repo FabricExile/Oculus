@@ -5,6 +5,9 @@
 #include "conversion.h"
 #include <FabricEDK.h>
 #include "ovrDevice_functions.h"
+#include "ovrGLTextureBuffer_functions.h"
+#include "ovrGLDepthBuffer_functions.h"
+#include "ovrGLMirrorTexture_functions.h"
 #include <boost/thread/locks.hpp>
 #include <boost/thread/shared_mutex.hpp>
 
@@ -17,22 +20,22 @@ typedef boost::unique_lock< Lock >  WriteLock;
 typedef boost::shared_lock< Lock >  ReadLock;
 Lock gDeviceLock;
 
-void ContextCallback(bool opening, void const *contextPtr)
+
+void SetupCallback()
 {
-  if ( opening )
-  {
-    WriteLock w_lock(gDeviceLock);
-    OVR::System::Init();
-    ovr_Initialize(NULL);
-  }
-  else
-  {
-    WriteLock w_lock(gDeviceLock);
-    ovr_Shutdown();
-    OVR::System::Destroy();
-  }
+  WriteLock w_lock(gDeviceLock);
+  OVR::System::Init();
+  ovr_Initialize(NULL);
 }
-IMPLEMENT_FABRIC_EDK_ENTRIES_WITH_CONTEXT_CALLBACK( Oculus, &ContextCallback )
+
+// void ShutdownCallback()
+// {
+//   WriteLock w_lock(gDeviceLock);
+//   ovr_Shutdown();
+//   OVR::System::Destroy();
+// }
+
+IMPLEMENT_FABRIC_EDK_ENTRIES_WITH_SETUP_CALLBACK( Oculus, &SetupCallback )
 
 // Defined at src\ovrDevice.kl:21:1
 FABRIC_EXT_EXPORT void ovrDevice_Construct(
@@ -63,8 +66,14 @@ FABRIC_EXT_EXPORT void ovrDevice_Construct(
 FABRIC_EXT_EXPORT void ovrDevice_Destruct(
   KL::Traits< KL::ovrDevice >::IOParam this_
 ) {
-
   WriteLock w_lock(gDeviceLock);
+
+  for(unsigned int i=0;i<this_->textureBuffers.size();i++)
+    ovrGLTextureBuffer_Destruct(this_->textureBuffers[i]);
+  for(unsigned int i=0;i<this_->depthBuffers.size();i++)
+    ovrGLDepthBuffer_Destruct(this_->depthBuffers[i]);
+  for(unsigned int i=0;i<this_->mirrorTextures.size();i++)
+    ovrGLMirrorTexture_Destruct(this_->mirrorTextures[i]);
 
   if(this_->handle)
   {

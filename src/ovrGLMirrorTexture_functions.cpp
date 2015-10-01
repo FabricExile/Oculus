@@ -31,6 +31,7 @@ FABRIC_EXT_EXPORT void ovrGLMirrorTexture_Destruct(
 ) {
   if(!this_->handle)
     return;
+
   MirrorTexture * texture = (MirrorTexture *)this_->handle;
   delete(texture);
   this_->handle = NULL;

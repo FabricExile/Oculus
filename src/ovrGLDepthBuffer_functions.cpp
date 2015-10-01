@@ -13,6 +13,8 @@ FABRIC_EXT_EXPORT void ovrGLDepthBuffer_Construct(
   KL::Traits< KL::ovrSize >::INParam size,
   KL::Traits< KL::SInt32 >::INParam sampleCount
 ) {
+  ensureGlewIsInitialized();
+
   this_->handle = NULL;
   ovrSizei size_;
   convert(size, size_);
@@ -25,6 +27,7 @@ FABRIC_EXT_EXPORT void ovrGLDepthBuffer_Destruct(
 ) {
   if(!this_->handle)
     return;
+
   DepthBuffer * buffer = (DepthBuffer *)this_->handle;
   delete(buffer);
   this_->handle = NULL;

@@ -135,7 +135,10 @@ function Boolean ovrViewportCallback.invoke!(ViewportDrawPhase phase, io Viewpor
         this.tBuffers[eye] = ovrGLTextureBuffer(this.device, true, true, this.eyeRes[eye], 1, 1);
         this.dBuffers[eye] = ovrGLDepthBuffer(this.tBuffers[eye].getSize(), 0);
 
+        this.device.textureBuffers.push(this.tBuffers[eye]);
+        this.device.depthBuffers.push(this.dBuffers[eye]);
       }
+
     }
 
     this.viewScaleDesc.HmdSpaceToWorldScaleInMeters = 1.0f;
@@ -152,7 +155,11 @@ function Boolean ovrViewportCallback.invoke!(ViewportDrawPhase phase, io Viewpor
     }
 
     ovrSize windowSize(vp.dimensions.x, vp.dimensions.y);
+
+    this.device.mirrorTextures.resize(0);
+
     this.mirror = ovrGLMirrorTexture(this.device, windowSize);
+    this.device.mirrorTextures.push(this.mirror);
 
     glEnable(GL_DEPTH_TEST);
     glClearColor(this.bgColor.r, this.bgColor.g, this.bgColor.b, this.bgColor.a);

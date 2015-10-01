@@ -35,6 +35,7 @@ FABRIC_EXT_EXPORT void ovrGLTextureBuffer_Destruct(
 ) {
   if(!this_->handle)
     return;
+
   TextureBuffer * buffer = (TextureBuffer *)this_->handle;
   delete(buffer);
   this_->handle = NULL;
