@@ -74,12 +74,16 @@ kl2dfgLogFile = presetStageDir.File('kl2dfg.log')
 kl2edkResults = env.RunKL2EDK(headers, sources)
 kl2dfgResults = env.RunKL2DFG([kl2dfgLogFile], extensionFiles)
 
+compounds = env.Glob(os.path.join(env.Dir('#').Dir('Presets').abspath, '*.canvas'))
+installedCompounds = env.Install(presetStageDir.Dir('Compounds'), compounds)
+
 extLibFileName = env.File(extName + '-' + extSuffix)
 libraryFiles = Flatten([env.SharedLibrary(extLibFileName, cppFiles)])
 env.Depends(cppFiles, kl2edkResults)
 env.Depends(kl2dfgResults, sources + cppFiles)
 extensionFiles += env.Install(extStageDir, libraryFiles[0])
 extensionFiles += Flatten(kl2dfgResults)
+extensionFiles += installedCompounds
 extensionFiles = Flatten(extensionFiles)
 
 env.AlwaysBuild(extensionFiles)

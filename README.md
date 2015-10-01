@@ -52,6 +52,8 @@ known issues
 
 The positional tracking sometimes may not work in cases where you have another camera (webcam) setup. In these kind of cases please experiment with disconnecting the camera or changing the USB ports so that the Oculus tracking camera is seen first by the USB controller.
 
+If you are experiencing a slight lag in the motion tracking, make sure to turn off VSYNC.
+
 samples
 =======
 
