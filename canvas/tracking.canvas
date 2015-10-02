@@ -1,7 +1,7 @@
 {
   "objectType" : "Graph",
   "metadata" : {
-    "camera_mat44" : "{\n  \"row0\" : {\n    \"x\" : 0.9335868954658508,\n    \"y\" : 0.1230500489473343,\n    \"z\" : -0.3365633487701416,\n    \"t\" : -11.2169075012207\n    },\n  \"row1\" : {\n    \"x\" : 8.94070240065048e-08,\n    \"y\" : 0.939186692237854,\n    \"z\" : 0.3433806896209717,\n    \"t\" : 7.004810810089111\n    },\n  \"row2\" : {\n    \"x\" : 0.3583527803421021,\n    \"y\" : -0.3205723464488983,\n    \"z\" : 0.8768205642700195,\n    \"t\" : 8.968202590942383\n    },\n  \"row3\" : {\n    \"x\" : 0,\n    \"y\" : 0,\n    \"z\" : 0,\n    \"t\" : 1\n    }\n  }",
+    "camera_mat44" : "{\n  \"row0\" : {\n    \"x\" : 0.9335868954658508,\n    \"y\" : 0.1230500414967537,\n    \"z\" : -0.3365633487701416,\n    \"t\" : -11.2169075012207\n    },\n  \"row1\" : {\n    \"x\" : 8.94070240065048e-08,\n    \"y\" : 0.9391866326332092,\n    \"z\" : 0.3433806896209717,\n    \"t\" : 7.004810810089111\n    },\n  \"row2\" : {\n    \"x\" : 0.3583527803421021,\n    \"y\" : -0.3205723464488983,\n    \"z\" : 0.8768205642700195,\n    \"t\" : 8.968202590942383\n    },\n  \"row3\" : {\n    \"x\" : 0,\n    \"y\" : 0,\n    \"z\" : 0,\n    \"t\" : 1\n    }\n  }",
     "timeline_start" : "1",
     "timeline_loopMode" : "1",
     "timeline_simMode" : "0",
@@ -29,318 +29,6 @@
     ],
   "extDeps" : {},
   "nodes" : [
-    {
-      "objectType" : "Inst",
-      "metadata" : {
-        "uiGraphPos" : "{\"x\":776.0,\"y\":202.0}"
-        },
-      "name" : "Oculus",
-      "ports" : [
-        {
-          "objectType" : "InstPort",
-          "nodePortType" : "Out",
-          "name" : "oculus"
-          },
-        {
-          "objectType" : "InstPort",
-          "nodePortType" : "Out",
-          "name" : "headXfo"
-          },
-        {
-          "objectType" : "InstPort",
-          "nodePortType" : "Out",
-          "name" : "cameraXfo"
-          },
-        {
-          "objectType" : "InstPort",
-          "nodePortType" : "In",
-          "defaultValues" : {
-            "Float32" : 18
-            },
-          "name" : "scale"
-          }
-        ],
-      "definition" : {
-        "objectType" : "Graph",
-        "metadata" : {
-          "uiGraphZoom" : "{\n  \"value\" : 1.0\n  }",
-          "uiGraphPan" : "{\n  \"x\" : 903.3209838867188,\n  \"y\" : 35.33456420898438\n  }"
-          },
-        "title" : "Oculus",
-        "ports" : [
-          {
-            "objectType" : "Port",
-            "nodePortType" : "In",
-            "name" : "oculus",
-            "execPortType" : "Out",
-            "typeSpec" : "ovrDevice"
-            },
-          {
-            "objectType" : "Port",
-            "nodePortType" : "In",
-            "name" : "headXfo",
-            "execPortType" : "Out",
-            "typeSpec" : "Xfo"
-            },
-          {
-            "objectType" : "Port",
-            "nodePortType" : "In",
-            "name" : "cameraXfo",
-            "execPortType" : "Out",
-            "typeSpec" : "Xfo"
-            },
-          {
-            "objectType" : "Port",
-            "metadata" : {
-              "uiRange" : "(0, 1000)"
-              },
-            "nodePortType" : "Out",
-            "defaultValues" : {
-              "Scalar" : 1
-              },
-            "name" : "scale",
-            "execPortType" : "In",
-            "typeSpec" : "Scalar"
-            }
-          ],
-        "extDeps" : {
-          "Oculus" : "*"
-          },
-        "nodes" : [
-          {
-            "objectType" : "Var",
-            "metadata" : {
-              "uiGraphPos" : "{\"x\":242.10546875,\"y\":125.1278610229492}",
-              "uiCollapsedState" : "1"
-              },
-            "name" : "device",
-            "ports" : [
-              {
-                "objectType" : "VarPort",
-                "nodePortType" : "IO",
-                "name" : "value"
-                }
-              ],
-            "dataType" : "ovrDevice",
-            "extDep" : "Oculus:*"
-            },
-          {
-            "objectType" : "Inst",
-            "metadata" : {
-              "uiGraphPos" : "{\"x\":694.8824462890625,\"y\":240.6405334472656}",
-              "uiCollapsedState" : "1"
-              },
-            "name" : "GetTrackingState",
-            "ports" : [
-              {
-                "objectType" : "InstPort",
-                "nodePortType" : "In",
-                "name" : "this"
-                },
-              {
-                "objectType" : "InstPort",
-                "nodePortType" : "In",
-                "name" : "absTime"
-                },
-              {
-                "objectType" : "InstPort",
-                "nodePortType" : "Out",
-                "name" : "result"
-                }
-              ],
-            "executable" : "ThirdParty.Oculus.ovrDevice.GetTrackingState",
-            "presetGUID" : "47C3A86FA9FCDD8EAB9AC8A02F9BF2E0"
-            },
-          {
-            "objectType" : "Inst",
-            "metadata" : {
-              "uiGraphPos" : "{\"x\":937.2833862304688,\"y\":354.4396057128906}",
-              "uiCollapsedState" : "1"
-              },
-            "name" : "ovrTrackingState",
-            "ports" : [
-              {
-                "objectType" : "InstPort",
-                "nodePortType" : "In",
-                "name" : "value"
-                },
-              {
-                "objectType" : "InstPort",
-                "nodePortType" : "Out",
-                "name" : "HeadPose"
-                },
-              {
-                "objectType" : "InstPort",
-                "nodePortType" : "Out",
-                "name" : "CameraPose"
-                },
-              {
-                "objectType" : "InstPort",
-                "nodePortType" : "Out",
-                "name" : "LeveledCameraPose"
-                },
-              {
-                "objectType" : "InstPort",
-                "nodePortType" : "Out",
-                "name" : "HandPoses"
-                },
-              {
-                "objectType" : "InstPort",
-                "nodePortType" : "Out",
-                "name" : "RawSensorData"
-                },
-              {
-                "objectType" : "InstPort",
-                "nodePortType" : "Out",
-                "name" : "StatusFlags"
-                },
-              {
-                "objectType" : "InstPort",
-                "nodePortType" : "Out",
-                "name" : "LastCameraFrameCounter"
-                }
-              ],
-            "executable" : "ThirdParty.Oculus.ovrTrackingState.DecomposeovrTrackingState",
-            "presetGUID" : "24CF49CE421968F9ACE0E2C85E48DC6D"
-            },
-          {
-            "objectType" : "Inst",
-            "metadata" : {
-              "uiGraphPos" : "{\"x\":1289.496459960938,\"y\":435.2133178710938}",
-              "uiCollapsedState" : "1"
-              },
-            "name" : "GetPoseAsXfo",
-            "ports" : [
-              {
-                "objectType" : "InstPort",
-                "nodePortType" : "In",
-                "name" : "this"
-                },
-              {
-                "objectType" : "InstPort",
-                "nodePortType" : "In",
-                "name" : "scale"
-                },
-              {
-                "objectType" : "InstPort",
-                "nodePortType" : "Out",
-                "name" : "result"
-                }
-              ],
-            "executable" : "ThirdParty.Oculus.ovrPoseState.GetPoseAsXfo",
-            "presetGUID" : "979090BAB9119AFBD5023FF19E7735A6"
-            },
-          {
-            "objectType" : "Inst",
-            "metadata" : {
-              "uiGraphPos" : "{\"x\":1287.088500976563,\"y\":563.3524169921875}",
-              "uiCollapsedState" : "1"
-              },
-            "name" : "GetPoseAsXfo_2",
-            "ports" : [
-              {
-                "objectType" : "InstPort",
-                "nodePortType" : "In",
-                "name" : "this"
-                },
-              {
-                "objectType" : "InstPort",
-                "nodePortType" : "In",
-                "name" : "scale"
-                },
-              {
-                "objectType" : "InstPort",
-                "nodePortType" : "Out",
-                "name" : "result"
-                }
-              ],
-            "executable" : "ThirdParty.Oculus.ovrPose.GetPoseAsXfo",
-            "presetGUID" : "A90D6B58A805A0F140FA7C51F92276FA"
-            },
-          {
-            "objectType" : "Inst",
-            "metadata" : {
-              "uiGraphPos" : "{\"x\":6.9493408203125,\"y\":108.9834365844727}",
-              "uiCollapsedState" : "0"
-              },
-            "name" : "OvrDevice",
-            "ports" : [
-              {
-                "objectType" : "InstPort",
-                "nodePortType" : "In",
-                "name" : "index"
-                },
-              {
-                "objectType" : "InstPort",
-                "nodePortType" : "In",
-                "name" : "configureTracking"
-                },
-              {
-                "objectType" : "InstPort",
-                "nodePortType" : "Out",
-                "name" : "result"
-                }
-              ],
-            "executable" : "ThirdParty.Oculus.ovrDevice.OvrDevice",
-            "presetGUID" : "B509ED9FF63BBDB4B5CB2F6BE053C95E"
-            },
-          {
-            "objectType" : "Inst",
-            "metadata" : {
-              "uiGraphPos" : "{\"x\":455.0502624511719,\"y\":305.1315002441406}",
-              "uiCollapsedState" : "1"
-              },
-            "name" : "GetTimeInSeconds",
-            "ports" : [
-              {
-                "objectType" : "InstPort",
-                "nodePortType" : "In",
-                "name" : "this"
-                },
-              {
-                "objectType" : "InstPort",
-                "nodePortType" : "Out",
-                "name" : "result"
-                }
-              ],
-            "executable" : "ThirdParty.Oculus.ovrDevice.GetTimeInSeconds",
-            "presetGUID" : "7EF0C34AE3BF29B6D5CB907B6368CB84"
-            }
-          ],
-        "connections" : {
-          "scale" : [
-            "GetPoseAsXfo.scale",
-            "GetPoseAsXfo_2.scale"
-            ],
-          "device.value" : [
-            "oculus",
-            "GetTimeInSeconds.this",
-            "GetTrackingState.this"
-            ],
-          "GetTrackingState.result" : [
-            "ovrTrackingState.value"
-            ],
-          "ovrTrackingState.HeadPose" : [
-            "GetPoseAsXfo.this"
-            ],
-          "ovrTrackingState.CameraPose" : [
-            "GetPoseAsXfo_2.this"
-            ],
-          "GetPoseAsXfo.result" : [
-            "headXfo"
-            ],
-          "GetPoseAsXfo_2.result" : [
-            "cameraXfo"
-            ],
-          "OvrDevice.result" : [
-            "device.value"
-            ],
-          "GetTimeInSeconds.result" : [
-            "GetTrackingState.absTime"
-            ]
-          }
-        }
-      },
     {
       "objectType" : "Inst",
       "metadata" : {
@@ -434,15 +122,39 @@
         ],
       "executable" : "Fabric.Exts.InlineDrawing.DrawingHandle.DrawAxes",
       "presetGUID" : "7830EDE4D404DB2AE6B73F5DBA42EFED"
+      },
+    {
+      "objectType" : "Inst",
+      "metadata" : {
+        "uiGraphPos" : "{\"x\":742.0,\"y\":205.0}"
+        },
+      "name" : "OculusTracking",
+      "ports" : [
+        {
+          "objectType" : "InstPort",
+          "nodePortType" : "Out",
+          "name" : "oculus"
+          },
+        {
+          "objectType" : "InstPort",
+          "nodePortType" : "Out",
+          "name" : "headXfo"
+          },
+        {
+          "objectType" : "InstPort",
+          "nodePortType" : "Out",
+          "name" : "cameraXfo"
+          },
+        {
+          "objectType" : "InstPort",
+          "nodePortType" : "In",
+          "name" : "scale"
+          }
+        ],
+      "executable" : "ThirdParty.Oculus.Compounds.OculusTracking"
       }
     ],
   "connections" : {
-    "Oculus.headXfo" : [
-      "DrawAxes.transform"
-      ],
-    "Oculus.cameraXfo" : [
-      "DrawAxes_2.transform"
-      ],
     "EmptyDrawingHandle.handle" : [
       "DrawAxes.this"
       ],
@@ -451,9 +163,470 @@
       ],
     "DrawAxes_2.this" : [
       "this"
+      ],
+    "OculusTracking.headXfo" : [
+      "DrawAxes.transform"
+      ],
+    "OculusTracking.cameraXfo" : [
+      "DrawAxes_2.transform"
       ]
     },
   "requiredPresets" : {
+    "Fabric.Exts.InlineDrawing.DrawingHandle.EmptyDrawingHandle" : {
+      "objectType" : "Graph",
+      "title" : "EmptyDrawingHandle",
+      "cacheRule" : "never",
+      "ports" : [
+        {
+          "objectType" : "Port",
+          "nodePortType" : "In",
+          "name" : "handle",
+          "execPortType" : "Out",
+          "typeSpec" : "DrawingHandle"
+          }
+        ],
+      "extDeps" : {},
+      "presetGUID" : "2440020BA6A1CAB1CEB690A198F99C70",
+      "nodes" : [
+        {
+          "objectType" : "Inst",
+          "metadata" : {
+            "uiGraphPos" : "{\"x\": 894, \"y\": 100}"
+            },
+          "name" : "Clear",
+          "ports" : [
+            {
+              "objectType" : "InstPort",
+              "nodePortType" : "IO",
+              "name" : "this"
+              }
+            ],
+          "executable" : "Fabric.Exts.InlineDrawing.DrawingHandle.Clear",
+          "presetGUID" : "39E8D81FA7C7C4A825877F16EFE3564F",
+          "cacheRule" : "never"
+          },
+        {
+          "objectType" : "Var",
+          "metadata" : {
+            "uiGraphPos" : "{\"x\":567.0,\"y\":56.0}",
+            "uiCollapsedState" : "0"
+            },
+          "name" : "handleVar",
+          "ports" : [
+            {
+              "objectType" : "VarPort",
+              "nodePortType" : "IO",
+              "name" : "value"
+              }
+            ],
+          "dataType" : "DrawingHandle",
+          "extDep" : "InlineDrawing:*"
+          },
+        {
+          "objectType" : "Inst",
+          "metadata" : {
+            "uiGraphPos" : "{\"x\":287.0,\"y\":56.0}"
+            },
+          "name" : "CreateDrawingHandle",
+          "ports" : [
+            {
+              "objectType" : "InstPort",
+              "nodePortType" : "Out",
+              "name" : "handle"
+              }
+            ],
+          "definition" : {
+            "objectType" : "Func",
+            "title" : "Create DrawingHandle",
+            "ports" : [
+              {
+                "objectType" : "Port",
+                "nodePortType" : "In",
+                "name" : "handle",
+                "execPortType" : "Out",
+                "typeSpec" : "DrawingHandle"
+                }
+              ],
+            "extDeps" : {
+              "InlineDrawing" : "*"
+              },
+            "code" : "dfgEntry {\n  handle = DrawingHandle();\n}\n"
+            }
+          }
+        ],
+      "connections" : {
+        "Clear.this" : [
+          "handle"
+          ],
+        "handleVar.value" : [
+          "Clear.this"
+          ],
+        "CreateDrawingHandle.handle" : [
+          "handleVar.value"
+          ]
+        }
+      },
+    "Fabric.Exts.InlineDrawing.DrawingHandle.Clear" : {
+      "objectType" : "Func",
+      "metadata" : {
+        "uiDocUrl" : "http://docs.fabric-engine.com/FabricEngine/2.0.0/HTML/KLExtensionsGuide/InlineDrawing/DrawingHandle.html",
+        "uiTooltip" : "removes all contents from the DrawingHandle\n\n Supported by DrawingHandle"
+        },
+      "title" : "Clear",
+      "ports" : [
+        {
+          "objectType" : "Port",
+          "nodePortType" : "IO",
+          "name" : "this",
+          "execPortType" : "IO",
+          "typeSpec" : "DrawingHandle"
+          }
+        ],
+      "extDeps" : {
+        "InlineDrawing" : "*"
+        },
+      "presetGUID" : "39E8D81FA7C7C4A825877F16EFE3564F",
+      "code" : "require InlineDrawing;\n\ndfgEntry {\n  this.clear();\n}\n"
+      },
+    "Fabric.Exts.InlineDrawing.DrawingHandle.DrawAxes" : {
+      "objectType" : "Func",
+      "metadata" : {
+        "uiDocUrl" : "http://docs.fabric-engine.com/FabricEngine/2.0.0/HTML/KLExtensionsGuide/InlineDrawing/DrawingHandle.html",
+        "uiTooltip" : "helper function to draw a single axes\n\n Supported by DrawingHandle"
+        },
+      "title" : "DrawAxes",
+      "ports" : [
+        {
+          "objectType" : "Port",
+          "nodePortType" : "IO",
+          "name" : "this",
+          "execPortType" : "IO",
+          "typeSpec" : "DrawingHandle"
+          },
+        {
+          "objectType" : "Port",
+          "nodePortType" : "Out",
+          "name" : "name",
+          "execPortType" : "In",
+          "typeSpec" : "String"
+          },
+        {
+          "objectType" : "Port",
+          "metadata" : {
+            "uiColor" : "{\n  \"r\" : 249,\n  \"g\" : 157,\n  \"b\" : 28\n  }"
+            },
+          "nodePortType" : "Out",
+          "name" : "transform",
+          "execPortType" : "In",
+          "typeSpec" : "Xfo"
+          },
+        {
+          "objectType" : "Port",
+          "metadata" : {
+            "uiColor" : "{\n  \"r\" : 255,\n  \"g\" : 242,\n  \"b\" : 0\n  }"
+            },
+          "nodePortType" : "In",
+          "name" : "dummyResult",
+          "execPortType" : "Out",
+          "typeSpec" : "Vec3"
+          },
+        {
+          "objectType" : "Port",
+          "nodePortType" : "In",
+          "name" : "instance",
+          "execPortType" : "Out",
+          "typeSpec" : "InlineInstance"
+          }
+        ],
+      "extDeps" : {
+        "InlineDrawing" : "*"
+        },
+      "presetGUID" : "7830EDE4D404DB2AE6B73F5DBA42EFED",
+      "code" : "require InlineDrawing;\n\ndfgEntry {\n  this.drawAxes(name, transform, dummyResult, instance);\n}\n"
+      },
+    "ThirdParty.Oculus.Compounds.OculusTracking" : {
+      "objectType" : "Graph",
+      "metadata" : {
+        "uiTextColor" : "{\n  \"r\" : 20,\n  \"g\" : 20,\n  \"b\" : 20\n  }",
+        "uiNodeColor" : "{\n  \"r\" : 121,\n  \"g\" : 134,\n  \"b\" : 143\n  }",
+        "uiGraphZoom" : "{\n  \"value\" : 0.7807489633560181\n  }",
+        "uiGraphPan" : "{\n  \"x\" : 276.4447631835938,\n  \"y\" : -49.9013671875\n  }"
+        },
+      "title" : "OculusTracking",
+      "ports" : [
+        {
+          "objectType" : "Port",
+          "nodePortType" : "In",
+          "name" : "oculus",
+          "execPortType" : "Out",
+          "typeSpec" : "ovrDevice"
+          },
+        {
+          "objectType" : "Port",
+          "nodePortType" : "In",
+          "name" : "headXfo",
+          "execPortType" : "Out",
+          "typeSpec" : "Xfo"
+          },
+        {
+          "objectType" : "Port",
+          "nodePortType" : "In",
+          "name" : "cameraXfo",
+          "execPortType" : "Out",
+          "typeSpec" : "Xfo"
+          },
+        {
+          "objectType" : "Port",
+          "metadata" : {
+            "uiPersistValue" : "true",
+            "uiRange" : "(0, 1000)"
+            },
+          "nodePortType" : "Out",
+          "defaultValues" : {
+            "Scalar" : 18
+            },
+          "name" : "scale",
+          "execPortType" : "In",
+          "typeSpec" : "Scalar"
+          }
+        ],
+      "extDeps" : {
+        "Oculus" : "*"
+        },
+      "nodes" : [
+        {
+          "objectType" : "Var",
+          "metadata" : {
+            "uiGraphPos" : "{\"x\":242.10546875,\"y\":125.1278610229492}",
+            "uiCollapsedState" : "1"
+            },
+          "name" : "device",
+          "ports" : [
+            {
+              "objectType" : "VarPort",
+              "nodePortType" : "IO",
+              "name" : "value"
+              }
+            ],
+          "dataType" : "ovrDevice",
+          "extDep" : "Oculus:*"
+          },
+        {
+          "objectType" : "Inst",
+          "metadata" : {
+            "uiGraphPos" : "{\"x\":694.8824462890625,\"y\":240.6405334472656}",
+            "uiCollapsedState" : "1"
+            },
+          "name" : "GetTrackingState",
+          "ports" : [
+            {
+              "objectType" : "InstPort",
+              "nodePortType" : "In",
+              "name" : "this"
+              },
+            {
+              "objectType" : "InstPort",
+              "nodePortType" : "In",
+              "name" : "absTime"
+              },
+            {
+              "objectType" : "InstPort",
+              "nodePortType" : "Out",
+              "name" : "result"
+              }
+            ],
+          "executable" : "ThirdParty.Oculus.ovrDevice.GetTrackingState",
+          "presetGUID" : "47C3A86FA9FCDD8EAB9AC8A02F9BF2E0"
+          },
+        {
+          "objectType" : "Inst",
+          "metadata" : {
+            "uiGraphPos" : "{\"x\":937.2833862304688,\"y\":354.4396057128906}",
+            "uiCollapsedState" : "1"
+            },
+          "name" : "ovrTrackingState",
+          "ports" : [
+            {
+              "objectType" : "InstPort",
+              "nodePortType" : "In",
+              "name" : "value"
+              },
+            {
+              "objectType" : "InstPort",
+              "nodePortType" : "Out",
+              "name" : "HeadPose"
+              },
+            {
+              "objectType" : "InstPort",
+              "nodePortType" : "Out",
+              "name" : "CameraPose"
+              },
+            {
+              "objectType" : "InstPort",
+              "nodePortType" : "Out",
+              "name" : "LeveledCameraPose"
+              },
+            {
+              "objectType" : "InstPort",
+              "nodePortType" : "Out",
+              "name" : "HandPoses"
+              },
+            {
+              "objectType" : "InstPort",
+              "nodePortType" : "Out",
+              "name" : "RawSensorData"
+              },
+            {
+              "objectType" : "InstPort",
+              "nodePortType" : "Out",
+              "name" : "StatusFlags"
+              },
+            {
+              "objectType" : "InstPort",
+              "nodePortType" : "Out",
+              "name" : "LastCameraFrameCounter"
+              }
+            ],
+          "executable" : "ThirdParty.Oculus.ovrTrackingState.DecomposeovrTrackingState",
+          "presetGUID" : "24CF49CE421968F9ACE0E2C85E48DC6D"
+          },
+        {
+          "objectType" : "Inst",
+          "metadata" : {
+            "uiGraphPos" : "{\"x\":1289.496459960938,\"y\":435.2133178710938}",
+            "uiCollapsedState" : "1"
+            },
+          "name" : "GetPoseAsXfo",
+          "ports" : [
+            {
+              "objectType" : "InstPort",
+              "nodePortType" : "In",
+              "name" : "this"
+              },
+            {
+              "objectType" : "InstPort",
+              "nodePortType" : "In",
+              "name" : "scale"
+              },
+            {
+              "objectType" : "InstPort",
+              "nodePortType" : "Out",
+              "name" : "result"
+              }
+            ],
+          "executable" : "ThirdParty.Oculus.ovrPoseState.GetPoseAsXfo",
+          "presetGUID" : "979090BAB9119AFBD5023FF19E7735A6"
+          },
+        {
+          "objectType" : "Inst",
+          "metadata" : {
+            "uiGraphPos" : "{\"x\":1287.088500976563,\"y\":563.3524169921875}",
+            "uiCollapsedState" : "1"
+            },
+          "name" : "GetPoseAsXfo_2",
+          "ports" : [
+            {
+              "objectType" : "InstPort",
+              "nodePortType" : "In",
+              "name" : "this"
+              },
+            {
+              "objectType" : "InstPort",
+              "nodePortType" : "In",
+              "name" : "scale"
+              },
+            {
+              "objectType" : "InstPort",
+              "nodePortType" : "Out",
+              "name" : "result"
+              }
+            ],
+          "executable" : "ThirdParty.Oculus.ovrPose.GetPoseAsXfo",
+          "presetGUID" : "A90D6B58A805A0F140FA7C51F92276FA"
+          },
+        {
+          "objectType" : "Inst",
+          "metadata" : {
+            "uiGraphPos" : "{\"x\":6.9493408203125,\"y\":108.9834365844727}",
+            "uiCollapsedState" : "0"
+            },
+          "name" : "OvrDevice",
+          "ports" : [
+            {
+              "objectType" : "InstPort",
+              "nodePortType" : "In",
+              "name" : "index"
+              },
+            {
+              "objectType" : "InstPort",
+              "nodePortType" : "In",
+              "name" : "configureTracking"
+              },
+            {
+              "objectType" : "InstPort",
+              "nodePortType" : "Out",
+              "name" : "result"
+              }
+            ],
+          "executable" : "ThirdParty.Oculus.ovrDevice.OvrDevice",
+          "presetGUID" : "B509ED9FF63BBDB4B5CB2F6BE053C95E"
+          },
+        {
+          "objectType" : "Inst",
+          "metadata" : {
+            "uiGraphPos" : "{\"x\":455.0502624511719,\"y\":305.1315002441406}",
+            "uiCollapsedState" : "1"
+            },
+          "name" : "GetTimeInSeconds",
+          "ports" : [
+            {
+              "objectType" : "InstPort",
+              "nodePortType" : "In",
+              "name" : "this"
+              },
+            {
+              "objectType" : "InstPort",
+              "nodePortType" : "Out",
+              "name" : "result"
+              }
+            ],
+          "executable" : "ThirdParty.Oculus.ovrDevice.GetTimeInSeconds",
+          "presetGUID" : "7EF0C34AE3BF29B6D5CB907B6368CB84"
+          }
+        ],
+      "connections" : {
+        "scale" : [
+          "GetPoseAsXfo.scale",
+          "GetPoseAsXfo_2.scale"
+          ],
+        "device.value" : [
+          "oculus",
+          "GetTimeInSeconds.this",
+          "GetTrackingState.this"
+          ],
+        "GetTrackingState.result" : [
+          "ovrTrackingState.value"
+          ],
+        "ovrTrackingState.HeadPose" : [
+          "GetPoseAsXfo.this"
+          ],
+        "ovrTrackingState.CameraPose" : [
+          "GetPoseAsXfo_2.this"
+          ],
+        "GetPoseAsXfo.result" : [
+          "headXfo"
+          ],
+        "GetPoseAsXfo_2.result" : [
+          "cameraXfo"
+          ],
+        "OvrDevice.result" : [
+          "device.value"
+          ],
+        "GetTimeInSeconds.result" : [
+          "GetTrackingState.absTime"
+          ]
+        }
+      },
     "ThirdParty.Oculus.ovrDevice.GetTrackingState" : {
       "objectType" : "Func",
       "metadata" : {
@@ -471,6 +644,9 @@
         {
           "objectType" : "Port",
           "nodePortType" : "Out",
+          "defaultValues" : {
+            "Float64" : -1
+            },
           "name" : "absTime",
           "execPortType" : "In",
           "typeSpec" : "Float64"
@@ -868,178 +1044,6 @@
         },
       "presetGUID" : "7EF0C34AE3BF29B6D5CB907B6368CB84",
       "code" : "require Oculus;\n\ndfgEntry {\n  result = this.getTimeInSeconds();\n}\n"
-      },
-    "Fabric.Exts.InlineDrawing.DrawingHandle.EmptyDrawingHandle" : {
-      "objectType" : "Graph",
-      "title" : "EmptyDrawingHandle",
-      "cacheRule" : "never",
-      "ports" : [
-        {
-          "objectType" : "Port",
-          "nodePortType" : "In",
-          "name" : "handle",
-          "execPortType" : "Out",
-          "typeSpec" : "DrawingHandle"
-          }
-        ],
-      "extDeps" : {},
-      "presetGUID" : "2440020BA6A1CAB1CEB690A198F99C70",
-      "nodes" : [
-        {
-          "objectType" : "Inst",
-          "metadata" : {
-            "uiGraphPos" : "{\"x\": 894, \"y\": 100}"
-            },
-          "name" : "Clear",
-          "ports" : [
-            {
-              "objectType" : "InstPort",
-              "nodePortType" : "IO",
-              "name" : "this"
-              }
-            ],
-          "executable" : "Fabric.Exts.InlineDrawing.DrawingHandle.Clear",
-          "presetGUID" : "39E8D81FA7C7C4A825877F16EFE3564F",
-          "cacheRule" : "never"
-          },
-        {
-          "objectType" : "Var",
-          "metadata" : {
-            "uiGraphPos" : "{\"x\":567.0,\"y\":56.0}",
-            "uiCollapsedState" : "0"
-            },
-          "name" : "handleVar",
-          "ports" : [
-            {
-              "objectType" : "VarPort",
-              "nodePortType" : "IO",
-              "name" : "value"
-              }
-            ],
-          "dataType" : "DrawingHandle",
-          "extDep" : "InlineDrawing:*"
-          },
-        {
-          "objectType" : "Inst",
-          "metadata" : {
-            "uiGraphPos" : "{\"x\":287.0,\"y\":56.0}"
-            },
-          "name" : "CreateDrawingHandle",
-          "ports" : [
-            {
-              "objectType" : "InstPort",
-              "nodePortType" : "Out",
-              "name" : "handle"
-              }
-            ],
-          "definition" : {
-            "objectType" : "Func",
-            "title" : "Create DrawingHandle",
-            "ports" : [
-              {
-                "objectType" : "Port",
-                "nodePortType" : "In",
-                "name" : "handle",
-                "execPortType" : "Out",
-                "typeSpec" : "DrawingHandle"
-                }
-              ],
-            "extDeps" : {
-              "InlineDrawing" : "*"
-              },
-            "code" : "dfgEntry {\n  handle = DrawingHandle();\n}\n"
-            }
-          }
-        ],
-      "connections" : {
-        "Clear.this" : [
-          "handle"
-          ],
-        "handleVar.value" : [
-          "Clear.this"
-          ],
-        "CreateDrawingHandle.handle" : [
-          "handleVar.value"
-          ]
-        }
-      },
-    "Fabric.Exts.InlineDrawing.DrawingHandle.Clear" : {
-      "objectType" : "Func",
-      "metadata" : {
-        "uiDocUrl" : "http://docs.fabric-engine.com/FabricEngine/2.0.0/HTML/KLExtensionsGuide/InlineDrawing/DrawingHandle.html",
-        "uiTooltip" : "removes all contents from the DrawingHandle\n\n Supported by DrawingHandle"
-        },
-      "title" : "Clear",
-      "ports" : [
-        {
-          "objectType" : "Port",
-          "nodePortType" : "IO",
-          "name" : "this",
-          "execPortType" : "IO",
-          "typeSpec" : "DrawingHandle"
-          }
-        ],
-      "extDeps" : {
-        "InlineDrawing" : "*"
-        },
-      "presetGUID" : "39E8D81FA7C7C4A825877F16EFE3564F",
-      "code" : "require InlineDrawing;\n\ndfgEntry {\n  this.clear();\n}\n"
-      },
-    "Fabric.Exts.InlineDrawing.DrawingHandle.DrawAxes" : {
-      "objectType" : "Func",
-      "metadata" : {
-        "uiDocUrl" : "http://docs.fabric-engine.com/FabricEngine/2.0.0/HTML/KLExtensionsGuide/InlineDrawing/DrawingHandle.html",
-        "uiTooltip" : "helper function to draw a single axes\n\n Supported by DrawingHandle"
-        },
-      "title" : "DrawAxes",
-      "ports" : [
-        {
-          "objectType" : "Port",
-          "nodePortType" : "IO",
-          "name" : "this",
-          "execPortType" : "IO",
-          "typeSpec" : "DrawingHandle"
-          },
-        {
-          "objectType" : "Port",
-          "nodePortType" : "Out",
-          "name" : "name",
-          "execPortType" : "In",
-          "typeSpec" : "String"
-          },
-        {
-          "objectType" : "Port",
-          "metadata" : {
-            "uiColor" : "{\n  \"r\" : 249,\n  \"g\" : 157,\n  \"b\" : 28\n  }"
-            },
-          "nodePortType" : "Out",
-          "name" : "transform",
-          "execPortType" : "In",
-          "typeSpec" : "Xfo"
-          },
-        {
-          "objectType" : "Port",
-          "metadata" : {
-            "uiColor" : "{\n  \"r\" : 255,\n  \"g\" : 242,\n  \"b\" : 0\n  }"
-            },
-          "nodePortType" : "In",
-          "name" : "dummyResult",
-          "execPortType" : "Out",
-          "typeSpec" : "Vec3"
-          },
-        {
-          "objectType" : "Port",
-          "nodePortType" : "In",
-          "name" : "instance",
-          "execPortType" : "Out",
-          "typeSpec" : "InlineInstance"
-          }
-        ],
-      "extDeps" : {
-        "InlineDrawing" : "*"
-        },
-      "presetGUID" : "7830EDE4D404DB2AE6B73F5DBA42EFED",
-      "code" : "require InlineDrawing;\n\ndfgEntry {\n  this.drawAxes(name, transform, dummyResult, instance);\n}\n"
       }
     },
   "args" : [
