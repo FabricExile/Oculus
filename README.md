@@ -71,4 +71,4 @@ Some samples might require the RazerHydra or the XBox extension, which are also 
 license
 ==========
 
-The license used for this extensions is the new BSD license. You can find it in the root folder of the repository.
+The license used for this extension can be found it in the root folder of the repository, in LICENSE.TXT.
