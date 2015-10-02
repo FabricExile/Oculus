@@ -9,7 +9,7 @@ extName = 'Oculus'
 env = parentEnv.Clone()
 env.Append(CPPPATH = [env.Dir('.').abspath])
 env.Append(LIBS = ['libovr'])
-env.Append(LIBS = ['libboost_thread-vc100-mt-s-1_55'])
+env.Append(LIBS = ['libboost_thread-vc120-mt-s-1_55'])
 env.Append(CCFLAGS = ['/EHsc'])
 
 env.Append(LIBS = [

@@ -91,10 +91,10 @@ def RunKL2DFG(
 
   return result
 
-# for windows for now use Visual Studio 2010. 
+# for windows for now use Visual Studio 2013. 
 # if you upgrade this you will also have to provide
 # boost libs for the corresponding VS version
-env = Environment(ENV = os.environ, MSVC_VERSION='10.0')
+env = Environment(ENV = os.environ, MSVC_VERSION='12.0')
 env.AddMethod(RunKL2EDK)
 env.AddMethod(RunKL2DFG)
 
@@ -105,7 +105,7 @@ for thirdpartyDir in thirdpartyDirs:
 
 env.Append(CPPPATH = [os.path.join(os.environ['FABRIC_DIR'], 'include')])
 env.Append(CPPPATH = [os.path.join(os.environ['OCULUS_DIR'], 'LibOVR', 'Include')])
-env.Append(LIBPATH = [os.path.join(os.environ['OCULUS_DIR'], 'LibOVR', 'Lib', 'Windows', 'x64', 'Release', 'VS2010')])
+env.Append(LIBPATH = [os.path.join(os.environ['OCULUS_DIR'], 'LibOVR', 'Lib', 'Windows', 'x64', 'Release', 'VS2013')])
 env.Append(CPPPATH = [os.path.join(os.environ['OCULUS_DIR'], 'LibOVRKernel', 'src')])
 env.Append(CPPPATH = [os.path.join(os.environ['BOOST_INCLUDE_DIR'], 'include')])
 env.Append(LIBPATH = [os.path.join(os.environ['BOOST_LIBRARY_DIR'])])
