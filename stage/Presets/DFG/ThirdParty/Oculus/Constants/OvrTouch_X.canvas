@@ -1,0 +1,19 @@
+// Created by kl2dfg (processConstant)
+{
+  "objectType" : "Func",
+  "title" : "OvrTouch_X",
+  "ports" : [
+    {
+      "objectType" : "Port",
+      "nodePortType" : "In",
+      "name" : "value",
+      "execPortType" : "Out",
+      "typeSpec" : "ovrTouch"
+      }
+    ],
+  "extDeps" : {
+    "Oculus" : "*"
+    },
+  "presetGUID" : "6D459C6B98727CCFE8A99667C77C41E5",
+  "code" : "require Oculus;\n\ndfgEntry {\n  value = ovrTouch_X;\n}\n"
+  }

@@ -1,0 +1,19 @@
+// Created by kl2dfg (processConstant)
+{
+  "objectType" : "Func",
+  "title" : "OvrTouch_LThumb",
+  "ports" : [
+    {
+      "objectType" : "Port",
+      "nodePortType" : "In",
+      "name" : "value",
+      "execPortType" : "Out",
+      "typeSpec" : "ovrTouch"
+      }
+    ],
+  "extDeps" : {
+    "Oculus" : "*"
+    },
+  "presetGUID" : "D661A215E7C86BC8E366C929AC58AF68",
+  "code" : "require Oculus;\n\ndfgEntry {\n  value = ovrTouch_LThumb;\n}\n"
+  }

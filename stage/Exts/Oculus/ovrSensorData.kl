@@ -1,0 +1,18 @@
+/*
+ *  Copyright 2010-2014 Fabric Software Inc. All rights reserved.
+ */
+
+require Math;
+
+struct ovrSensorData {
+  /// Acceleration reading in m/s^2.
+  Vec3 Accelerometer;    
+  /// Rotation rate in rad/s.
+  Vec3  Gyro;             
+  /// Magnetic field in Gauss.
+  Vec3  Magnetometer;     
+  /// Temperature of the sensor in degrees Celsius.
+  Float32 Temperature;      
+  /// Time when the reported IMU reading took place, in seconds.
+  Float32 TimeInSeconds;    
+};

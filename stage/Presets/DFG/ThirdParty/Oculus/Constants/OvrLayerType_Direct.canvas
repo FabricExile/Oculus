@@ -1,0 +1,19 @@
+// Created by kl2dfg (processConstant)
+{
+  "objectType" : "Func",
+  "title" : "OvrLayerType_Direct",
+  "ports" : [
+    {
+      "objectType" : "Port",
+      "nodePortType" : "In",
+      "name" : "value",
+      "execPortType" : "Out",
+      "typeSpec" : "ovrLayerType"
+      }
+    ],
+  "extDeps" : {
+    "Oculus" : "*"
+    },
+  "presetGUID" : "FC623418C0DEEAD2BD9C66AFAD40A159",
+  "code" : "require Oculus;\n\ndfgEntry {\n  value = ovrLayerType_Direct;\n}\n"
+  }

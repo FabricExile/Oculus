@@ -1,0 +1,19 @@
+// Created by kl2dfg (processConstant)
+{
+  "objectType" : "Func",
+  "title" : "OvrLogLevel_Debug",
+  "ports" : [
+    {
+      "objectType" : "Port",
+      "nodePortType" : "In",
+      "name" : "value",
+      "execPortType" : "Out",
+      "typeSpec" : "ovrLogLevel"
+      }
+    ],
+  "extDeps" : {
+    "Oculus" : "*"
+    },
+  "presetGUID" : "F9F1AEC001E3C3A18014FF8396CB09E1",
+  "code" : "require Oculus;\n\ndfgEntry {\n  value = ovrLogLevel_Debug;\n}\n"
+  }

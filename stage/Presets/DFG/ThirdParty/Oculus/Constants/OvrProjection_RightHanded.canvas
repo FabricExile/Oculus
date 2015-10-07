@@ -1,0 +1,19 @@
+// Created by kl2dfg (processConstant)
+{
+  "objectType" : "Func",
+  "title" : "OvrProjection_RightHanded",
+  "ports" : [
+    {
+      "objectType" : "Port",
+      "nodePortType" : "In",
+      "name" : "value",
+      "execPortType" : "Out",
+      "typeSpec" : "ovrProjectionModifier"
+      }
+    ],
+  "extDeps" : {
+    "Oculus" : "*"
+    },
+  "presetGUID" : "0B0C069D127B65F7D4DF9E10676D1F4C",
+  "code" : "require Oculus;\n\ndfgEntry {\n  value = ovrProjection_RightHanded;\n}\n"
+  }

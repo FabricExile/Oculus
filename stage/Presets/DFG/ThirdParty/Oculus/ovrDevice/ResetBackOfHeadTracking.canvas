@@ -1,0 +1,22 @@
+// Created by kl2dfg (processFunction)
+{
+  "objectType" : "Func",
+  "metadata" : {
+    "uiTooltip" : "Should be called when the headset is placed on a new user.\nPreviously named ovrHmd_ResetOnlyBackOfHeadTrackingForConnectConf.\nThis may be removed in a future SDK version.\n\n Supported by ovrDevice"
+    },
+  "title" : "ResetBackOfHeadTracking",
+  "ports" : [
+    {
+      "objectType" : "Port",
+      "nodePortType" : "IO",
+      "name" : "this",
+      "execPortType" : "IO",
+      "typeSpec" : "ovrDevice"
+      }
+    ],
+  "extDeps" : {
+    "Oculus" : "*"
+    },
+  "presetGUID" : "58900DAD47A03A0A6FB7742F95366A28",
+  "code" : "require Oculus;\n\ndfgEntry {\n  this.resetBackOfHeadTracking();\n}\n"
+  }

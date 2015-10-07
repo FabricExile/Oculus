@@ -1,0 +1,52 @@
+// Created by kl2dfg (processStructConstant)
+{
+  "objectType" : "Func",
+  "metadata" : {
+    "uiAlwaysShowDaisyChainPorts" : "true"
+    },
+  "title" : "ovrEyeRenderDesc",
+  "ports" : [
+    {
+      "objectType" : "Port",
+      "nodePortType" : "Out",
+      "defaultValues" : {
+        "ovrEyeRenderDesc" : {
+          "Eye" : 0,
+          "Fov" : {
+            "UpTan" : 0,
+            "DownTan" : 0,
+            "LeftTan" : 0,
+            "RightTan" : 0
+            },
+          "DistortedViewport" : {
+            "Pos" : {
+              "x" : 0,
+              "y" : 0
+              },
+            "Size" : {
+              "w" : 0,
+              "h" : 0
+              }
+            },
+          "PixelsPerTanAngleAtCenter" : {
+            "x" : 0,
+            "y" : 0
+            },
+          "HmdToEyeViewOffset" : {
+            "x" : 0,
+            "y" : 0,
+            "z" : 0
+            }
+          }
+        },
+      "name" : "value",
+      "execPortType" : "In",
+      "typeSpec" : "ovrEyeRenderDesc"
+      }
+    ],
+  "extDeps" : {
+    "Oculus" : "*"
+    },
+  "presetGUID" : "4E1832EF9A3663067F87B3D898BB02C7",
+  "code" : "dfgEntry {\n}\n"
+  }

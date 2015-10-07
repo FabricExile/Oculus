@@ -1,0 +1,19 @@
+// Created by kl2dfg (processConstant)
+{
+  "objectType" : "Func",
+  "title" : "OvrLayerType_Disabled",
+  "ports" : [
+    {
+      "objectType" : "Port",
+      "nodePortType" : "In",
+      "name" : "value",
+      "execPortType" : "Out",
+      "typeSpec" : "ovrLayerType"
+      }
+    ],
+  "extDeps" : {
+    "Oculus" : "*"
+    },
+  "presetGUID" : "3031408DEFC77A9297D824C1CF7DAA48",
+  "code" : "require Oculus;\n\ndfgEntry {\n  value = ovrLayerType_Disabled;\n}\n"
+  }

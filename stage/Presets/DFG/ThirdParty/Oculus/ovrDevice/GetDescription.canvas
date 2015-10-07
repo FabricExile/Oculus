@@ -1,0 +1,29 @@
+// Created by kl2dfg (processFunction)
+{
+  "objectType" : "Func",
+  "metadata" : {
+    "uiTooltip" : "----------------------------------------\nOVR_CAPI_0_7_0.h\n-----------------------------------------------------------------------------------------------------------------------------------------------------\nreturns the full description of this device\n\n Supported by ovrDevice"
+    },
+  "title" : "GetDescription",
+  "ports" : [
+    {
+      "objectType" : "Port",
+      "nodePortType" : "Out",
+      "name" : "this",
+      "execPortType" : "In",
+      "typeSpec" : "ovrDevice"
+      },
+    {
+      "objectType" : "Port",
+      "nodePortType" : "In",
+      "name" : "result",
+      "execPortType" : "Out",
+      "typeSpec" : "ovrDescription"
+      }
+    ],
+  "extDeps" : {
+    "Oculus" : "*"
+    },
+  "presetGUID" : "8DDA5993FA4A59415EC61B63A2B1C204",
+  "code" : "require Oculus;\n\ndfgEntry {\n  result = this.getDescription();\n}\n"
+  }

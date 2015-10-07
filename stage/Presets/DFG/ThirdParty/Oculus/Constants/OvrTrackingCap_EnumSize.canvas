@@ -1,0 +1,19 @@
+// Created by kl2dfg (processConstant)
+{
+  "objectType" : "Func",
+  "title" : "OvrTrackingCap_EnumSize",
+  "ports" : [
+    {
+      "objectType" : "Port",
+      "nodePortType" : "In",
+      "name" : "value",
+      "execPortType" : "Out",
+      "typeSpec" : "ovrTrackingCaps"
+      }
+    ],
+  "extDeps" : {
+    "Oculus" : "*"
+    },
+  "presetGUID" : "7BB3817F50DC86FFF6C4D91CD229BD9A",
+  "code" : "require Oculus;\n\ndfgEntry {\n  value = ovrTrackingCap_EnumSize;\n}\n"
+  }

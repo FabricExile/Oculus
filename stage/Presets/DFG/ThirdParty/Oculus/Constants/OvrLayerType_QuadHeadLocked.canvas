@@ -1,0 +1,19 @@
+// Created by kl2dfg (processConstant)
+{
+  "objectType" : "Func",
+  "title" : "OvrLayerType_QuadHeadLocked",
+  "ports" : [
+    {
+      "objectType" : "Port",
+      "nodePortType" : "In",
+      "name" : "value",
+      "execPortType" : "Out",
+      "typeSpec" : "ovrLayerType"
+      }
+    ],
+  "extDeps" : {
+    "Oculus" : "*"
+    },
+  "presetGUID" : "84ECB735F7A481BBC454ADBFF3D77CF5",
+  "code" : "require Oculus;\n\ndfgEntry {\n  value = ovrLayerType_QuadHeadLocked;\n}\n"
+  }

@@ -1,0 +1,22 @@
+// Created by kl2dfg (processFunction)
+{
+  "objectType" : "Func",
+  "metadata" : {
+    "uiTooltip" : "\n\n Supported by ovrViewportCallback"
+    },
+  "title" : "RegisterForViewport",
+  "ports" : [
+    {
+      "objectType" : "Port",
+      "nodePortType" : "IO",
+      "name" : "this",
+      "execPortType" : "IO",
+      "typeSpec" : "ovrViewportCallback"
+      }
+    ],
+  "extDeps" : {
+    "Oculus" : "*"
+    },
+  "presetGUID" : "82C002B8095E96375DDBA9F828083A66",
+  "code" : "require Oculus;\n\ndfgEntry {\n  this.registerForViewport();\n}\n"
+  }

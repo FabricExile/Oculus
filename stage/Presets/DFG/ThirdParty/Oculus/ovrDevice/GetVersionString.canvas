@@ -1,0 +1,29 @@
+// Created by kl2dfg (processFunction)
+{
+  "objectType" : "Func",
+  "metadata" : {
+    "uiTooltip" : "Returns the version string representing the LibOVRRT version.\n\n Supported by ovrDevice"
+    },
+  "title" : "GetVersionString",
+  "ports" : [
+    {
+      "objectType" : "Port",
+      "nodePortType" : "Out",
+      "name" : "this",
+      "execPortType" : "In",
+      "typeSpec" : "ovrDevice"
+      },
+    {
+      "objectType" : "Port",
+      "nodePortType" : "In",
+      "name" : "result",
+      "execPortType" : "Out",
+      "typeSpec" : "String"
+      }
+    ],
+  "extDeps" : {
+    "Oculus" : "*"
+    },
+  "presetGUID" : "90623663B7509CCCEC876C0FA1265BFE",
+  "code" : "require Oculus;\n\ndfgEntry {\n  result = this.getVersionString();\n}\n"
+  }

@@ -1,0 +1,30 @@
+// Created by kl2dfg (processStructConstant)
+{
+  "objectType" : "Func",
+  "metadata" : {
+    "uiAlwaysShowDaisyChainPorts" : "true"
+    },
+  "title" : "ovrFrameTiming",
+  "ports" : [
+    {
+      "objectType" : "Port",
+      "nodePortType" : "Out",
+      "defaultValues" : {
+        "ovrFrameTiming" : {
+          "DisplayMidpointSeconds" : 0,
+          "FrameIntervalSeconds" : 0,
+          "AppFrameIndex" : 0,
+          "DisplayFrameIndex" : 0
+          }
+        },
+      "name" : "value",
+      "execPortType" : "In",
+      "typeSpec" : "ovrFrameTiming"
+      }
+    ],
+  "extDeps" : {
+    "Oculus" : "*"
+    },
+  "presetGUID" : "4E1832EF9A3663067F87B3D898BB02C7",
+  "code" : "dfgEntry {\n}\n"
+  }

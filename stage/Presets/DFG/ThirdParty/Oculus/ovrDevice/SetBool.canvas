@@ -1,0 +1,36 @@
+// Created by kl2dfg (processFunction)
+{
+  "objectType" : "Func",
+  "metadata" : {
+    "uiTooltip" : "Writes or creates a boolean property.\nIf the property wasn't previously a boolean property, it is changed to a boolean property.\n\n Supported by ovrDevice"
+    },
+  "title" : "SetBool",
+  "ports" : [
+    {
+      "objectType" : "Port",
+      "nodePortType" : "IO",
+      "name" : "this",
+      "execPortType" : "IO",
+      "typeSpec" : "ovrDevice"
+      },
+    {
+      "objectType" : "Port",
+      "nodePortType" : "Out",
+      "name" : "propertyName",
+      "execPortType" : "In",
+      "typeSpec" : "String"
+      },
+    {
+      "objectType" : "Port",
+      "nodePortType" : "Out",
+      "name" : "value",
+      "execPortType" : "In",
+      "typeSpec" : "Boolean"
+      }
+    ],
+  "extDeps" : {
+    "Oculus" : "*"
+    },
+  "presetGUID" : "82D4B3D1ED9B62D221AC6F862F1B2660",
+  "code" : "require Oculus;\n\ndfgEntry {\n  this.setBool(propertyName, value);\n}\n"
+  }

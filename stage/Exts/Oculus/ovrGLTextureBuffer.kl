@@ -1,0 +1,23 @@
+/*
+ *  Copyright 2010-2014 Fabric Software Inc. All rights reserved.
+ */
+
+/// \dfgPresetOmit
+object ovrGLTextureBuffer {
+  /// \internal
+  Data handle;
+};
+
+function ovrGLTextureBuffer(ovrDevice device, Boolean rendertarget, Boolean displayableOnHmd, ovrSize size, SInt32 mipLevels, SInt32 sampleCount) = "ovrGLTextureBuffer_Construct";
+
+function ~ovrGLTextureBuffer() = "ovrGLTextureBuffer_Destruct";
+
+function ovrSize ovrGLTextureBuffer.getSize() = "ovrGLTextureBuffer_GetSize";
+
+function ovrGLTextureBuffer.setAndClearRenderSurface!(ovrGLDepthBuffer dbuffer) = "ovrGLTextureBuffer_SetAndClearRenderSurface";
+
+function ovrGLTextureBuffer.unsetRenderSurface!() = "ovrGLTextureBuffer_UnsetRenderSurface";
+
+function SInt32 ovrGLTextureBuffer.getTexId() = "ovrGLTextureBuffer_GetTexId";
+
+function SInt32 ovrGLTextureBuffer.getFboId() = "ovrGLTextureBuffer_GetFboId";

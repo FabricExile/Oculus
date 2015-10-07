@@ -1,0 +1,19 @@
+// Created by kl2dfg (processConstant)
+{
+  "objectType" : "Func",
+  "title" : "OvrStatus_HmdConnected",
+  "ports" : [
+    {
+      "objectType" : "Port",
+      "nodePortType" : "In",
+      "name" : "value",
+      "execPortType" : "Out",
+      "typeSpec" : "Integer"
+      }
+    ],
+  "extDeps" : {
+    "Oculus" : "*"
+    },
+  "presetGUID" : "056DAEE8607BE2C4F4BAA18874D45A4A",
+  "code" : "require Oculus;\n\ndfgEntry {\n  value = ovrStatus_HmdConnected;\n}\n"
+  }

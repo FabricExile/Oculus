@@ -1,0 +1,19 @@
+// Created by kl2dfg (processConstant)
+{
+  "objectType" : "Func",
+  "title" : "OvrTouch_LThumbUp",
+  "ports" : [
+    {
+      "objectType" : "Port",
+      "nodePortType" : "In",
+      "name" : "value",
+      "execPortType" : "Out",
+      "typeSpec" : "ovrTouch"
+      }
+    ],
+  "extDeps" : {
+    "Oculus" : "*"
+    },
+  "presetGUID" : "DF04686A4DB6B8C26B99142EDFE53481",
+  "code" : "require Oculus;\n\ndfgEntry {\n  value = ovrTouch_LThumbUp;\n}\n"
+  }

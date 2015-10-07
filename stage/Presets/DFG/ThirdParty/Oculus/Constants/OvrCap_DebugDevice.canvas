@@ -1,0 +1,19 @@
+// Created by kl2dfg (processConstant)
+{
+  "objectType" : "Func",
+  "title" : "OvrCap_DebugDevice",
+  "ports" : [
+    {
+      "objectType" : "Port",
+      "nodePortType" : "In",
+      "name" : "value",
+      "execPortType" : "Out",
+      "typeSpec" : "ovrCaps"
+      }
+    ],
+  "extDeps" : {
+    "Oculus" : "*"
+    },
+  "presetGUID" : "63329601425FB87A7D5A2E5C15BDAD6B",
+  "code" : "require Oculus;\n\ndfgEntry {\n  value = ovrCap_DebugDevice;\n}\n"
+  }

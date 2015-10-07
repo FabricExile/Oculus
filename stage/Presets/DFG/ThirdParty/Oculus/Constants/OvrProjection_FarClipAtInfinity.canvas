@@ -1,0 +1,19 @@
+// Created by kl2dfg (processConstant)
+{
+  "objectType" : "Func",
+  "title" : "OvrProjection_FarClipAtInfinity",
+  "ports" : [
+    {
+      "objectType" : "Port",
+      "nodePortType" : "In",
+      "name" : "value",
+      "execPortType" : "Out",
+      "typeSpec" : "ovrProjectionModifier"
+      }
+    ],
+  "extDeps" : {
+    "Oculus" : "*"
+    },
+  "presetGUID" : "5478D60BF95F7749EF36B467E6D18655",
+  "code" : "require Oculus;\n\ndfgEntry {\n  value = ovrProjection_FarClipAtInfinity;\n}\n"
+  }

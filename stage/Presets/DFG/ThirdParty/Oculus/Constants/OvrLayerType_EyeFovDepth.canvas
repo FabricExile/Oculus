@@ -1,0 +1,19 @@
+// Created by kl2dfg (processConstant)
+{
+  "objectType" : "Func",
+  "title" : "OvrLayerType_EyeFovDepth",
+  "ports" : [
+    {
+      "objectType" : "Port",
+      "nodePortType" : "In",
+      "name" : "value",
+      "execPortType" : "Out",
+      "typeSpec" : "ovrLayerType"
+      }
+    ],
+  "extDeps" : {
+    "Oculus" : "*"
+    },
+  "presetGUID" : "E71656CC22E8140294D106A395D4D8C8",
+  "code" : "require Oculus;\n\ndfgEntry {\n  value = ovrLayerType_EyeFovDepth;\n}\n"
+  }

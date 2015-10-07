@@ -1,0 +1,19 @@
+// Created by kl2dfg (processConstant)
+{
+  "objectType" : "Func",
+  "title" : "OvrTrackingCap_Orientation",
+  "ports" : [
+    {
+      "objectType" : "Port",
+      "nodePortType" : "In",
+      "name" : "value",
+      "execPortType" : "Out",
+      "typeSpec" : "ovrTrackingCaps"
+      }
+    ],
+  "extDeps" : {
+    "Oculus" : "*"
+    },
+  "presetGUID" : "AACA335CD5A6EEE2F5233CB613D58DA3",
+  "code" : "require Oculus;\n\ndfgEntry {\n  value = ovrTrackingCap_Orientation;\n}\n"
+  }

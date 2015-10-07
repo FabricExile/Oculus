@@ -1,0 +1,45 @@
+// Created by kl2dfg (processComposeFunction)
+{
+  "objectType" : "Func",
+  "title" : "-> ovrRect",
+  "ports" : [
+    {
+      "objectType" : "Port",
+      "nodePortType" : "Out",
+      "defaultValues" : {
+        "ovrVec2" : {
+          "x" : 0,
+          "y" : 0
+          }
+        },
+      "name" : "Pos",
+      "execPortType" : "In",
+      "typeSpec" : "ovrVec2"
+      },
+    {
+      "objectType" : "Port",
+      "nodePortType" : "Out",
+      "defaultValues" : {
+        "ovrSize" : {
+          "w" : 0,
+          "h" : 0
+          }
+        },
+      "name" : "Size",
+      "execPortType" : "In",
+      "typeSpec" : "ovrSize"
+      },
+    {
+      "objectType" : "Port",
+      "nodePortType" : "In",
+      "name" : "result",
+      "execPortType" : "Out",
+      "typeSpec" : "ovrRect"
+      }
+    ],
+  "extDeps" : {
+    "Oculus" : "*"
+    },
+  "presetGUID" : "B3AA4B63D9DE06000BC197488DA9A5FF",
+  "code" : "require Oculus;\n\ndfgEntry {\n  result.Pos = Pos;\n  result.Size = Size;\n}\n"
+  }

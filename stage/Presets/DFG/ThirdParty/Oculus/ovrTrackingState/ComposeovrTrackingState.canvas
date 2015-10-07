@@ -1,0 +1,249 @@
+// Created by kl2dfg (processComposeFunction)
+{
+  "objectType" : "Func",
+  "title" : "-> ovrTrackingState",
+  "ports" : [
+    {
+      "objectType" : "Port",
+      "nodePortType" : "Out",
+      "defaultValues" : {
+        "ovrPoseState" : {
+          "ThePose" : {
+            "Orientation" : {
+              "v" : {
+                "x" : 0,
+                "y" : 0,
+                "z" : 0
+                },
+              "w" : 1
+              },
+            "Position" : {
+              "x" : 0,
+              "y" : 0,
+              "z" : 0
+              }
+            },
+          "AngularVelocity" : {
+            "x" : 0,
+            "y" : 0,
+            "z" : 0
+            },
+          "LinearVelocity" : {
+            "x" : 0,
+            "y" : 0,
+            "z" : 0
+            },
+          "AngularAcceleration" : {
+            "x" : 0,
+            "y" : 0,
+            "z" : 0
+            },
+          "LinearAcceleration" : {
+            "x" : 0,
+            "y" : 0,
+            "z" : 0
+            },
+          "TimeInSeconds" : 0
+          }
+        },
+      "name" : "HeadPose",
+      "execPortType" : "In",
+      "typeSpec" : "ovrPoseState"
+      },
+    {
+      "objectType" : "Port",
+      "nodePortType" : "Out",
+      "defaultValues" : {
+        "ovrPose" : {
+          "Orientation" : {
+            "v" : {
+              "x" : 0,
+              "y" : 0,
+              "z" : 0
+              },
+            "w" : 1
+            },
+          "Position" : {
+            "x" : 0,
+            "y" : 0,
+            "z" : 0
+            }
+          }
+        },
+      "name" : "CameraPose",
+      "execPortType" : "In",
+      "typeSpec" : "ovrPose"
+      },
+    {
+      "objectType" : "Port",
+      "nodePortType" : "Out",
+      "defaultValues" : {
+        "ovrPose" : {
+          "Orientation" : {
+            "v" : {
+              "x" : 0,
+              "y" : 0,
+              "z" : 0
+              },
+            "w" : 1
+            },
+          "Position" : {
+            "x" : 0,
+            "y" : 0,
+            "z" : 0
+            }
+          }
+        },
+      "name" : "LeveledCameraPose",
+      "execPortType" : "In",
+      "typeSpec" : "ovrPose"
+      },
+    {
+      "objectType" : "Port",
+      "nodePortType" : "Out",
+      "defaultValues" : {
+        "ovrPoseState[2]" : [
+          {
+            "ThePose" : {
+              "Orientation" : {
+                "v" : {
+                  "x" : 0,
+                  "y" : 0,
+                  "z" : 0
+                  },
+                "w" : 1
+                },
+              "Position" : {
+                "x" : 0,
+                "y" : 0,
+                "z" : 0
+                }
+              },
+            "AngularVelocity" : {
+              "x" : 0,
+              "y" : 0,
+              "z" : 0
+              },
+            "LinearVelocity" : {
+              "x" : 0,
+              "y" : 0,
+              "z" : 0
+              },
+            "AngularAcceleration" : {
+              "x" : 0,
+              "y" : 0,
+              "z" : 0
+              },
+            "LinearAcceleration" : {
+              "x" : 0,
+              "y" : 0,
+              "z" : 0
+              },
+            "TimeInSeconds" : 0
+            },
+          {
+            "ThePose" : {
+              "Orientation" : {
+                "v" : {
+                  "x" : 0,
+                  "y" : 0,
+                  "z" : 0
+                  },
+                "w" : 1
+                },
+              "Position" : {
+                "x" : 0,
+                "y" : 0,
+                "z" : 0
+                }
+              },
+            "AngularVelocity" : {
+              "x" : 0,
+              "y" : 0,
+              "z" : 0
+              },
+            "LinearVelocity" : {
+              "x" : 0,
+              "y" : 0,
+              "z" : 0
+              },
+            "AngularAcceleration" : {
+              "x" : 0,
+              "y" : 0,
+              "z" : 0
+              },
+            "LinearAcceleration" : {
+              "x" : 0,
+              "y" : 0,
+              "z" : 0
+              },
+            "TimeInSeconds" : 0
+            }
+          ]
+        },
+      "name" : "HandPoses",
+      "execPortType" : "In",
+      "typeSpec" : "ovrPoseState[2]"
+      },
+    {
+      "objectType" : "Port",
+      "nodePortType" : "Out",
+      "defaultValues" : {
+        "ovrSensorData" : {
+          "Accelerometer" : {
+            "x" : 0,
+            "y" : 0,
+            "z" : 0
+            },
+          "Gyro" : {
+            "x" : 0,
+            "y" : 0,
+            "z" : 0
+            },
+          "Magnetometer" : {
+            "x" : 0,
+            "y" : 0,
+            "z" : 0
+            },
+          "Temperature" : 0,
+          "TimeInSeconds" : 0
+          }
+        },
+      "name" : "RawSensorData",
+      "execPortType" : "In",
+      "typeSpec" : "ovrSensorData"
+      },
+    {
+      "objectType" : "Port",
+      "nodePortType" : "Out",
+      "defaultValues" : {
+        "Size" : 0
+        },
+      "name" : "StatusFlags",
+      "execPortType" : "In",
+      "typeSpec" : "Size"
+      },
+    {
+      "objectType" : "Port",
+      "nodePortType" : "Out",
+      "defaultValues" : {
+        "UInt32" : 0
+        },
+      "name" : "LastCameraFrameCounter",
+      "execPortType" : "In",
+      "typeSpec" : "UInt32"
+      },
+    {
+      "objectType" : "Port",
+      "nodePortType" : "In",
+      "name" : "result",
+      "execPortType" : "Out",
+      "typeSpec" : "ovrTrackingState"
+      }
+    ],
+  "extDeps" : {
+    "Oculus" : "*"
+    },
+  "presetGUID" : "B3AA4B63D9DE06000BC197488DA9A5FF",
+  "code" : "require Oculus;\n\ndfgEntry {\n  result.HeadPose = HeadPose;\n  result.CameraPose = CameraPose;\n  result.LeveledCameraPose = LeveledCameraPose;\n  result.HandPoses = HandPoses;\n  result.RawSensorData = RawSensorData;\n  result.StatusFlags = StatusFlags;\n  result.LastCameraFrameCounter = LastCameraFrameCounter;\n}\n"
+  }

@@ -1,0 +1,56 @@
+// Created by kl2dfg (processDecomposeFunction)
+{
+  "objectType" : "Func",
+  "title" : "ovrPose ->",
+  "ports" : [
+    {
+      "objectType" : "Port",
+      "nodePortType" : "Out",
+      "defaultValues" : {
+        "ovrPose" : {
+          "Orientation" : {
+            "v" : {
+              "x" : 0,
+              "y" : 0,
+              "z" : 0
+              },
+            "w" : 1
+            },
+          "Position" : {
+            "x" : 0,
+            "y" : 0,
+            "z" : 0
+            }
+          }
+        },
+      "name" : "value",
+      "execPortType" : "In",
+      "typeSpec" : "ovrPose"
+      },
+    {
+      "objectType" : "Port",
+      "metadata" : {
+        "uiColor" : "{\n  \"r\" : 0,\n  \"g\" : 191,\n  \"b\" : 232\n  }"
+        },
+      "nodePortType" : "In",
+      "name" : "Orientation",
+      "execPortType" : "Out",
+      "typeSpec" : "Quat"
+      },
+    {
+      "objectType" : "Port",
+      "metadata" : {
+        "uiColor" : "{\n  \"r\" : 255,\n  \"g\" : 242,\n  \"b\" : 0\n  }"
+        },
+      "nodePortType" : "In",
+      "name" : "Position",
+      "execPortType" : "Out",
+      "typeSpec" : "Vec3"
+      }
+    ],
+  "extDeps" : {
+    "Oculus" : "*"
+    },
+  "presetGUID" : "24CF49CE421968F9ACE0E2C85E48DC6D",
+  "code" : "require Oculus;\n\ndfgEntry {\n  Orientation = value.Orientation;\n  Position = value.Position;\n}\n"
+  }

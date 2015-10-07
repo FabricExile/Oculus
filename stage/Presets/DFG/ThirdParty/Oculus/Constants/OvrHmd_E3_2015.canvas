@@ -1,0 +1,19 @@
+// Created by kl2dfg (processConstant)
+{
+  "objectType" : "Func",
+  "title" : "OvrHmd_E3_2015",
+  "ports" : [
+    {
+      "objectType" : "Port",
+      "nodePortType" : "In",
+      "name" : "value",
+      "execPortType" : "Out",
+      "typeSpec" : "ovrHmdType"
+      }
+    ],
+  "extDeps" : {
+    "Oculus" : "*"
+    },
+  "presetGUID" : "B9920A952CDC7D004CA66F2D01625D58",
+  "code" : "require Oculus;\n\ndfgEntry {\n  value = ovrHmd_E3_2015;\n}\n"
+  }

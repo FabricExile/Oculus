@@ -1,0 +1,15 @@
+/*
+ *  Copyright 2010-2014 Fabric Software Inc. All rights reserved.
+ */
+
+/// \dfgPresetOmit
+object ovrGLDepthBuffer {
+  /// \internal
+  Data handle;
+};
+
+function ovrGLDepthBuffer(ovrSize size, SInt32 sampleCount) = "ovrGLDepthBuffer_Construct";
+
+function ~ovrGLDepthBuffer() = "ovrGLDepthBuffer_Destruct";
+
+function SInt32 ovrGLDepthBuffer.getTexId() = "ovrGLDepthBuffer_GetTexId";

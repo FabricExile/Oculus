@@ -1,0 +1,19 @@
+// Created by kl2dfg (processConstant)
+{
+  "objectType" : "Func",
+  "title" : "OvrHmd_DKHD",
+  "ports" : [
+    {
+      "objectType" : "Port",
+      "nodePortType" : "In",
+      "name" : "value",
+      "execPortType" : "Out",
+      "typeSpec" : "ovrHmdType"
+      }
+    ],
+  "extDeps" : {
+    "Oculus" : "*"
+    },
+  "presetGUID" : "09E3752997A8F945C71FCB6B3E2DEF3D",
+  "code" : "require Oculus;\n\ndfgEntry {\n  value = ovrHmd_DKHD;\n}\n"
+  }

@@ -1,0 +1,19 @@
+// Created by kl2dfg (processConstant)
+{
+  "objectType" : "Func",
+  "title" : "OvrTouch_RIndexPointing",
+  "ports" : [
+    {
+      "objectType" : "Port",
+      "nodePortType" : "In",
+      "name" : "value",
+      "execPortType" : "Out",
+      "typeSpec" : "ovrTouch"
+      }
+    ],
+  "extDeps" : {
+    "Oculus" : "*"
+    },
+  "presetGUID" : "00A3234A75A2D61409C6877668640544",
+  "code" : "require Oculus;\n\ndfgEntry {\n  value = ovrTouch_RIndexPointing;\n}\n"
+  }

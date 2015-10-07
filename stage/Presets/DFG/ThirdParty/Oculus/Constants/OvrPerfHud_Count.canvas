@@ -1,0 +1,19 @@
+// Created by kl2dfg (processConstant)
+{
+  "objectType" : "Func",
+  "title" : "OvrPerfHud_Count",
+  "ports" : [
+    {
+      "objectType" : "Port",
+      "nodePortType" : "In",
+      "name" : "value",
+      "execPortType" : "Out",
+      "typeSpec" : "ovrPerfHudMode"
+      }
+    ],
+  "extDeps" : {
+    "Oculus" : "*"
+    },
+  "presetGUID" : "8ED9C8F3ECDDA43CEE9D32D0267BCF18",
+  "code" : "require Oculus;\n\ndfgEntry {\n  value = ovrPerfHud_Count;\n}\n"
+  }

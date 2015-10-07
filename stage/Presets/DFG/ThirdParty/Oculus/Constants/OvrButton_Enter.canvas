@@ -1,0 +1,19 @@
+// Created by kl2dfg (processConstant)
+{
+  "objectType" : "Func",
+  "title" : "OvrButton_Enter",
+  "ports" : [
+    {
+      "objectType" : "Port",
+      "nodePortType" : "In",
+      "name" : "value",
+      "execPortType" : "Out",
+      "typeSpec" : "ovrButton"
+      }
+    ],
+  "extDeps" : {
+    "Oculus" : "*"
+    },
+  "presetGUID" : "ABE3FCFC9C0E426759AE4FD64C0DE39A",
+  "code" : "require Oculus;\n\ndfgEntry {\n  value = ovrButton_Enter;\n}\n"
+  }

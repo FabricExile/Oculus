@@ -1,0 +1,55 @@
+// Created by kl2dfg (processDecomposeFunction)
+{
+  "objectType" : "Func",
+  "title" : "ovrFrameTiming ->",
+  "ports" : [
+    {
+      "objectType" : "Port",
+      "nodePortType" : "Out",
+      "defaultValues" : {
+        "ovrFrameTiming" : {
+          "DisplayMidpointSeconds" : 0,
+          "FrameIntervalSeconds" : 0,
+          "AppFrameIndex" : 0,
+          "DisplayFrameIndex" : 0
+          }
+        },
+      "name" : "value",
+      "execPortType" : "In",
+      "typeSpec" : "ovrFrameTiming"
+      },
+    {
+      "objectType" : "Port",
+      "nodePortType" : "In",
+      "name" : "DisplayMidpointSeconds",
+      "execPortType" : "Out",
+      "typeSpec" : "Float64"
+      },
+    {
+      "objectType" : "Port",
+      "nodePortType" : "In",
+      "name" : "FrameIntervalSeconds",
+      "execPortType" : "Out",
+      "typeSpec" : "Float64"
+      },
+    {
+      "objectType" : "Port",
+      "nodePortType" : "In",
+      "name" : "AppFrameIndex",
+      "execPortType" : "Out",
+      "typeSpec" : "UInt32"
+      },
+    {
+      "objectType" : "Port",
+      "nodePortType" : "In",
+      "name" : "DisplayFrameIndex",
+      "execPortType" : "Out",
+      "typeSpec" : "UInt32"
+      }
+    ],
+  "extDeps" : {
+    "Oculus" : "*"
+    },
+  "presetGUID" : "24CF49CE421968F9ACE0E2C85E48DC6D",
+  "code" : "require Oculus;\n\ndfgEntry {\n  DisplayMidpointSeconds = value.DisplayMidpointSeconds;\n  FrameIntervalSeconds = value.FrameIntervalSeconds;\n  AppFrameIndex = value.AppFrameIndex;\n  DisplayFrameIndex = value.DisplayFrameIndex;\n}\n"
+  }

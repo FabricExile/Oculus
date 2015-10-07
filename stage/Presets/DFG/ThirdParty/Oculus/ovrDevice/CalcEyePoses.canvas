@@ -1,0 +1,46 @@
+// Created by kl2dfg (processFunction)
+{
+  "objectType" : "Func",
+  "metadata" : {
+    "uiTooltip" : "Computes offset eye poses based on headPose returned by ovrTrackingState.\n\n Supported by ovrDevice"
+    },
+  "title" : "CalcEyePoses",
+  "ports" : [
+    {
+      "objectType" : "Port",
+      "nodePortType" : "Out",
+      "name" : "this",
+      "execPortType" : "In",
+      "typeSpec" : "ovrDevice"
+      },
+    {
+      "objectType" : "Port",
+      "nodePortType" : "Out",
+      "name" : "headPose",
+      "execPortType" : "In",
+      "typeSpec" : "ovrPose"
+      },
+    {
+      "objectType" : "Port",
+      "metadata" : {
+        "uiColor" : "{\n  \"r\" : 255,\n  \"g\" : 242,\n  \"b\" : 0\n  }"
+        },
+      "nodePortType" : "Out",
+      "name" : "hmdToEyeViewOffset",
+      "execPortType" : "In",
+      "typeSpec" : "Vec3[2]"
+      },
+    {
+      "objectType" : "Port",
+      "nodePortType" : "In",
+      "name" : "result",
+      "execPortType" : "Out",
+      "typeSpec" : "ovrPose[2]"
+      }
+    ],
+  "extDeps" : {
+    "Oculus" : "*"
+    },
+  "presetGUID" : "8D53C65E14BA39CE840E9350D68E1D50",
+  "code" : "require Oculus;\n\ndfgEntry {\n  result = this.calcEyePoses(headPose, hmdToEyeViewOffset);\n}\n"
+  }

@@ -1,0 +1,96 @@
+// Created by kl2dfg (processComposeFunction)
+{
+  "objectType" : "Func",
+  "title" : "-> ovrEyeRenderDesc",
+  "ports" : [
+    {
+      "objectType" : "Port",
+      "nodePortType" : "Out",
+      "defaultValues" : {
+        "ovrEyeType" : 0
+        },
+      "name" : "Eye",
+      "execPortType" : "In",
+      "typeSpec" : "ovrEyeType"
+      },
+    {
+      "objectType" : "Port",
+      "nodePortType" : "Out",
+      "defaultValues" : {
+        "ovrFovPort" : {
+          "UpTan" : 0,
+          "DownTan" : 0,
+          "LeftTan" : 0,
+          "RightTan" : 0
+          }
+        },
+      "name" : "Fov",
+      "execPortType" : "In",
+      "typeSpec" : "ovrFovPort"
+      },
+    {
+      "objectType" : "Port",
+      "nodePortType" : "Out",
+      "defaultValues" : {
+        "ovrRect" : {
+          "Pos" : {
+            "x" : 0,
+            "y" : 0
+            },
+          "Size" : {
+            "w" : 0,
+            "h" : 0
+            }
+          }
+        },
+      "name" : "DistortedViewport",
+      "execPortType" : "In",
+      "typeSpec" : "ovrRect"
+      },
+    {
+      "objectType" : "Port",
+      "metadata" : {
+        "uiColor" : "{\n  \"r\" : 255,\n  \"g\" : 242,\n  \"b\" : 0\n  }"
+        },
+      "nodePortType" : "Out",
+      "defaultValues" : {
+        "Vec2" : {
+          "x" : 0,
+          "y" : 0
+          }
+        },
+      "name" : "PixelsPerTanAngleAtCenter",
+      "execPortType" : "In",
+      "typeSpec" : "Vec2"
+      },
+    {
+      "objectType" : "Port",
+      "metadata" : {
+        "uiColor" : "{\n  \"r\" : 255,\n  \"g\" : 242,\n  \"b\" : 0\n  }"
+        },
+      "nodePortType" : "Out",
+      "defaultValues" : {
+        "Vec3" : {
+          "x" : 0,
+          "y" : 0,
+          "z" : 0
+          }
+        },
+      "name" : "HmdToEyeViewOffset",
+      "execPortType" : "In",
+      "typeSpec" : "Vec3"
+      },
+    {
+      "objectType" : "Port",
+      "nodePortType" : "In",
+      "name" : "result",
+      "execPortType" : "Out",
+      "typeSpec" : "ovrEyeRenderDesc"
+      }
+    ],
+  "extDeps" : {
+    "Oculus" : "*"
+    },
+  "presetGUID" : "B3AA4B63D9DE06000BC197488DA9A5FF",
+  "code" : "require Oculus;\n\ndfgEntry {\n  result.Eye = Eye;\n  result.Fov = Fov;\n  result.DistortedViewport = DistortedViewport;\n  result.PixelsPerTanAngleAtCenter = PixelsPerTanAngleAtCenter;\n  result.HmdToEyeViewOffset = HmdToEyeViewOffset;\n}\n"
+  }

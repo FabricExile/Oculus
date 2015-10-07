@@ -1,0 +1,19 @@
+// Created by kl2dfg (processConstant)
+{
+  "objectType" : "Func",
+  "title" : "OvrLayerFlag_TextureOriginAtBottomLeft",
+  "ports" : [
+    {
+      "objectType" : "Port",
+      "nodePortType" : "In",
+      "name" : "value",
+      "execPortType" : "Out",
+      "typeSpec" : "ovrLayerFlags"
+      }
+    ],
+  "extDeps" : {
+    "Oculus" : "*"
+    },
+  "presetGUID" : "E0B086C794DD3EE72979329612AA3D00",
+  "code" : "require Oculus;\n\ndfgEntry {\n  value = ovrLayerFlag_TextureOriginAtBottomLeft;\n}\n"
+  }

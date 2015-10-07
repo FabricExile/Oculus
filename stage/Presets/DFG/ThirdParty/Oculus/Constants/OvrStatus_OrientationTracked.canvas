@@ -1,0 +1,19 @@
+// Created by kl2dfg (processConstant)
+{
+  "objectType" : "Func",
+  "title" : "OvrStatus_OrientationTracked",
+  "ports" : [
+    {
+      "objectType" : "Port",
+      "nodePortType" : "In",
+      "name" : "value",
+      "execPortType" : "Out",
+      "typeSpec" : "Integer"
+      }
+    ],
+  "extDeps" : {
+    "Oculus" : "*"
+    },
+  "presetGUID" : "1F3032F86C3DD932232DFED3CBEBB93D",
+  "code" : "require Oculus;\n\ndfgEntry {\n  value = ovrStatus_OrientationTracked;\n}\n"
+  }

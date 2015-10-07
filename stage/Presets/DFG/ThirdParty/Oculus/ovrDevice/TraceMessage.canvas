@@ -1,0 +1,36 @@
+// Created by kl2dfg (processFunction)
+{
+  "objectType" : "Func",
+  "metadata" : {
+    "uiTooltip" : "Writes a message string to the LibOVR tracing mechanism (if enabled).\n\n Supported by ovrDevice"
+    },
+  "title" : "TraceMessage",
+  "ports" : [
+    {
+      "objectType" : "Port",
+      "nodePortType" : "IO",
+      "name" : "this",
+      "execPortType" : "IO",
+      "typeSpec" : "ovrDevice"
+      },
+    {
+      "objectType" : "Port",
+      "nodePortType" : "Out",
+      "name" : "level",
+      "execPortType" : "In",
+      "typeSpec" : "ovrLogLevel"
+      },
+    {
+      "objectType" : "Port",
+      "nodePortType" : "Out",
+      "name" : "message",
+      "execPortType" : "In",
+      "typeSpec" : "String"
+      }
+    ],
+  "extDeps" : {
+    "Oculus" : "*"
+    },
+  "presetGUID" : "D636B2A28FE6B28D5FD6BE96D525C367",
+  "code" : "require Oculus;\n\ndfgEntry {\n  this.traceMessage(level, message);\n}\n"
+  }

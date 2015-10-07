@@ -1,0 +1,19 @@
+// Created by kl2dfg (processConstant)
+{
+  "objectType" : "Func",
+  "title" : "OvrDebugHudStereo_Off",
+  "ports" : [
+    {
+      "objectType" : "Port",
+      "nodePortType" : "In",
+      "name" : "value",
+      "execPortType" : "Out",
+      "typeSpec" : "ovrDebugHudStereoMode"
+      }
+    ],
+  "extDeps" : {
+    "Oculus" : "*"
+    },
+  "presetGUID" : "8F5813CCFBC6679FB5DA491ED27B7766",
+  "code" : "require Oculus;\n\ndfgEntry {\n  value = ovrDebugHudStereo_Off;\n}\n"
+  }

@@ -1,0 +1,19 @@
+// Created by kl2dfg (processConstant)
+{
+  "objectType" : "Func",
+  "title" : "OvrControllerType_EnumSize",
+  "ports" : [
+    {
+      "objectType" : "Port",
+      "nodePortType" : "In",
+      "name" : "value",
+      "execPortType" : "Out",
+      "typeSpec" : "ovrControllerType"
+      }
+    ],
+  "extDeps" : {
+    "Oculus" : "*"
+    },
+  "presetGUID" : "C0BB84F930A0C73A48C6FC445BB8A950",
+  "code" : "require Oculus;\n\ndfgEntry {\n  value = ovrControllerType_EnumSize;\n}\n"
+  }

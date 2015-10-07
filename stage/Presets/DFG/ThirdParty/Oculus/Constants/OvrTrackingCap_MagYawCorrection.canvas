@@ -1,0 +1,19 @@
+// Created by kl2dfg (processConstant)
+{
+  "objectType" : "Func",
+  "title" : "OvrTrackingCap_MagYawCorrection",
+  "ports" : [
+    {
+      "objectType" : "Port",
+      "nodePortType" : "In",
+      "name" : "value",
+      "execPortType" : "Out",
+      "typeSpec" : "ovrTrackingCaps"
+      }
+    ],
+  "extDeps" : {
+    "Oculus" : "*"
+    },
+  "presetGUID" : "FD81F18678F397D504C5CBFF4904668B",
+  "code" : "require Oculus;\n\ndfgEntry {\n  value = ovrTrackingCap_MagYawCorrection;\n}\n"
+  }

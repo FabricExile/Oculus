@@ -1,0 +1,19 @@
+// Created by kl2dfg (processConstant)
+{
+  "objectType" : "Func",
+  "title" : "OvrLogLevel_EnumSize",
+  "ports" : [
+    {
+      "objectType" : "Port",
+      "nodePortType" : "In",
+      "name" : "value",
+      "execPortType" : "Out",
+      "typeSpec" : "ovrLogLevel"
+      }
+    ],
+  "extDeps" : {
+    "Oculus" : "*"
+    },
+  "presetGUID" : "7130BE8C6954B16A0D3708957EBCF639",
+  "code" : "require Oculus;\n\ndfgEntry {\n  value = ovrLogLevel_EnumSize;\n}\n"
+  }

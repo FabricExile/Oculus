@@ -1,0 +1,29 @@
+// Created by kl2dfg (processFunction)
+{
+  "objectType" : "Func",
+  "metadata" : {
+    "uiTooltip" : "Returns ovrHmdCaps bits that are currently enabled.\n\n Supported by ovrDevice"
+    },
+  "title" : "GetEnabledCaps",
+  "ports" : [
+    {
+      "objectType" : "Port",
+      "nodePortType" : "Out",
+      "name" : "this",
+      "execPortType" : "In",
+      "typeSpec" : "ovrDevice"
+      },
+    {
+      "objectType" : "Port",
+      "nodePortType" : "In",
+      "name" : "result",
+      "execPortType" : "Out",
+      "typeSpec" : "ovrCaps"
+      }
+    ],
+  "extDeps" : {
+    "Oculus" : "*"
+    },
+  "presetGUID" : "AAEA57A426AF50BB3990E6F02C9CFED8",
+  "code" : "require Oculus;\n\ndfgEntry {\n  result = this.getEnabledCaps();\n}\n"
+  }

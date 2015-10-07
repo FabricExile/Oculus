@@ -1,0 +1,19 @@
+// Created by kl2dfg (processConstant)
+{
+  "objectType" : "Func",
+  "title" : "OvrRenderAPI_None",
+  "ports" : [
+    {
+      "objectType" : "Port",
+      "nodePortType" : "In",
+      "name" : "value",
+      "execPortType" : "Out",
+      "typeSpec" : "ovrRenderAPIType"
+      }
+    ],
+  "extDeps" : {
+    "Oculus" : "*"
+    },
+  "presetGUID" : "1B79A9C855368AF7E2BE7DC56681A60C",
+  "code" : "require Oculus;\n\ndfgEntry {\n  value = ovrRenderAPI_None;\n}\n"
+  }

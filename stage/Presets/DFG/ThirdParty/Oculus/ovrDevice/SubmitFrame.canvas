@@ -1,0 +1,50 @@
+// Created by kl2dfg (processFunction)
+{
+  "objectType" : "Func",
+  "metadata" : {
+    "uiTooltip" : "Submits layers for distortion and display.\nOverload taking a single ovrLayerEyeFov\novr_SubmitFrame triggers distortion and processing which might happen asynchronously.\nThe function will return when there is room in the submission queue and surfaces\nare available. Distortion might or might not have completed.\n\n Supported by ovrDevice"
+    },
+  "title" : "SubmitFrame",
+  "ports" : [
+    {
+      "objectType" : "Port",
+      "nodePortType" : "IO",
+      "name" : "this",
+      "execPortType" : "IO",
+      "typeSpec" : "ovrDevice"
+      },
+    {
+      "objectType" : "Port",
+      "nodePortType" : "Out",
+      "name" : "frameIndex",
+      "execPortType" : "In",
+      "typeSpec" : "UInt32"
+      },
+    {
+      "objectType" : "Port",
+      "nodePortType" : "Out",
+      "name" : "scale",
+      "execPortType" : "In",
+      "typeSpec" : "ovrViewScaleDesc"
+      },
+    {
+      "objectType" : "Port",
+      "nodePortType" : "Out",
+      "name" : "layer",
+      "execPortType" : "In",
+      "typeSpec" : "ovrLayerEyeFov"
+      },
+    {
+      "objectType" : "Port",
+      "nodePortType" : "In",
+      "name" : "result",
+      "execPortType" : "Out",
+      "typeSpec" : "Boolean"
+      }
+    ],
+  "extDeps" : {
+    "Oculus" : "*"
+    },
+  "presetGUID" : "6DA49AE9F1115B8DBD353DE52D341468",
+  "code" : "require Oculus;\n\ndfgEntry {\n  result = this.submitFrame(frameIndex, scale, layer);\n}\n"
+  }

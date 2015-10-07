@@ -1,0 +1,97 @@
+// Created by kl2dfg (processDecomposeFunction)
+{
+  "objectType" : "Func",
+  "title" : "ovrInputState ->",
+  "ports" : [
+    {
+      "objectType" : "Port",
+      "nodePortType" : "Out",
+      "defaultValues" : {
+        "ovrInputState" : {
+          "TimeInSeconds" : 0,
+          "ConnectedControllerTypes" : 0,
+          "Buttons" : 0,
+          "Touches" : 0,
+          "IndexTrigger" : [
+            0,
+            0
+            ],
+          "HandTrigger" : [
+            0,
+            0
+            ],
+          "Thumbstick" : [
+            {
+              "x" : 0,
+              "y" : 0
+              },
+            {
+              "x" : 0,
+              "y" : 0
+              }
+            ]
+          }
+        },
+      "name" : "value",
+      "execPortType" : "In",
+      "typeSpec" : "ovrInputState"
+      },
+    {
+      "objectType" : "Port",
+      "nodePortType" : "In",
+      "name" : "TimeInSeconds",
+      "execPortType" : "Out",
+      "typeSpec" : "Float64"
+      },
+    {
+      "objectType" : "Port",
+      "nodePortType" : "In",
+      "name" : "ConnectedControllerTypes",
+      "execPortType" : "Out",
+      "typeSpec" : "UInt32"
+      },
+    {
+      "objectType" : "Port",
+      "nodePortType" : "In",
+      "name" : "Buttons",
+      "execPortType" : "Out",
+      "typeSpec" : "UInt32"
+      },
+    {
+      "objectType" : "Port",
+      "nodePortType" : "In",
+      "name" : "Touches",
+      "execPortType" : "Out",
+      "typeSpec" : "UInt32"
+      },
+    {
+      "objectType" : "Port",
+      "nodePortType" : "In",
+      "name" : "IndexTrigger",
+      "execPortType" : "Out",
+      "typeSpec" : "Float32[2]"
+      },
+    {
+      "objectType" : "Port",
+      "nodePortType" : "In",
+      "name" : "HandTrigger",
+      "execPortType" : "Out",
+      "typeSpec" : "Float32[2]"
+      },
+    {
+      "objectType" : "Port",
+      "metadata" : {
+        "uiColor" : "{\n  \"r\" : 255,\n  \"g\" : 242,\n  \"b\" : 0\n  }"
+        },
+      "nodePortType" : "In",
+      "name" : "Thumbstick",
+      "execPortType" : "Out",
+      "typeSpec" : "Vec2[2]"
+      }
+    ],
+  "extDeps" : {
+    "Oculus" : "*"
+    },
+  "presetGUID" : "24CF49CE421968F9ACE0E2C85E48DC6D",
+  "code" : "require Oculus;\n\ndfgEntry {\n  TimeInSeconds = value.TimeInSeconds;\n  ConnectedControllerTypes = value.ConnectedControllerTypes;\n  Buttons = value.Buttons;\n  Touches = value.Touches;\n  IndexTrigger = value.IndexTrigger;\n  HandTrigger = value.HandTrigger;\n  Thumbstick = value.Thumbstick;\n}\n"
+  }

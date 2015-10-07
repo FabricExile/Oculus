@@ -1,0 +1,10 @@
+/*
+ *  Copyright 2010-2014 Fabric Software Inc. All rights reserved.
+ */
+
+alias Integer ovrLogLevel;
+
+const ovrLogLevel ovrLogLevel_Debug    = 0; ///< Debug-level log event.
+const ovrLogLevel ovrLogLevel_Info     = 1; ///< Info-level log event.
+const ovrLogLevel ovrLogLevel_Error    = 2; ///< Error-level log event.
+const ovrLogLevel ovrLogLevel_EnumSize = 0x7fffffff; ///< \internal Force type int32_t.

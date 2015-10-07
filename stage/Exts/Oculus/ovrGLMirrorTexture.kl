@@ -1,0 +1,21 @@
+/*
+ *  Copyright 2010-2014 Fabric Software Inc. All rights reserved.
+ */
+
+/// \dfgPresetOmit
+object ovrGLMirrorTexture {
+  /// \internal
+  Data handle;
+};
+
+function ovrGLMirrorTexture(ovrDevice device, ovrSize windowSize) = "ovrGLMirrorTexture_Construct";
+
+function ~ovrGLMirrorTexture() = "ovrGLMirrorTexture_Destruct";
+
+function ovrSize ovrGLMirrorTexture.getSize() = "ovrGLMirrorTexture_GetSize";
+
+function SInt32 ovrGLMirrorTexture.getTexId() = "ovrGLMirrorTexture_GetTexId";
+
+function SInt32 ovrGLMirrorTexture.getFboId() = "ovrGLMirrorTexture_GetFboId";
+
+function ovrGLMirrorTexture.blitTexture!() = "ovrGLMirrorTexture_BlitTexture";

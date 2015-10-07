@@ -1,0 +1,19 @@
+// Created by kl2dfg (processConstant)
+{
+  "objectType" : "Func",
+  "title" : "OvrTrackingCap_Idle",
+  "ports" : [
+    {
+      "objectType" : "Port",
+      "nodePortType" : "In",
+      "name" : "value",
+      "execPortType" : "Out",
+      "typeSpec" : "ovrTrackingCaps"
+      }
+    ],
+  "extDeps" : {
+    "Oculus" : "*"
+    },
+  "presetGUID" : "C955E1BA8092851EA68BDE83618120BB",
+  "code" : "require Oculus;\n\ndfgEntry {\n  value = ovrTrackingCap_Idle;\n}\n"
+  }

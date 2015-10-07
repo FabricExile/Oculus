@@ -1,0 +1,36 @@
+// Created by kl2dfg (processFunction)
+{
+  "objectType" : "Func",
+  "metadata" : {
+    "uiTooltip" : "\n\n Supported by ovrRect"
+    },
+  "title" : "OvrRect",
+  "ports" : [
+    {
+      "objectType" : "Port",
+      "nodePortType" : "Out",
+      "name" : "Pos",
+      "execPortType" : "In",
+      "typeSpec" : "ovrVec2"
+      },
+    {
+      "objectType" : "Port",
+      "nodePortType" : "Out",
+      "name" : "size",
+      "execPortType" : "In",
+      "typeSpec" : "ovrSize"
+      },
+    {
+      "objectType" : "Port",
+      "nodePortType" : "In",
+      "name" : "result",
+      "execPortType" : "Out",
+      "typeSpec" : "ovrRect"
+      }
+    ],
+  "extDeps" : {
+    "Oculus" : "*"
+    },
+  "presetGUID" : "E89322D67DA8299FFC3253C06A7DEBF1",
+  "code" : "require Oculus;\n\ndfgEntry {\n  result = ovrRect(Pos, size);\n}\n"
+  }

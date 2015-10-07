@@ -1,0 +1,43 @@
+// Created by kl2dfg (processFunction)
+{
+  "objectType" : "Func",
+  "metadata" : {
+    "uiTooltip" : "Returns the most recent input state for controllers, without positional tracking info.\nDevelopers can tell whether the same state was returned by checking the PacketNumber.\n\n Supported by ovrDevice"
+    },
+  "title" : "GetInputState",
+  "ports" : [
+    {
+      "objectType" : "Port",
+      "nodePortType" : "Out",
+      "name" : "this",
+      "execPortType" : "In",
+      "typeSpec" : "ovrDevice"
+      },
+    {
+      "objectType" : "Port",
+      "nodePortType" : "Out",
+      "name" : "controllerTypeMask",
+      "execPortType" : "In",
+      "typeSpec" : "ovrControllerType"
+      },
+    {
+      "objectType" : "Port",
+      "nodePortType" : "IO",
+      "name" : "state",
+      "execPortType" : "IO",
+      "typeSpec" : "ovrInputState"
+      },
+    {
+      "objectType" : "Port",
+      "nodePortType" : "In",
+      "name" : "result",
+      "execPortType" : "Out",
+      "typeSpec" : "Boolean"
+      }
+    ],
+  "extDeps" : {
+    "Oculus" : "*"
+    },
+  "presetGUID" : "2A69F1B9A81B5352B5F8830B55D50AE9",
+  "code" : "require Oculus;\n\ndfgEntry {\n  result = this.getInputState(controllerTypeMask, state);\n}\n"
+  }

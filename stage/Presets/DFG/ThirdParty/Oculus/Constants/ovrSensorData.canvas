@@ -1,0 +1,43 @@
+// Created by kl2dfg (processStructConstant)
+{
+  "objectType" : "Func",
+  "metadata" : {
+    "uiAlwaysShowDaisyChainPorts" : "true"
+    },
+  "title" : "ovrSensorData",
+  "ports" : [
+    {
+      "objectType" : "Port",
+      "nodePortType" : "Out",
+      "defaultValues" : {
+        "ovrSensorData" : {
+          "Accelerometer" : {
+            "x" : 0,
+            "y" : 0,
+            "z" : 0
+            },
+          "Gyro" : {
+            "x" : 0,
+            "y" : 0,
+            "z" : 0
+            },
+          "Magnetometer" : {
+            "x" : 0,
+            "y" : 0,
+            "z" : 0
+            },
+          "Temperature" : 0,
+          "TimeInSeconds" : 0
+          }
+        },
+      "name" : "value",
+      "execPortType" : "In",
+      "typeSpec" : "ovrSensorData"
+      }
+    ],
+  "extDeps" : {
+    "Oculus" : "*"
+    },
+  "presetGUID" : "4E1832EF9A3663067F87B3D898BB02C7",
+  "code" : "dfgEntry {\n}\n"
+  }

@@ -1,0 +1,19 @@
+// Created by kl2dfg (processConstant)
+{
+  "objectType" : "Func",
+  "title" : "OvrEye_Left",
+  "ports" : [
+    {
+      "objectType" : "Port",
+      "nodePortType" : "In",
+      "name" : "value",
+      "execPortType" : "Out",
+      "typeSpec" : "ovrEyeType"
+      }
+    ],
+  "extDeps" : {
+    "Oculus" : "*"
+    },
+  "presetGUID" : "A6FF32F329266C02D1CFB2BDB2FC58D9",
+  "code" : "require Oculus;\n\ndfgEntry {\n  value = ovrEye_Left;\n}\n"
+  }

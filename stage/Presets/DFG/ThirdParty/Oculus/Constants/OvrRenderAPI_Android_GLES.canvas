@@ -1,0 +1,19 @@
+// Created by kl2dfg (processConstant)
+{
+  "objectType" : "Func",
+  "title" : "OvrRenderAPI_Android_GLES",
+  "ports" : [
+    {
+      "objectType" : "Port",
+      "nodePortType" : "In",
+      "name" : "value",
+      "execPortType" : "Out",
+      "typeSpec" : "ovrRenderAPIType"
+      }
+    ],
+  "extDeps" : {
+    "Oculus" : "*"
+    },
+  "presetGUID" : "AB1CED240FF8EEEF86EE7A69D3435CE4",
+  "code" : "require Oculus;\n\ndfgEntry {\n  value = ovrRenderAPI_Android_GLES;\n}\n"
+  }

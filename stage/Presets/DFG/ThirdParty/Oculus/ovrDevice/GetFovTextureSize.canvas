@@ -1,0 +1,50 @@
+// Created by kl2dfg (processFunction)
+{
+  "objectType" : "Func",
+  "metadata" : {
+    "uiTooltip" : "Calculates the recommended viewport size for rendering a given eye within the HMD\nwith a given FOV cone.\nHigher FOV will generally require larger textures to maintain quality.\nApps packing multiple eye views together on the same texture should ensure there are\nat least 8 pixels of padding between them to prevent texture filtering and chromatic\naberration causing images to leak between the two eye views.\n\n Supported by ovrDevice"
+    },
+  "title" : "GetFovTextureSize",
+  "ports" : [
+    {
+      "objectType" : "Port",
+      "nodePortType" : "Out",
+      "name" : "this",
+      "execPortType" : "In",
+      "typeSpec" : "ovrDevice"
+      },
+    {
+      "objectType" : "Port",
+      "nodePortType" : "Out",
+      "name" : "eye",
+      "execPortType" : "In",
+      "typeSpec" : "ovrEyeType"
+      },
+    {
+      "objectType" : "Port",
+      "nodePortType" : "Out",
+      "name" : "fov",
+      "execPortType" : "In",
+      "typeSpec" : "ovrFovPort"
+      },
+    {
+      "objectType" : "Port",
+      "nodePortType" : "Out",
+      "name" : "pixelsPerDisplayPixel",
+      "execPortType" : "In",
+      "typeSpec" : "Float32"
+      },
+    {
+      "objectType" : "Port",
+      "nodePortType" : "In",
+      "name" : "result",
+      "execPortType" : "Out",
+      "typeSpec" : "ovrSize"
+      }
+    ],
+  "extDeps" : {
+    "Oculus" : "*"
+    },
+  "presetGUID" : "6F8DC885B1C37AD97462A23C6A6EF8F7",
+  "code" : "require Oculus;\n\ndfgEntry {\n  result = this.getFovTextureSize(eye, fov, pixelsPerDisplayPixel);\n}\n"
+  }

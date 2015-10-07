@@ -1,0 +1,19 @@
+// Created by kl2dfg (processConstant)
+{
+  "objectType" : "Func",
+  "title" : "OvrStatus_PositionConnected",
+  "ports" : [
+    {
+      "objectType" : "Port",
+      "nodePortType" : "In",
+      "name" : "value",
+      "execPortType" : "Out",
+      "typeSpec" : "Integer"
+      }
+    ],
+  "extDeps" : {
+    "Oculus" : "*"
+    },
+  "presetGUID" : "98FC86FC0193D3A71054F37771C3AEEB",
+  "code" : "require Oculus;\n\ndfgEntry {\n  value = ovrStatus_PositionConnected;\n}\n"
+  }

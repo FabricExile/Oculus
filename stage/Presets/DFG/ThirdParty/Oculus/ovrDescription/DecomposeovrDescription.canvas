@@ -1,0 +1,159 @@
+// Created by kl2dfg (processDecomposeFunction)
+{
+  "objectType" : "Func",
+  "title" : "ovrDescription ->",
+  "ports" : [
+    {
+      "objectType" : "Port",
+      "nodePortType" : "Out",
+      "name" : "value",
+      "execPortType" : "In",
+      "typeSpec" : "ovrDescription"
+      },
+    {
+      "objectType" : "Port",
+      "nodePortType" : "In",
+      "name" : "Type",
+      "execPortType" : "Out",
+      "typeSpec" : "ovrHmdType"
+      },
+    {
+      "objectType" : "Port",
+      "nodePortType" : "In",
+      "name" : "ProductName",
+      "execPortType" : "Out",
+      "typeSpec" : "String"
+      },
+    {
+      "objectType" : "Port",
+      "nodePortType" : "In",
+      "name" : "Manufacturer",
+      "execPortType" : "Out",
+      "typeSpec" : "String"
+      },
+    {
+      "objectType" : "Port",
+      "nodePortType" : "In",
+      "name" : "VendorId",
+      "execPortType" : "Out",
+      "typeSpec" : "SInt8"
+      },
+    {
+      "objectType" : "Port",
+      "nodePortType" : "In",
+      "name" : "ProductId",
+      "execPortType" : "Out",
+      "typeSpec" : "SInt8"
+      },
+    {
+      "objectType" : "Port",
+      "nodePortType" : "In",
+      "name" : "SerialNumber",
+      "execPortType" : "Out",
+      "typeSpec" : "String"
+      },
+    {
+      "objectType" : "Port",
+      "nodePortType" : "In",
+      "name" : "FirmwareMajor",
+      "execPortType" : "Out",
+      "typeSpec" : "SInt8"
+      },
+    {
+      "objectType" : "Port",
+      "nodePortType" : "In",
+      "name" : "FirmwareMinor",
+      "execPortType" : "Out",
+      "typeSpec" : "SInt8"
+      },
+    {
+      "objectType" : "Port",
+      "nodePortType" : "In",
+      "name" : "CameraFrustumHFovInRadians",
+      "execPortType" : "Out",
+      "typeSpec" : "Float32"
+      },
+    {
+      "objectType" : "Port",
+      "nodePortType" : "In",
+      "name" : "CameraFrustumVFovInRadians",
+      "execPortType" : "Out",
+      "typeSpec" : "Float32"
+      },
+    {
+      "objectType" : "Port",
+      "nodePortType" : "In",
+      "name" : "CameraFrustumNearZInMeters",
+      "execPortType" : "Out",
+      "typeSpec" : "Float32"
+      },
+    {
+      "objectType" : "Port",
+      "nodePortType" : "In",
+      "name" : "CameraFrustumFarZInMeters",
+      "execPortType" : "Out",
+      "typeSpec" : "Float32"
+      },
+    {
+      "objectType" : "Port",
+      "nodePortType" : "In",
+      "name" : "AvailableHmdCaps",
+      "execPortType" : "Out",
+      "typeSpec" : "UInt32"
+      },
+    {
+      "objectType" : "Port",
+      "nodePortType" : "In",
+      "name" : "DefaultHmdCaps",
+      "execPortType" : "Out",
+      "typeSpec" : "UInt32"
+      },
+    {
+      "objectType" : "Port",
+      "nodePortType" : "In",
+      "name" : "AvailableTrackingCaps",
+      "execPortType" : "Out",
+      "typeSpec" : "UInt32"
+      },
+    {
+      "objectType" : "Port",
+      "nodePortType" : "In",
+      "name" : "DefaultTrackingCaps",
+      "execPortType" : "Out",
+      "typeSpec" : "UInt32"
+      },
+    {
+      "objectType" : "Port",
+      "nodePortType" : "In",
+      "name" : "DefaultEyeFov",
+      "execPortType" : "Out",
+      "typeSpec" : "ovrFovPort[2]"
+      },
+    {
+      "objectType" : "Port",
+      "nodePortType" : "In",
+      "name" : "MaxEyeFov",
+      "execPortType" : "Out",
+      "typeSpec" : "ovrFovPort[2]"
+      },
+    {
+      "objectType" : "Port",
+      "nodePortType" : "In",
+      "name" : "Resolution",
+      "execPortType" : "Out",
+      "typeSpec" : "ovrSize"
+      },
+    {
+      "objectType" : "Port",
+      "nodePortType" : "In",
+      "name" : "DisplayRefreshRate",
+      "execPortType" : "Out",
+      "typeSpec" : "Float32"
+      }
+    ],
+  "extDeps" : {
+    "Oculus" : "*"
+    },
+  "presetGUID" : "24CF49CE421968F9ACE0E2C85E48DC6D",
+  "code" : "require Oculus;\n\ndfgEntry {\n  Type = value.Type;\n  ProductName = value.ProductName;\n  Manufacturer = value.Manufacturer;\n  VendorId = value.VendorId;\n  ProductId = value.ProductId;\n  SerialNumber = value.SerialNumber;\n  FirmwareMajor = value.FirmwareMajor;\n  FirmwareMinor = value.FirmwareMinor;\n  CameraFrustumHFovInRadians = value.CameraFrustumHFovInRadians;\n  CameraFrustumVFovInRadians = value.CameraFrustumVFovInRadians;\n  CameraFrustumNearZInMeters = value.CameraFrustumNearZInMeters;\n  CameraFrustumFarZInMeters = value.CameraFrustumFarZInMeters;\n  AvailableHmdCaps = value.AvailableHmdCaps;\n  DefaultHmdCaps = value.DefaultHmdCaps;\n  AvailableTrackingCaps = value.AvailableTrackingCaps;\n  DefaultTrackingCaps = value.DefaultTrackingCaps;\n  DefaultEyeFov = value.DefaultEyeFov;\n  MaxEyeFov = value.MaxEyeFov;\n  Resolution = value.Resolution;\n  DisplayRefreshRate = value.DisplayRefreshRate;\n}\n"
+  }

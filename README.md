@@ -24,6 +24,14 @@ supported platforms
 Oculus is currently only supported on Windows.
 For Fabric Engine 2.0.0 the extension has to be built using Visual Studio 2013 (through scons).
 
+binaries
+========
+
+The binaries provided with the repository only work on windows and have been built against
+- Boost 1.55 (static)
+- OculusSDK 0.7.0 (has to be installed)
+- Fabric Engine 2.0.0 (should work with higher versions)
+
 building
 ========
 
