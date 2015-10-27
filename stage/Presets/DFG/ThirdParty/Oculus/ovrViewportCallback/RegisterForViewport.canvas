@@ -18,5 +18,10 @@
     "Oculus" : "*"
     },
   "presetGUID" : "82C002B8095E96375DDBA9F828083A66",
-  "code" : "require Oculus;\n\ndfgEntry {\n  this.registerForViewport();\n}\n"
+  "code" : "require Oculus;
+
+dfgEntry {
+  this.registerForViewport();
+}
+"
   }

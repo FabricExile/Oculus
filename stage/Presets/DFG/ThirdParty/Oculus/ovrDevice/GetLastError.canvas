@@ -25,5 +25,10 @@
     "Oculus" : "*"
     },
   "presetGUID" : "C0C26120B4C473288A58F43D4712B485",
-  "code" : "require Oculus;\n\ndfgEntry {\n  result = this.getLastError();\n}\n"
+  "code" : "require Oculus;
+
+dfgEntry {
+  result = this.getLastError();
+}
+"
   }

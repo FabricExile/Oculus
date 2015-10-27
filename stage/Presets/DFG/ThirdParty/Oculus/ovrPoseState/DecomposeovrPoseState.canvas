@@ -109,5 +109,15 @@
     "Oculus" : "*"
     },
   "presetGUID" : "24CF49CE421968F9ACE0E2C85E48DC6D",
-  "code" : "require Oculus;\n\ndfgEntry {\n  ThePose = value.ThePose;\n  AngularVelocity = value.AngularVelocity;\n  LinearVelocity = value.LinearVelocity;\n  AngularAcceleration = value.AngularAcceleration;\n  LinearAcceleration = value.LinearAcceleration;\n  TimeInSeconds = value.TimeInSeconds;\n}\n"
+  "code" : "require Oculus;
+
+dfgEntry {
+  ThePose = value.ThePose;
+  AngularVelocity = value.AngularVelocity;
+  LinearVelocity = value.LinearVelocity;
+  AngularAcceleration = value.AngularAcceleration;
+  LinearAcceleration = value.LinearAcceleration;
+  TimeInSeconds = value.TimeInSeconds;
+}
+"
   }

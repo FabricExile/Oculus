@@ -49,5 +49,10 @@
     "Oculus" : "*"
     },
   "presetGUID" : "780A89FF5185B268E0FDC3794C3D7CA9",
-  "code" : "require Oculus;\n\ndfgEntry {\n  this.getEyePoses(frameIndex, hmdToEyeViewOffset, outEyePoses, outHmdTrackingState);\n}\n"
+  "code" : "require Oculus;
+
+dfgEntry {
+  this.getEyePoses(frameIndex, hmdToEyeViewOffset, outEyePoses, outHmdTrackingState);
+}
+"
   }

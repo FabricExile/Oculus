@@ -43,5 +43,12 @@
     "Oculus" : "*"
     },
   "presetGUID" : "24CF49CE421968F9ACE0E2C85E48DC6D",
-  "code" : "require Oculus;\n\ndfgEntry {\n  Projection22 = value.Projection22;\n  Projection23 = value.Projection23;\n  Projection32 = value.Projection32;\n}\n"
+  "code" : "require Oculus;
+
+dfgEntry {
+  Projection22 = value.Projection22;
+  Projection23 = value.Projection23;
+  Projection32 = value.Projection32;
+}
+"
   }

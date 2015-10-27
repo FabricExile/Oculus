@@ -15,5 +15,10 @@
     "Oculus" : "*"
     },
   "presetGUID" : "E5E324F731BB84B84F4F911E6288B7E8",
-  "code" : "require Oculus;\n\ndfgEntry {\n  value = ovrCap_Writable_Mask;\n}\n"
+  "code" : "require Oculus;
+
+dfgEntry {
+  value = ovrCap_Writable_Mask;
+}
+"
   }

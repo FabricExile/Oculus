@@ -15,5 +15,10 @@
     "Oculus" : "*"
     },
   "presetGUID" : "E701DF9E85CFF320C65AE740787BBBFF",
-  "code" : "require Oculus;\n\ndfgEntry {\n  value = ovrProjection_ClipRangeOpenGL;\n}\n"
+  "code" : "require Oculus;
+
+dfgEntry {
+  value = ovrProjection_ClipRangeOpenGL;
+}
+"
   }

@@ -52,5 +52,11 @@
     "Oculus" : "*"
     },
   "presetGUID" : "24CF49CE421968F9ACE0E2C85E48DC6D",
-  "code" : "require Oculus;\n\ndfgEntry {\n  Orientation = value.Orientation;\n  Position = value.Position;\n}\n"
+  "code" : "require Oculus;
+
+dfgEntry {
+  Orientation = value.Orientation;
+  Position = value.Position;
+}
+"
   }

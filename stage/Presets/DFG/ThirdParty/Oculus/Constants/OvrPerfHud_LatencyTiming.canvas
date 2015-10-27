@@ -15,5 +15,10 @@
     "Oculus" : "*"
     },
   "presetGUID" : "0D5D2C6CBBC33AEA4D207F6C89726C56",
-  "code" : "require Oculus;\n\ndfgEntry {\n  value = ovrPerfHud_LatencyTiming;\n}\n"
+  "code" : "require Oculus;
+
+dfgEntry {
+  value = ovrPerfHud_LatencyTiming;
+}
+"
   }

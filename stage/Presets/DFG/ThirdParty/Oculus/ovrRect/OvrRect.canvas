@@ -32,5 +32,10 @@
     "Oculus" : "*"
     },
   "presetGUID" : "E89322D67DA8299FFC3253C06A7DEBF1",
-  "code" : "require Oculus;\n\ndfgEntry {\n  result = ovrRect(Pos, size);\n}\n"
+  "code" : "require Oculus;
+
+dfgEntry {
+  result = ovrRect(Pos, size);
+}
+"
   }

@@ -15,5 +15,10 @@
     "Oculus" : "*"
     },
   "presetGUID" : "0B0C069D127B65F7D4DF9E10676D1F4C",
-  "code" : "require Oculus;\n\ndfgEntry {\n  value = ovrProjection_RightHanded;\n}\n"
+  "code" : "require Oculus;
+
+dfgEntry {
+  value = ovrProjection_RightHanded;
+}
+"
   }

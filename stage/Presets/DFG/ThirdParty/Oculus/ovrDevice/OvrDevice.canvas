@@ -35,5 +35,10 @@
     "Oculus" : "*"
     },
   "presetGUID" : "B509ED9FF63BBDB4B5CB2F6BE053C95E",
-  "code" : "require Oculus;\n\ndfgEntry {\n  result = ovrDevice(index, configureTracking);\n}\n"
+  "code" : "require Oculus;
+
+dfgEntry {
+  result = ovrDevice(index, configureTracking);
+}
+"
   }

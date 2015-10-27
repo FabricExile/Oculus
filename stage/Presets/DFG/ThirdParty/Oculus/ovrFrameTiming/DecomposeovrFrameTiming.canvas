@@ -51,5 +51,13 @@
     "Oculus" : "*"
     },
   "presetGUID" : "24CF49CE421968F9ACE0E2C85E48DC6D",
-  "code" : "require Oculus;\n\ndfgEntry {\n  DisplayMidpointSeconds = value.DisplayMidpointSeconds;\n  FrameIntervalSeconds = value.FrameIntervalSeconds;\n  AppFrameIndex = value.AppFrameIndex;\n  DisplayFrameIndex = value.DisplayFrameIndex;\n}\n"
+  "code" : "require Oculus;
+
+dfgEntry {
+  DisplayMidpointSeconds = value.DisplayMidpointSeconds;
+  FrameIntervalSeconds = value.FrameIntervalSeconds;
+  AppFrameIndex = value.AppFrameIndex;
+  DisplayFrameIndex = value.DisplayFrameIndex;
+}
+"
   }

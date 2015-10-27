@@ -15,5 +15,10 @@
     "Oculus" : "*"
     },
   "presetGUID" : "98FC86FC0193D3A71054F37771C3AEEB",
-  "code" : "require Oculus;\n\ndfgEntry {\n  value = ovrStatus_PositionConnected;\n}\n"
+  "code" : "require Oculus;
+
+dfgEntry {
+  value = ovrStatus_PositionConnected;
+}
+"
   }

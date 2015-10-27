@@ -15,5 +15,10 @@
     "Oculus" : "*"
     },
   "presetGUID" : "2DD6ABE691061F3B4CC2AD49ADF84AD4",
-  "code" : "require Oculus;\n\ndfgEntry {\n  value = ovrRenderAPI_OpenGL;\n}\n"
+  "code" : "require Oculus;
+
+dfgEntry {
+  value = ovrRenderAPI_OpenGL;
+}
+"
   }

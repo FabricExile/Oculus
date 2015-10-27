@@ -245,5 +245,16 @@
     "Oculus" : "*"
     },
   "presetGUID" : "B3AA4B63D9DE06000BC197488DA9A5FF",
-  "code" : "require Oculus;\n\ndfgEntry {\n  result.HeadPose = HeadPose;\n  result.CameraPose = CameraPose;\n  result.LeveledCameraPose = LeveledCameraPose;\n  result.HandPoses = HandPoses;\n  result.RawSensorData = RawSensorData;\n  result.StatusFlags = StatusFlags;\n  result.LastCameraFrameCounter = LastCameraFrameCounter;\n}\n"
+  "code" : "require Oculus;
+
+dfgEntry {
+  result.HeadPose = HeadPose;
+  result.CameraPose = CameraPose;
+  result.LeveledCameraPose = LeveledCameraPose;
+  result.HandPoses = HandPoses;
+  result.RawSensorData = RawSensorData;
+  result.StatusFlags = StatusFlags;
+  result.LastCameraFrameCounter = LastCameraFrameCounter;
+}
+"
   }

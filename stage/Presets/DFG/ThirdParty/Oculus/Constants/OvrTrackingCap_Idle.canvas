@@ -15,5 +15,10 @@
     "Oculus" : "*"
     },
   "presetGUID" : "C955E1BA8092851EA68BDE83618120BB",
-  "code" : "require Oculus;\n\ndfgEntry {\n  value = ovrTrackingCap_Idle;\n}\n"
+  "code" : "require Oculus;
+
+dfgEntry {
+  value = ovrTrackingCap_Idle;
+}
+"
   }

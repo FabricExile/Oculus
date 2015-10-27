@@ -86,5 +86,14 @@
     "Oculus" : "*"
     },
   "presetGUID" : "B3AA4B63D9DE06000BC197488DA9A5FF",
-  "code" : "require Oculus;\n\ndfgEntry {\n  result.Accelerometer = Accelerometer;\n  result.Gyro = Gyro;\n  result.Magnetometer = Magnetometer;\n  result.Temperature = Temperature;\n  result.TimeInSeconds = TimeInSeconds;\n}\n"
+  "code" : "require Oculus;
+
+dfgEntry {
+  result.Accelerometer = Accelerometer;
+  result.Gyro = Gyro;
+  result.Magnetometer = Magnetometer;
+  result.Temperature = Temperature;
+  result.TimeInSeconds = TimeInSeconds;
+}
+"
   }

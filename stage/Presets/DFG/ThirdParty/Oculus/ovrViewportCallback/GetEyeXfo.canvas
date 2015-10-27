@@ -45,5 +45,10 @@
     "Oculus" : "*"
     },
   "presetGUID" : "CB7FD298AAD6CD4F0F2FF31D168306DB",
-  "code" : "require Oculus;\n\ndfgEntry {\n  result = this.getEyeXfo(eye, scale);\n}\n"
+  "code" : "require Oculus;
+
+dfgEntry {
+  result = this.getEyeXfo(eye, scale);
+}
+"
   }

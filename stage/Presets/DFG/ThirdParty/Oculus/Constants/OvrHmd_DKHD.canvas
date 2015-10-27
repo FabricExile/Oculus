@@ -15,5 +15,10 @@
     "Oculus" : "*"
     },
   "presetGUID" : "09E3752997A8F945C71FCB6B3E2DEF3D",
-  "code" : "require Oculus;\n\ndfgEntry {\n  value = ovrHmd_DKHD;\n}\n"
+  "code" : "require Oculus;
+
+dfgEntry {
+  value = ovrHmd_DKHD;
+}
+"
   }

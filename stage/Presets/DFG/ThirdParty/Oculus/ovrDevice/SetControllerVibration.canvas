@@ -46,5 +46,10 @@
     "Oculus" : "*"
     },
   "presetGUID" : "9FDEA3B143A2BBD8B774C2D5F242EAC2",
-  "code" : "require Oculus;\n\ndfgEntry {\n  result = this.setControllerVibration(controllerTypeMask, frequency, amplitude);\n}\n"
+  "code" : "require Oculus;
+
+dfgEntry {
+  result = this.setControllerVibration(controllerTypeMask, frequency, amplitude);
+}
+"
   }

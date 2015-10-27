@@ -45,5 +45,10 @@
     "Oculus" : "*"
     },
   "presetGUID" : "CE80E532E9A7D896F2E7D903AC018907",
-  "code" : "require Oculus;\n\ndfgEntry {\n  result = this.configureTracking(requestedTrackingCaps, requiredTrackingCaps);\n}\n"
+  "code" : "require Oculus;
+
+dfgEntry {
+  result = this.configureTracking(requestedTrackingCaps, requiredTrackingCaps);
+}
+"
   }

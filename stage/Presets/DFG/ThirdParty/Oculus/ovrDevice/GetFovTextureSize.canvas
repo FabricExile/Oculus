@@ -46,5 +46,10 @@
     "Oculus" : "*"
     },
   "presetGUID" : "6F8DC885B1C37AD97462A23C6A6EF8F7",
-  "code" : "require Oculus;\n\ndfgEntry {\n  result = this.getFovTextureSize(eye, fov, pixelsPerDisplayPixel);\n}\n"
+  "code" : "require Oculus;
+
+dfgEntry {
+  result = this.getFovTextureSize(eye, fov, pixelsPerDisplayPixel);
+}
+"
   }

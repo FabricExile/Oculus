@@ -35,5 +35,10 @@
     "Oculus" : "*"
     },
   "presetGUID" : "47C3A86FA9FCDD8EAB9AC8A02F9BF2E0",
-  "code" : "require Oculus;\n\ndfgEntry {\n  result = this.getTrackingState(absTime);\n}\n"
+  "code" : "require Oculus;
+
+dfgEntry {
+  result = this.getTrackingState(absTime);
+}
+"
   }

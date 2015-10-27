@@ -39,5 +39,10 @@
     "Oculus" : "*"
     },
   "presetGUID" : "2A69F1B9A81B5352B5F8830B55D50AE9",
-  "code" : "require Oculus;\n\ndfgEntry {\n  result = this.getInputState(controllerTypeMask, state);\n}\n"
+  "code" : "require Oculus;
+
+dfgEntry {
+  result = this.getInputState(controllerTypeMask, state);
+}
+"
   }

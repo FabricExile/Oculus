@@ -26,5 +26,7 @@
     "Oculus" : "*"
     },
   "presetGUID" : "4E1832EF9A3663067F87B3D898BB02C7",
-  "code" : "dfgEntry {\n}\n"
+  "code" : "dfgEntry {
+}
+"
   }

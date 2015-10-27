@@ -103,5 +103,16 @@
     "Oculus" : "*"
     },
   "presetGUID" : "B3AA4B63D9DE06000BC197488DA9A5FF",
-  "code" : "require Oculus;\n\ndfgEntry {\n  result.TimeInSeconds = TimeInSeconds;\n  result.ConnectedControllerTypes = ConnectedControllerTypes;\n  result.Buttons = Buttons;\n  result.Touches = Touches;\n  result.IndexTrigger = IndexTrigger;\n  result.HandTrigger = HandTrigger;\n  result.Thumbstick = Thumbstick;\n}\n"
+  "code" : "require Oculus;
+
+dfgEntry {
+  result.TimeInSeconds = TimeInSeconds;
+  result.ConnectedControllerTypes = ConnectedControllerTypes;
+  result.Buttons = Buttons;
+  result.Touches = Touches;
+  result.IndexTrigger = IndexTrigger;
+  result.HandTrigger = HandTrigger;
+  result.Thumbstick = Thumbstick;
+}
+"
   }

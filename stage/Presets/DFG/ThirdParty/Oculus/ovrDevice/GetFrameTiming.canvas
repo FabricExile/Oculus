@@ -32,5 +32,10 @@
     "Oculus" : "*"
     },
   "presetGUID" : "0DF33B4D935CA76BF63C76ABEADBD21A",
-  "code" : "require Oculus;\n\ndfgEntry {\n  result = this.getFrameTiming(frameIndex);\n}\n"
+  "code" : "require Oculus;
+
+dfgEntry {
+  result = this.getFrameTiming(frameIndex);
+}
+"
   }

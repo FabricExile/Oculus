@@ -56,5 +56,10 @@
     "Oculus" : "*"
     },
   "presetGUID" : "293E5D2A10E82B6F756763F5523EA485",
-  "code" : "require Oculus;\n\ndfgEntry {\n  result = this.getProjectionMat44(fov, znear, zfar, projectionModFlags);\n}\n"
+  "code" : "require Oculus;
+
+dfgEntry {
+  result = this.getProjectionMat44(fov, znear, zfar, projectionModFlags);
+}
+"
   }

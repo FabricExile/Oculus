@@ -15,5 +15,10 @@
     "Oculus" : "*"
     },
   "presetGUID" : "7525A79B2179C5A6191955B8FA600BC7",
-  "code" : "require Oculus;\n\ndfgEntry {\n  value = ovrRenderAPI_EnumSize;\n}\n"
+  "code" : "require Oculus;
+
+dfgEntry {
+  value = ovrRenderAPI_EnumSize;
+}
+"
   }
