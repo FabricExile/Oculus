@@ -45,17 +45,10 @@ FABRIC_EXT_EXPORT void ovrDevice_Construct(
 
   WriteLock w_lock(gDeviceLock);
 
-  ovrHmd HMD;
-  ovrGraphicsLuid luid;
-  ovrResult result = ovr_Create(&HMD, &luid);
-  if(!OVR_SUCCESS(result))
-    return;
+  this_->session = KL::ovrSession::Create();
+  ovrSession * session_ = (ovrSession *)this_->session->handle;
 
-  this_->handle = HMD;
-  if(!this_->handle)
-    return;
-
-  ovrHmdDesc hmdDesc = ovr_GetHmdDesc(HMD);
+  ovrHmdDesc hmdDesc = ovr_GetHmdDesc(*session_);
   ovrSizei windowSize = { hmdDesc.Resolution.w / 2, hmdDesc.Resolution.h / 2 };
 
   this_->configured = false;
@@ -74,12 +67,6 @@ FABRIC_EXT_EXPORT void ovrDevice_Destruct(
     ovrGLDepthBuffer_Destruct(this_->depthBuffers[i]);
   for(unsigned int i=0;i<this_->mirrorTextures.size();i++)
     ovrGLMirrorTexture_Destruct(this_->mirrorTextures[i]);
-
-  if(this_->handle)
-  {
-    ovr_Destroy((ovrHmd)this_->handle);
-    this_->handle = NULL;
-  }
 }
 
 // Defined at src\ovrDevice.kl:32:1
@@ -88,10 +75,10 @@ FABRIC_EXT_EXPORT void ovrDevice_GetDescription(
   KL::Traits< KL::ovrDevice >::INParam this_
 ) {
 
-  if(!this_->handle)
+  ovrSession * session_ = (ovrSession *)this_->session->handle;
+  if(!session_)
     return;
-  ovrHmd hmd = (ovrHmd)this_->handle;
-  ovrHmdDesc desc = ovr_GetHmdDesc(hmd);
+  ovrHmdDesc desc = ovr_GetHmdDesc(*session_);
   convert(desc, _result);
 }
 
@@ -122,62 +109,31 @@ FABRIC_EXT_EXPORT void ovrDevice_TraceMessage(
   ovr_TraceMessage(level, message.getCString());
 }
 
-// Defined at src\\ovrDevice.kl:50:1
-FABRIC_EXT_EXPORT KL::SInt32 ovrDevice_GetEnabledCaps(
-  KL::Traits< KL::ovrDevice >::INParam this_
-) {
-  if(!this_->handle)
-    return 0;
-  ovrHmd hmd = (ovrHmd)this_->handle;
-  return ovr_GetEnabledCaps(hmd);  
-}
-
-// Defined at src\\ovrDevice.kl:54:1
-FABRIC_EXT_EXPORT void ovrDevice_SetEnabledCaps(
-  KL::Traits< KL::ovrDevice >::IOParam this_,
-  KL::Traits< KL::SInt32 >::INParam caps
-) {
-  if(!this_->handle)
-    return;
-  ovrHmd hmd = (ovrHmd)this_->handle;
-  ovr_SetEnabledCaps(hmd, caps);
-}
-
-// Defined at src\\ovrDevice.kl:57:1
-FABRIC_EXT_EXPORT KL::Boolean ovrDevice_ConfigureTracking(
-  KL::Traits< KL::ovrDevice >::IOParam this_,
-  KL::Traits< KL::SInt32 >::INParam requestedTrackingCaps,
-  KL::Traits< KL::SInt32 >::INParam requiredTrackingCaps
-) {
-  if(!this_->handle)
-    return false;
-  ovrHmd hmd = (ovrHmd)this_->handle;
-  return OVR_SUCCESS(ovr_ConfigureTracking(hmd, requestedTrackingCaps, requiredTrackingCaps));
-}
-
 // Defined at src\\ovrDevice.kl:68:1
 FABRIC_EXT_EXPORT void ovrDevice_RecenterPose(
   KL::Traits< KL::ovrDevice >::IOParam this_
 ) {
-  if(!this_->handle)
+  ovrSession * session_ = (ovrSession *)this_->session->handle;
+  if(!session_)
     return;
-  ovrHmd hmd = (ovrHmd)this_->handle;
-  ovr_RecenterPose(hmd);
+  ovr_RecenterPose(*session_);
 }
 
 // Defined at src\\ovrDevice.kl:76:1
 FABRIC_EXT_EXPORT void ovrDevice_GetTrackingState(
   KL::Traits< KL::ovrTrackingState >::Result _result,
   KL::Traits< KL::ovrDevice >::INParam this_,
-  KL::Traits< KL::Float64 >::INParam absTime
+  KL::Traits< KL::Float64 >::INParam absTime,
+  KL::Traits< KL::Boolean >::INParam latencyMarker
 ) {
-  if(!this_->handle)
+  ovrSession * session_ = (ovrSession *)this_->session->handle;
+  if(!session_)
     return;
-  ovrHmd hmd = (ovrHmd)this_->handle;
+
   double absTime_ = absTime;
   if(absTime_ < 0.0)
     absTime_ = ovr_GetTimeInSeconds();
-  ovrTrackingState state = ovr_GetTrackingState(hmd, absTime_);
+  ovrTrackingState state = ovr_GetTrackingState(*session_, absTime_, latencyMarker);
   convert(state, _result);
 }
 
@@ -187,11 +143,11 @@ FABRIC_EXT_EXPORT KL::Boolean ovrDevice_GetInputState(
   KL::Traits< KL::SInt32 >::INParam controllerTypeMask,
   KL::Traits< KL::ovrInputState >::IOParam state
 ) {
-  if(!this_->handle)
+  ovrSession * session_ = (ovrSession *)this_->session->handle;
+  if(!session_)
     return false;
-  ovrHmd hmd = (ovrHmd)this_->handle;
   ovrInputState _state;
-  bool result = OVR_SUCCESS(ovr_GetInputState(hmd, controllerTypeMask, &_state));
+  bool result = OVR_SUCCESS(ovr_GetInputState(*session_, controllerTypeMask, &_state));
   if(result)
     convert(_state, state);
   return result;
@@ -204,10 +160,10 @@ FABRIC_EXT_EXPORT KL::Boolean ovrDevice_SetControllerVibration(
   KL::Traits< KL::Float32 >::INParam frequency,
   KL::Traits< KL::Float32 >::INParam amplitude
 ) {
-  if(!this_->handle)
+  ovrSession * session_ = (ovrSession *)this_->session->handle;
+  if(!session_)
     return false;
-  ovrHmd hmd = (ovrHmd)this_->handle;
-  return OVR_SUCCESS(ovr_SetControllerVibration(hmd, controllerTypeMask, frequency, amplitude));
+  return OVR_SUCCESS(ovr_SetControllerVibration(*session_, controllerTypeMask, frequency, amplitude));
 }
 
 // Defined at src\\ovrDevice.kl:96:1
@@ -218,13 +174,13 @@ FABRIC_EXT_EXPORT void ovrDevice_GetFovTextureSize(
   KL::Traits< KL::ovrFovPort >::INParam fov,
   KL::Traits< KL::Float32 >::INParam pixelsPerDisplayPixel
 ) {
-  if(!this_->handle)
+  ovrSession * session_ = (ovrSession *)this_->session->handle;
+  if(!session_)
     return;
-  ovrHmd hmd = (ovrHmd)this_->handle;
 
   ovrFovPort fov_;
   convert(fov, fov_);
-  ovrSizei result = ovr_GetFovTextureSize(hmd, (ovrEyeType)eye, fov_, pixelsPerDisplayPixel);
+  ovrSizei result = ovr_GetFovTextureSize(*session_, (ovrEyeType)eye, fov_, pixelsPerDisplayPixel);
   convert(result, _result);
 }
 
@@ -235,13 +191,13 @@ FABRIC_EXT_EXPORT void ovrDevice_GetRenderDesc(
   KL::Traits< KL::SInt32 >::INParam eye,
   KL::Traits< KL::ovrFovPort >::INParam fov
 ) {
-  if(!this_->handle)
+  ovrSession * session_ = (ovrSession *)this_->session->handle;
+  if(!session_)
     return;
-  ovrHmd hmd = (ovrHmd)this_->handle;
 
   ovrFovPort fov_;
   convert(fov, fov_);
-  ovrEyeRenderDesc result = ovr_GetRenderDesc(hmd, (ovrEyeType)eye, fov_);
+  ovrEyeRenderDesc result = ovr_GetRenderDesc(*session_, (ovrEyeType)eye, fov_);
   convert(result, _result);
 }
 
@@ -253,9 +209,9 @@ FABRIC_EXT_EXPORT KL::Boolean ovrDevice_SubmitFrame_ovrLayerEyeFov(
   KL::Traits< KL::ovrLayerEyeFov >::INParam layer
 ) {
 
-  if(!this_->handle)
+  ovrSession * session_ = (ovrSession *)this_->session->handle;
+  if(!session_)
     return false;
-  ovrHmd hmd = (ovrHmd)this_->handle;
 
   ovrViewScaleDesc scale_;
   convert(scale, scale_);
@@ -264,20 +220,19 @@ FABRIC_EXT_EXPORT KL::Boolean ovrDevice_SubmitFrame_ovrLayerEyeFov(
   convert(layer, layer_);
 
   ovrLayerHeader * lh = &layer_.Header;
-  return OVR_SUCCESS(ovr_SubmitFrame(hmd, 0, &scale_, &lh, 1));
+  return OVR_SUCCESS(ovr_SubmitFrame(*session_, 0, &scale_, &lh, 1));
 }
 
-// Defined at src\\ovrDevice.kl:118:1
-FABRIC_EXT_EXPORT void ovrDevice_GetFrameTiming(
-  KL::Traits< KL::ovrFrameTiming >::Result _result,
+// Defined at src\\ovrDevice.kl:162:1
+FABRIC_EXT_EXPORT KL::Float64 ovrDevice_GetPredictedDisplayTime(
   KL::Traits< KL::ovrDevice >::INParam this_,
-  KL::Traits< KL::UInt32 >::INParam frameIndex
+  KL::Traits< KL::SInt64 >::INParam frameIndex
 ) {
-  if(!this_->handle)
-    return;
-  ovrHmd hmd = (ovrHmd)this_->handle;
-  ovrFrameTiming result = ovr_GetFrameTiming(hmd, frameIndex);
-  convert(result, _result);
+  ovrSession * session_ = (ovrSession *)this_->session->handle;
+  if(!session_)
+    return 0.0;
+
+  return ovr_GetPredictedDisplayTime(*session_, frameIndex);
 }
 
 // Defined at src\\ovrDevice.kl:124:1
@@ -291,20 +246,20 @@ FABRIC_EXT_EXPORT KL::Float64 ovrDevice_GetTimeInSeconds(
 FABRIC_EXT_EXPORT void ovrDevice_ResetBackOfHeadTracking(
   KL::Traits< KL::ovrDevice >::IOParam this_
 ) {
-  if(!this_->handle)
+  ovrSession * session_ = (ovrSession *)this_->session->handle;
+  if(!session_)
     return;
-  ovrHmd hmd = (ovrHmd)this_->handle;
-  ovr_ResetBackOfHeadTracking(hmd);  
+  ovr_ResetBackOfHeadTracking(*session_);  
 }
 
 // Defined at src\\ovrDevice.kl:135:1
 FABRIC_EXT_EXPORT void ovrDevice_ResetMulticameraTracking(
   KL::Traits< KL::ovrDevice >::IOParam this_
 ) {
-  if(!this_->handle)
+  ovrSession * session_ = (ovrSession *)this_->session->handle;
+  if(!session_)
     return;
-  ovrHmd hmd = (ovrHmd)this_->handle;
-  ovr_ResetMulticameraTracking(hmd);
+  ovr_ResetMulticameraTracking(*session_);
 }
 
 // Defined at src\\ovrDevice.kl:138:1
@@ -313,10 +268,10 @@ FABRIC_EXT_EXPORT KL::Boolean ovrDevice_GetBool(
   KL::Traits< KL::String >::INParam propertyName,
   KL::Traits< KL::Boolean >::INParam defaultValue
 ) {
-  if(!this_->handle)
+  ovrSession * session_ = (ovrSession *)this_->session->handle;
+  if(!session_)
     return false;
-  ovrHmd hmd = (ovrHmd)this_->handle;
-  return ovr_GetBool(hmd, propertyName.getCString(), defaultValue);
+  return ovr_GetBool(*session_, propertyName.getCString(), defaultValue);
 }
 
 // Defined at src\\ovrDevice.kl:142:1
@@ -325,10 +280,10 @@ FABRIC_EXT_EXPORT void ovrDevice_SetBool(
   KL::Traits< KL::String >::INParam propertyName,
   KL::Traits< KL::Boolean >::INParam value
 ) {
-  if(!this_->handle)
+  ovrSession * session_ = (ovrSession *)this_->session->handle;
+  if(!session_)
     return;
-  ovrHmd hmd = (ovrHmd)this_->handle;
-  ovr_SetBool(hmd, propertyName.getCString(), value);
+  ovr_SetBool(*session_, propertyName.getCString(), value);
 }
 
 // Defined at src\\ovrDevice.kl:145:1
@@ -337,10 +292,10 @@ FABRIC_EXT_EXPORT KL::SInt32 ovrDevice_GetInt(
   KL::Traits< KL::String >::INParam propertyName,
   KL::Traits< KL::SInt32 >::INParam defaultValue
 ) {
-  if(!this_->handle)
+  ovrSession * session_ = (ovrSession *)this_->session->handle;
+  if(!session_)
     return 0;
-  ovrHmd hmd = (ovrHmd)this_->handle;
-  return ovr_GetInt(hmd, propertyName.getCString(), defaultValue);
+  return ovr_GetInt(*session_, propertyName.getCString(), defaultValue);
 }
 
 // Defined at src\\ovrDevice.kl:149:1
@@ -349,10 +304,10 @@ FABRIC_EXT_EXPORT void ovrDevice_SetInt(
   KL::Traits< KL::String >::INParam propertyName,
   KL::Traits< KL::SInt32 >::INParam value
 ) {
-  if(!this_->handle)
+  ovrSession * session_ = (ovrSession *)this_->session->handle;
+  if(!session_)
     return;
-  ovrHmd hmd = (ovrHmd)this_->handle;
-  ovr_SetInt(hmd, propertyName.getCString(), value);
+  ovr_SetInt(*session_, propertyName.getCString(), value);
 }
 
 // Defined at src\\ovrDevice.kl:152:1
@@ -361,10 +316,10 @@ FABRIC_EXT_EXPORT KL::Float32 ovrDevice_GetFloat(
   KL::Traits< KL::String >::INParam propertyName,
   KL::Traits< KL::Float32 >::INParam defaultValue
 ) {
-  if(!this_->handle)
+  ovrSession * session_ = (ovrSession *)this_->session->handle;
+  if(!session_)
     return 0.0f;
-  ovrHmd hmd = (ovrHmd)this_->handle;
-  return ovr_GetFloat(hmd, propertyName.getCString(), defaultValue);
+  return ovr_GetFloat(*session_, propertyName.getCString(), defaultValue);
 }
 
 // Defined at src\\ovrDevice.kl:156:1
@@ -373,10 +328,10 @@ FABRIC_EXT_EXPORT void ovrDevice_SetFloat(
   KL::Traits< KL::String >::INParam propertyName,
   KL::Traits< KL::Float32 >::INParam value
 ) {
-  if(!this_->handle)
+  ovrSession * session_ = (ovrSession *)this_->session->handle;
+  if(!session_)
     return;
-  ovrHmd hmd = (ovrHmd)this_->handle;
-  ovr_SetFloat(hmd, propertyName.getCString(), value);
+  ovr_SetFloat(*session_, propertyName.getCString(), value);
 }
 
 // Defined at src\\ovrDevice.kl:160:1
@@ -386,11 +341,11 @@ FABRIC_EXT_EXPORT void ovrDevice_GetFloatArray(
   KL::Traits< KL::String >::INParam propertyName,
   KL::Traits< KL::UInt32 >::INParam valuesCapacity
 ) {
-  if(!this_->handle)
+  ovrSession * session_ = (ovrSession *)this_->session->handle;
+  if(!session_)
     return;
-  ovrHmd hmd = (ovrHmd)this_->handle;
   _result.resize(valuesCapacity);
-  ovr_GetFloatArray(hmd, propertyName.getCString(), &_result[0], valuesCapacity);
+  ovr_GetFloatArray(*session_, propertyName.getCString(), &_result[0], valuesCapacity);
 }
 
 
@@ -400,10 +355,10 @@ FABRIC_EXT_EXPORT void ovrDevice_SetFloatArray(
   KL::Traits< KL::String >::INParam propertyName,
   KL::Traits< KL::VariableArray< KL::Float32 > >::INParam values
 ) {
-  if(!this_->handle)
+  ovrSession * session_ = (ovrSession *)this_->session->handle;
+  if(!session_)
     return;
-  ovrHmd hmd = (ovrHmd)this_->handle;
-  ovr_SetFloatArray(hmd, propertyName.getCString(), &values[0], values.size());
+  ovr_SetFloatArray(*session_, propertyName.getCString(), &values[0], values.size());
 }
 
 // Defined at src\\ovrDevice.kl:167:1
@@ -413,10 +368,10 @@ FABRIC_EXT_EXPORT void ovrDevice_GetString(
   KL::Traits< KL::String >::INParam propertyName,
   KL::Traits< KL::String >::INParam defaultValue
 ) {
-  if(!this_->handle)
+  ovrSession * session_ = (ovrSession *)this_->session->handle;
+  if(!session_)
     return;
-  ovrHmd hmd = (ovrHmd)this_->handle;
-  _result = ovr_GetString(hmd, propertyName.getCString(), defaultValue.getCString());
+  _result = ovr_GetString(*session_, propertyName.getCString(), defaultValue.getCString());
 }
 
 // Defined at src\\ovrDevice.kl:171:1
@@ -425,10 +380,10 @@ FABRIC_EXT_EXPORT void ovrDevice_SetString(
   KL::Traits< KL::String >::INParam propertyName,
   KL::Traits< KL::String >::INParam value
 ) {
-  if(!this_->handle)
+  ovrSession * session_ = (ovrSession *)this_->session->handle;
+  if(!session_)
     return;
-  ovrHmd hmd = (ovrHmd)this_->handle;
-  ovr_SetString(hmd, propertyName.getCString(), value.getCString());
+  ovr_SetString(*session_, propertyName.getCString(), value.getCString());
 }
 
 // Defined at src\\ovrDevice.kl:187:1
@@ -498,19 +453,22 @@ FABRIC_EXT_EXPORT void ovrDevice_CalcEyePoses(
 FABRIC_EXT_EXPORT void ovrDevice_GetEyePoses(
   KL::Traits< KL::ovrDevice >::INParam this_,
   KL::Traits< KL::UInt32 >::INParam frameIndex,
+  KL::Traits< KL::Boolean >::INParam latencyMarker,
   KL::Traits< KL::FixedArray< KL::Vec3, 2 > >::INParam hmdToEyeViewOffset,
   KL::Traits< KL::FixedArray< KL::ovrPose, 2 > >::IOParam outEyePoses,
   KL::Traits< KL::ovrTrackingState >::IOParam outHmdTrackingState
 ) {
-  if(!this_->handle)
+  ovrSession * session_ = (ovrSession *)this_->session->handle;
+  if(!session_)
     return;
-  ovrHmd hmd = (ovrHmd)this_->handle;
+
   ovrVector3f hmdToEyeViewOffset_[2];
   convert(hmdToEyeViewOffset[0], hmdToEyeViewOffset_[0]);
   convert(hmdToEyeViewOffset[1], hmdToEyeViewOffset_[1]);
   ovrPosef outEyePoses_[2];
   ovrTrackingState outHmdTrackingState_;
-  ovr_GetEyePoses(hmd, frameIndex, hmdToEyeViewOffset_, outEyePoses_, &outHmdTrackingState_);
+
+  ovr_GetEyePoses(*session_, frameIndex, latencyMarker, hmdToEyeViewOffset_, outEyePoses_, &outHmdTrackingState_);
   convert(outEyePoses_[0], outEyePoses[0]);
   convert(outEyePoses_[1], outEyePoses[1]);
   convert(outHmdTrackingState_, outHmdTrackingState);

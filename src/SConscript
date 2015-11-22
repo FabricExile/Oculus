@@ -54,6 +54,7 @@ cppFiles += [env.Dir('LibOVRKernel').Dir('src').Dir('Util').File('Util_SystemGUI
 cppFiles += [
   env.File('glew.c'),
   env.File('conversion.cpp'),
+  env.File('ovrSession_functions.cpp'),
   env.File('ovrDevice_functions.cpp'),
   env.File('ovrGLTextureBuffer_functions.cpp'),
   env.File('ovrGLDepthBuffer_functions.cpp'),

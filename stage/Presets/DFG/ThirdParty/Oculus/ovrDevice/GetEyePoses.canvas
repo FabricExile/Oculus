@@ -2,7 +2,7 @@
 {
   "objectType" : "Func",
   "metadata" : {
-    "uiTooltip" : "Returns the predicted head pose in outHmdTrackingState and offset eye poses in outEyePoses.\nThis is a thread-safe function where caller should increment frameIndex with every frame\nand pass that index where applicable to functions called on the rendering thread.\nAssuming outEyePoses are used for rendering, it should be passed as a part of ovrLayerEyeFov.\nThe caller does not need to worry about applying HmdToEyeViewOffset to the returned outEyePoses variables.\n\n Supported by ovrDevice"
+    "uiTooltip" : "Returns the predicted head pose in outHmdTrackingState and offset eye poses in outEyePoses.\nThis is a thread-safe function where caller should increment frameIndex with every frame\nand pass that index where applicable to functions called on the rendering thread.\nAssuming outEyePoses are used for rendering, it should be passed as a part of ovrLayerEyeFov.\nThe caller does not need to worry about applying HmdToEyeViewOffset to the returned outEyePoses variables.\nthe last time ovr_SubmitFrame was called.\novr_GetRenderDesc. For monoscopic rendering, use a vector that is the average\nof the two vectors for both eyes.\nthe \"App-to-Mid-Photon\" latency timer starts from. If a given ovrLayer\nprovides \"SensorSampleTimestamp\", that will override the value stored here.\n\n Supported by ovrDevice"
     },
   "title" : "GetEyePoses",
   "ports" : [
@@ -19,6 +19,13 @@
       "name" : "frameIndex",
       "execPortType" : "In",
       "typeSpec" : "UInt32"
+      },
+    {
+      "objectType" : "Port",
+      "nodePortType" : "Out",
+      "name" : "latencyMarker",
+      "execPortType" : "In",
+      "typeSpec" : "Boolean"
       },
     {
       "objectType" : "Port",
@@ -48,11 +55,11 @@
   "extDeps" : {
     "Oculus" : "*"
     },
-  "presetGUID" : "780A89FF5185B268E0FDC3794C3D7CA9",
+  "presetGUID" : "F49E151B5E485E1C5ED5F494D34A348F",
   "code" : "require Oculus;
 
 dfgEntry {
-  this.getEyePoses(frameIndex, hmdToEyeViewOffset, outEyePoses, outHmdTrackingState);
+  this.getEyePoses(frameIndex, latencyMarker, hmdToEyeViewOffset, outEyePoses, outHmdTrackingState);
 }
 "
   }

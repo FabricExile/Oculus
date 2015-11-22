@@ -11,6 +11,8 @@
 #include "Oculus.h"
 
 #include <Kernel/OVR_System.h>
+#include <Tracing/LibOVREvents.h>
+#include <Tracing/Tracing.h>
 
 // Include the Oculus SDK
 #include "OVR_CAPI_GL.h"
@@ -38,8 +40,8 @@ namespace Fabric
     void convert(KL::ovrTimewarpProjectionDesc a, ovrTimewarpProjectionDesc & b);
     void convert(KL::ovrViewScaleDesc a, ovrViewScaleDesc & b);
     void convert(KL::ovrLayerHeader a, ovrLayerHeader & b);
-    void convert(KL::ovrFrameTiming a, ovrFrameTiming & b);
     void convert(const KL::ovrLayerEyeFov & a, ovrLayerEyeFov & b);
+    void convert(KL::ovrSessionStatus a, ovrSessionStatus & b);
 
     //------------------------------------------------------------------------------------------------------
 
@@ -61,8 +63,8 @@ namespace Fabric
     void convert(ovrTimewarpProjectionDesc a, KL::ovrTimewarpProjectionDesc & b);
     void convert(ovrViewScaleDesc a, KL::ovrViewScaleDesc & b);
     void convert(ovrLayerHeader a, KL::ovrLayerHeader & b);
-    void convert(ovrFrameTiming a, KL::ovrFrameTiming & b);
     void convert(ovrHmdDesc a, KL::ovrDescription & b);
+    void convert(ovrSessionStatus a, KL::ovrSessionStatus & b);
 
     //------------------------------------------------------------------------------------------------------
     void ensureGlewIsInitialized();

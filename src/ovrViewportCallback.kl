@@ -179,8 +179,8 @@ function Boolean ovrViewportCallback.invoke!(ViewportDrawPhase phase, io Viewpor
       viewOffset[ovrEye_Left] = this.eye_rdesc[ovrEye_Left].HmdToEyeViewOffset;
       viewOffset[ovrEye_Right] = this.eye_rdesc[ovrEye_Right].HmdToEyeViewOffset;
 
-      ovrFrameTiming ftiming = this.device.getFrameTiming(0);
-      this.trackingState = this.device.getTrackingState(ftiming.DisplayMidpointSeconds);
+      Float64 ftiming = this.device.getPredictedDisplayTime(0);
+      this.trackingState = this.device.getTrackingState(ftiming, false);
       this.poses = this.device.calcEyePoses(this.trackingState.HeadPose.ThePose, viewOffset);
 
       /* for each eye ... */

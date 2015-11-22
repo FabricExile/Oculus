@@ -8,7 +8,7 @@ object ovrGLMirrorTexture;
 
 object ovrDevice {
   /// \internal
-  Data handle;
+  ovrSession session;
   /// \internal
   Boolean configured;
   /// \internal
@@ -23,14 +23,6 @@ object ovrDevice {
 
 alias Integer ovrTrackingCap;
 
-/// constructor given a device index
-/// \dfgPresetDefault configureTracking true
-function ovrDevice(Index index, Boolean configureTracking) {
-  this.construct(index);
-  if(configureTracking)
-    this.configureTracking(ovrTrackingCap_Orientation | ovrTrackingCap_MagYawCorrection | ovrTrackingCap_Position, 0);
-}
-
 /// constructor using the first available device
 function ovrDevice() {
   this.construct(0);
@@ -42,7 +34,7 @@ function ovrDevice.construct!(Index index) = "ovrDevice_Construct";
 /// returns true if this device is valud
 function Boolean ovrDevice.valid() {
   Data NULL;
-  return this.handle == NULL;
+  return this.session.handle != NULL;
 }
 
 /// default destructor
@@ -69,22 +61,6 @@ function String ovrDevice.getVersionString() = "ovrDevice_GetVersionString";
 /// Writes a message string to the LibOVR tracing mechanism (if enabled).
 function ovrDevice.traceMessage!(ovrLogLevel level, String message) = "ovrDevice_TraceMessage";
 
-/// Returns ovrHmdCaps bits that are currently enabled.
-function ovrCaps ovrDevice.getEnabledCaps() = "ovrDevice_GetEnabledCaps";
-
-/// Modifies capability bits described by ovrHmdCaps that can be modified,
-/// such as ovrHmdCap_LowPersistance.
-function ovrDevice.setEnabledCaps!(ovrCaps caps) = "ovrDevice_SetEnabledCaps";
-
-/// Starts sensor sampling, enabling specified capabilities, described by ovrTrackingCaps.
-///
-/// Use 0 for both requestedTrackingCaps and requiredTrackingCaps to disable tracking.
-/// ovr_ConfigureTracking can be called multiple times with the same or different values
-/// for a given ovrHmd.
-/// \dfgPresetDefault requestedTrackingCaps 112
-/// \dfgPresetDefault requiredTrackingCaps 0
-function Boolean ovrDevice.configureTracking!(ovrTrackingCaps requestedTrackingCaps, ovrTrackingCaps requiredTrackingCaps) = "ovrDevice_ConfigureTracking";
-
 /// Re-centers the sensor position and orientation.
 ///
 /// This resets the (x,y,z) positional components and the yaw orientation component.
@@ -98,8 +74,19 @@ function ovrDevice.recenterPose!() = "ovrDevice_RecenterPose";
 /// both PredictedPose and SamplePose will have the same value.
 ///
 /// This may also be used for more refined timing of front buffer rendering logic, and so on.
-/// \dfgPresetDefault absTime -1.0
-function ovrTrackingState ovrDevice.getTrackingState(Float64 absTime) = "ovrDevice_GetTrackingState";
+/// This may be called by multiple threads.
+///
+/// \param[in] session Specifies an ovrSession previously returned by ovr_Create.
+/// \param[in] absTime Specifies the absolute future time to predict the return
+///            ovrTrackingState value. Use 0 to request the most recent tracking state.
+/// \param[in] latencyMarker Specifies that this call is the point in time where
+///            the "App-to-Mid-Photon" latency timer starts from. If a given ovrLayer
+///            provides "SensorSampleTimestamp", that will override the value stored here.
+/// \return Returns the ovrTrackingState that is predicted for the given absTime.
+///
+/// \see ovrTrackingState, ovr_GetEyePoses, ovr_GetTimeInSeconds
+///
+function ovrTrackingState ovrDevice.getTrackingState(Float64 absTime, Boolean latencyMarker) = "ovrDevice_GetTrackingState";
 
 /// Returns the most recent input state for controllers, without positional tracking info.
 /// Developers can tell whether the same state was returned by checking the PacketNumber.
@@ -134,7 +121,11 @@ function ovrEyeRenderDesc ovrDevice.getRenderDesc(ovrEyeType eye, ovrFovPort fov
 /// are available. Distortion might or might not have completed.
 function Boolean ovrDevice.submitFrame!(UInt32 frameIndex, ovrViewScaleDesc scale, ovrLayerEyeFov layer) = "ovrDevice_SubmitFrame_ovrLayerEyeFov";
 
-/// Gets the ovrFrameTiming for the given frame index.
+/// Gets the time of the specified frame midpoint.
+///
+/// Predicts the time at which the given frame will be displayed. The predicted time 
+/// is the middle of the time period during which the corresponding eye images will 
+/// be displayed. 
 ///
 /// The application should increment frameIndex for each successively targeted frame,
 /// and pass that index to any relevent OVR functions that need to apply to the frame
@@ -142,7 +133,14 @@ function Boolean ovrDevice.submitFrame!(UInt32 frameIndex, ovrViewScaleDesc scal
 ///
 /// This function is thread-safe and allows for multiple application threads to target
 /// their processing to the same displayed frame.
-function ovrFrameTiming ovrDevice.getFrameTiming(UInt32 frameIndex) = "ovrDevice_GetFrameTiming";
+/// 
+/// \param[in] session Specifies an ovrSession previously returned by ovr_Create.
+/// \param[in] frameIndex Identifies the frame the caller wishes to target.
+///            A value of zero returns the next frame index.
+/// \return Returns the absolute frame midpoint time for the given frameIndex.
+/// \see ovr_GetTimeInSeconds
+///
+function Float64 ovrDevice.getPredictedDisplayTime(SInt64 frameIndex) = "ovrDevice_GetPredictedDisplayTime";
 
 /// Returns global, absolute high-resolution time in seconds.
 ///
@@ -221,4 +219,17 @@ function ovrPose[2] ovrDevice.calcEyePoses(ovrPose headPose, Vec3 hmdToEyeViewOf
 /// and pass that index where applicable to functions called on the rendering thread.
 /// Assuming outEyePoses are used for rendering, it should be passed as a part of ovrLayerEyeFov.
 /// The caller does not need to worry about applying HmdToEyeViewOffset to the returned outEyePoses variables.
-function ovrDevice.getEyePoses(UInt32 frameIndex, Vec3 hmdToEyeViewOffset[2], io ovrPose outEyePoses[2], io ovrTrackingState outHmdTrackingState) = "ovrDevice_GetEyePoses";
+///
+/// \param[in]  hmd Specifies an ovrHmd previously returned by ovr_Create.
+/// \param[in]  frameIndex Specifies the targeted frame index, or 0 to refer to one frame after 
+///             the last time ovr_SubmitFrame was called.
+/// \param[in]  hmdToEyeViewOffset Can be ovrEyeRenderDesc.HmdToEyeViewOffset returned from 
+///             ovr_GetRenderDesc. For monoscopic rendering, use a vector that is the average 
+///             of the two vectors for both eyes.
+/// \param[in]  latencyMarker Specifies that this call is the point in time where
+///             the "App-to-Mid-Photon" latency timer starts from. If a given ovrLayer
+///             provides "SensorSampleTimestamp", that will override the value stored here.
+/// \param[out] outEyePoses The predicted eye poses.
+/// \param[out] outHmdTrackingState The predicted ovrTrackingState. May be NULL, in which case it is ignored.
+///
+function ovrDevice.getEyePoses(UInt32 frameIndex, Boolean latencyMarker, Vec3 hmdToEyeViewOffset[2], io ovrPose outEyePoses[2], io ovrTrackingState outHmdTrackingState) = "ovrDevice_GetEyePoses";

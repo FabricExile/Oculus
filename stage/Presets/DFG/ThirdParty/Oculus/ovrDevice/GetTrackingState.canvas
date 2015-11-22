@@ -2,7 +2,7 @@
 {
   "objectType" : "Func",
   "metadata" : {
-    "uiTooltip" : "Returns tracking state reading based on the specified absolute system time.\nPass an absTime value of 0.0 to request the most recent sensor reading. In this case\nboth PredictedPose and SamplePose will have the same value.\nThis may also be used for more refined timing of front buffer rendering logic, and so on.\n\n Supported by ovrDevice"
+    "uiTooltip" : "Returns tracking state reading based on the specified absolute system time.\nPass an absTime value of 0.0 to request the most recent sensor reading. In this case\nboth PredictedPose and SamplePose will have the same value.\nThis may also be used for more refined timing of front buffer rendering logic, and so on.\nThis may be called by multiple threads.\novrTrackingState value. Use 0 to request the most recent tracking state.\nthe \"App-to-Mid-Photon\" latency timer starts from. If a given ovrLayer\nprovides \"SensorSampleTimestamp\", that will override the value stored here.\n\n Supported by ovrDevice"
     },
   "title" : "GetTrackingState",
   "ports" : [
@@ -16,12 +16,16 @@
     {
       "objectType" : "Port",
       "nodePortType" : "Out",
-      "defaultValues" : {
-        "Float64" : -1
-        },
       "name" : "absTime",
       "execPortType" : "In",
       "typeSpec" : "Float64"
+      },
+    {
+      "objectType" : "Port",
+      "nodePortType" : "Out",
+      "name" : "latencyMarker",
+      "execPortType" : "In",
+      "typeSpec" : "Boolean"
       },
     {
       "objectType" : "Port",
@@ -34,11 +38,11 @@
   "extDeps" : {
     "Oculus" : "*"
     },
-  "presetGUID" : "47C3A86FA9FCDD8EAB9AC8A02F9BF2E0",
+  "presetGUID" : "CE1CF1AF543763FBA740BC514CB03909",
   "code" : "require Oculus;
 
 dfgEntry {
-  result = this.getTrackingState(absTime);
+  result = this.getTrackingState(absTime, latencyMarker);
 }
 "
   }

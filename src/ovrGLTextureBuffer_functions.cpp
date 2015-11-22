@@ -20,13 +20,15 @@ FABRIC_EXT_EXPORT void ovrGLTextureBuffer_Construct(
   ensureGlewIsInitialized();
 
   this_->handle = NULL;
-  if(!device->handle)
+
+  ovrSession * session_ = (ovrSession *)device->session->handle;
+  if(!session_)
     return;
-  ovrHmd hmd = (ovrHmd)device->handle;
+
   ovrSizei size_;
   convert(size, size_);
 
-  this_->handle = new TextureBuffer(hmd, rendertarget, displayableOnHmd, size_, mipLevels, NULL, sampleCount);
+  this_->handle = new TextureBuffer(*session_, rendertarget, displayableOnHmd, size_, mipLevels, NULL, sampleCount);
 }
 
 // Defined at src\\ovrGLTextureBuffer.kl:12:1

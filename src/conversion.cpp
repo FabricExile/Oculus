@@ -148,13 +148,6 @@ namespace Fabric
       b.Flags = a.Flags;
     }
 
-    void convert(KL::ovrFrameTiming a, ovrFrameTiming & b) {
-      b.DisplayMidpointSeconds = a.DisplayMidpointSeconds;
-      b.FrameIntervalSeconds = a.FrameIntervalSeconds;
-      b.AppFrameIndex = a.AppFrameIndex;
-      b.DisplayFrameIndex = a.DisplayFrameIndex;
-    }
-
     void convert(const KL::ovrLayerEyeFov & a, ovrLayerEyeFov & b)
     {
       convert(a.Header, b.Header);
@@ -166,6 +159,11 @@ namespace Fabric
       convert(a.Fov[1], b.Fov[1]);
       convert(a.RenderPose[0], b.RenderPose[0]);
       convert(a.RenderPose[1], b.RenderPose[1]);
+    }
+
+    void convert(KL::ovrSessionStatus a, ovrSessionStatus & b) {
+      b.HasVrFocus = a.HasVrFocus;
+      b.HmdPresent = a.HmdPresent;
     }
 
     //------------------------------------------------------------------------------------------------------
@@ -301,13 +299,6 @@ namespace Fabric
       b.Flags = a.Flags;
     }
 
-    void convert(ovrFrameTiming a, KL::ovrFrameTiming & b) {
-      b.DisplayMidpointSeconds = a.DisplayMidpointSeconds;
-      b.FrameIntervalSeconds = a.FrameIntervalSeconds;
-      b.AppFrameIndex = a.AppFrameIndex;
-      b.DisplayFrameIndex = a.DisplayFrameIndex;
-    }
-
     void convert(ovrHmdDesc a, KL::ovrDescription & b) {
       b.Type = (int)a.Type;
       b.ProductName = a.ProductName;
@@ -331,6 +322,11 @@ namespace Fabric
       convert(a.MaxEyeFov[1], b.MaxEyeFov[1]);
       convert(a.Resolution, b.Resolution);
       b.DisplayRefreshRate = (float)a.DisplayRefreshRate;
+    }
+
+    void convert(ovrSessionStatus a, KL::ovrSessionStatus & b) {
+      b.HasVrFocus = a.HasVrFocus;
+      b.HmdPresent = a.HmdPresent;
     }
 
     void ensureGlewIsInitialized()
