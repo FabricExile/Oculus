@@ -1,0 +1,42 @@
+/*
+ *  Copyright 2010-2014 Fabric Software Inc. All rights reserved.
+ */
+
+object ovrSession {
+  Data handle;
+};
+
+function ovrSession() = "ovrSession_Construct";
+function ~ovrSession() = "ovrSession_Destruct";
+
+/// Returns status information for the application.
+/// 
+/// \param[in] session Specifies an ovrSession previously returned by ovr_Create.
+/// \param[out] sessionStatus Provides an ovrSessionStatus that is filled in.
+/// 
+/// \return Returns an ovrResult indicating success or failure. In the case of 
+///         failure, use ovr_GetLastErrorInfo to get more information.
+/// 
+function Boolean ovrSession.getSessionStatus(io ovrSessionStatus sessionStatus) = "ovrSession_getSessionStatus";
+
+
+/// Returns ovrHmdCaps bits that are currently enabled.
+///
+/// Note that this value is different from ovrHmdDesc::AvailableHmdCaps, which describes what
+/// capabilities are available for that HMD.
+///
+/// \return Returns a combination of zero or more ovrHmdCaps.
+/// \see ovrHmdCaps
+///
+function SInt32 ovrSession.getEnabledCaps() = "ovrSession_getEnabledCaps";
+
+
+/// Modifies capability bits described by ovrHmdCaps that can be modified,
+/// such as ovrHmdCap_LowPersistance.
+///
+/// \param[in] session Specifies an ovrSession previously returned by ovr_Create.
+/// \param[in] hmdCaps A combination of 0 or more ovrHmdCaps.
+///
+/// \see ovrHmdCaps
+///
+function ovrSession.setEnabledCaps!(SInt32 hmdCaps) = "ovrSession_setEnabledCaps";

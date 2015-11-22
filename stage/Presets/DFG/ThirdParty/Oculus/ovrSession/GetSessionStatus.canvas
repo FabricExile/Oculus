@@ -1,0 +1,41 @@
+// Created by kl2dfg (processFunction)
+{
+  "objectType" : "Func",
+  "metadata" : {
+    "uiTooltip" : "Returns status information for the application.\n\n\nfailure, use ovr_GetLastErrorInfo to get more information.\n\n\n Supported by ovrSession"
+    },
+  "title" : "GetSessionStatus",
+  "ports" : [
+    {
+      "objectType" : "Port",
+      "nodePortType" : "Out",
+      "name" : "this",
+      "execPortType" : "In",
+      "typeSpec" : "ovrSession"
+      },
+    {
+      "objectType" : "Port",
+      "nodePortType" : "IO",
+      "name" : "sessionStatus",
+      "execPortType" : "IO",
+      "typeSpec" : "ovrSessionStatus"
+      },
+    {
+      "objectType" : "Port",
+      "nodePortType" : "In",
+      "name" : "result",
+      "execPortType" : "Out",
+      "typeSpec" : "Boolean"
+      }
+    ],
+  "extDeps" : {
+    "Oculus" : "*"
+    },
+  "presetGUID" : "91C6D5C1889C2E5A35DF60944BEC1AC6",
+  "code" : "require Oculus;
+
+dfgEntry {
+  result = this.getSessionStatus(sessionStatus);
+}
+"
+  }

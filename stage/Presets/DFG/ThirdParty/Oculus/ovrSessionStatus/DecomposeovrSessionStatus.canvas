@@ -1,0 +1,45 @@
+// Created by kl2dfg (processDecomposeFunction)
+{
+  "objectType" : "Func",
+  "title" : "ovrSessionStatus ->",
+  "ports" : [
+    {
+      "objectType" : "Port",
+      "nodePortType" : "Out",
+      "defaultValues" : {
+        "ovrSessionStatus" : {
+          "HasVrFocus" : false,
+          "HmdPresent" : false
+          }
+        },
+      "name" : "value",
+      "execPortType" : "In",
+      "typeSpec" : "ovrSessionStatus"
+      },
+    {
+      "objectType" : "Port",
+      "nodePortType" : "In",
+      "name" : "HasVrFocus",
+      "execPortType" : "Out",
+      "typeSpec" : "Boolean"
+      },
+    {
+      "objectType" : "Port",
+      "nodePortType" : "In",
+      "name" : "HmdPresent",
+      "execPortType" : "Out",
+      "typeSpec" : "Boolean"
+      }
+    ],
+  "extDeps" : {
+    "Oculus" : "*"
+    },
+  "presetGUID" : "24CF49CE421968F9ACE0E2C85E48DC6D",
+  "code" : "require Oculus;
+
+dfgEntry {
+  HasVrFocus = value.HasVrFocus;
+  HmdPresent = value.HmdPresent;
+}
+"
+  }
