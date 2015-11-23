@@ -31,10 +31,13 @@ For Fabric Engine 2.0.0 the extension has to be built using Visual Studio 2013 (
 binaries
 ========
 
-The binaries provided with the repository only work on windows and have been built against
+The extension has been built on windows and the binaries are provided for convenience with the repository in the stage folder. These binaries have been built against:
 - Boost 1.55 (static)
-- OculusSDK 0.8.0 (has to be installed)
+- OculusRuntime 0.8.0 (has to be installed)
+- OculusSDK 0.8.0
 - Fabric Engine 2.0.0 (should work with higher versions)
+
+Make sure to have the Oculus 0.7.0 runtime installed. Then, copy the content of the stage folder into the root of Fabric Engine 2. Loading canvas should register the extension with the Oculus presets.
 
 building
 ========
