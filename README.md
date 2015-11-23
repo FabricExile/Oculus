@@ -37,7 +37,7 @@ The extension has been built on windows and the binaries are provided for conven
 - OculusSDK 0.8.0
 - Fabric Engine 2.0.0 (should work with higher versions)
 
-Make sure to have the Oculus 0.7.0 runtime installed. Then, copy the content of the stage folder into the root of Fabric Engine 2. Loading canvas should register the extension with the Oculus presets.
+Copy the content of the stage folder into the root of Fabric Engine 2. Loading canvas should register the extension with the Oculus presets.
 
 building
 ========
