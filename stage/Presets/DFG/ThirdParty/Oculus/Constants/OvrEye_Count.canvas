@@ -15,10 +15,5 @@
     "Oculus" : "*"
     },
   "presetGUID" : "58E3AA927DDF945D48C373DF623478E7",
-  "code" : "require Oculus;
-
-dfgEntry {
-  value = ovrEye_Count;
-}
-"
+  "code" : "require Oculus;\n\ndfgEntry {\n  value = ovrEye_Count;\n}\n"
   }

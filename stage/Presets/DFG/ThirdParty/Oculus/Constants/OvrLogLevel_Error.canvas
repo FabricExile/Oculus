@@ -15,10 +15,5 @@
     "Oculus" : "*"
     },
   "presetGUID" : "C840B4C547977D78976447F4978AB960",
-  "code" : "require Oculus;
-
-dfgEntry {
-  value = ovrLogLevel_Error;
-}
-"
+  "code" : "require Oculus;\n\ndfgEntry {\n  value = ovrLogLevel_Error;\n}\n"
   }

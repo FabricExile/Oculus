@@ -32,10 +32,5 @@
     "Oculus" : "*"
     },
   "presetGUID" : "D636B2A28FE6B28D5FD6BE96D525C367",
-  "code" : "require Oculus;
-
-dfgEntry {
-  this.traceMessage(level, message);
-}
-"
+  "code" : "require Oculus;\n\ndfgEntry {\n  this.traceMessage(level, message);\n}\n"
   }

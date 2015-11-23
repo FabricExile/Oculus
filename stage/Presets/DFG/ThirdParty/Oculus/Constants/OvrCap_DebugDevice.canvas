@@ -15,10 +15,5 @@
     "Oculus" : "*"
     },
   "presetGUID" : "63329601425FB87A7D5A2E5C15BDAD6B",
-  "code" : "require Oculus;
-
-dfgEntry {
-  value = ovrCap_DebugDevice;
-}
-"
+  "code" : "require Oculus;\n\ndfgEntry {\n  value = ovrCap_DebugDevice;\n}\n"
   }

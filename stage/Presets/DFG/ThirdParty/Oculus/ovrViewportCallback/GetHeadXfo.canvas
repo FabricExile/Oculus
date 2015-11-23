@@ -38,10 +38,5 @@
     "Oculus" : "*"
     },
   "presetGUID" : "AB0A92E4F2AFE61ABDB5D9AE107BB728",
-  "code" : "require Oculus;
-
-dfgEntry {
-  result = this.getHeadXfo(scale);
-}
-"
+  "code" : "require Oculus;\n\ndfgEntry {\n  result = this.getHeadXfo(scale);\n}\n"
   }

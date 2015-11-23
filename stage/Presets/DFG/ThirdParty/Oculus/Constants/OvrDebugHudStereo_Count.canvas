@@ -15,10 +15,5 @@
     "Oculus" : "*"
     },
   "presetGUID" : "C2471F600F02757DA98F3F6094389073",
-  "code" : "require Oculus;
-
-dfgEntry {
-  value = ovrDebugHudStereo_Count;
-}
-"
+  "code" : "require Oculus;\n\ndfgEntry {\n  value = ovrDebugHudStereo_Count;\n}\n"
   }

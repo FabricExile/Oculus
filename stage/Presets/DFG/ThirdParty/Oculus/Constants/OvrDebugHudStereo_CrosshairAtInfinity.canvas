@@ -15,10 +15,5 @@
     "Oculus" : "*"
     },
   "presetGUID" : "A55C3350FC5525C9B3611D58C80D65F8",
-  "code" : "require Oculus;
-
-dfgEntry {
-  value = ovrDebugHudStereo_CrosshairAtInfinity;
-}
-"
+  "code" : "require Oculus;\n\ndfgEntry {\n  value = ovrDebugHudStereo_CrosshairAtInfinity;\n}\n"
   }

@@ -15,10 +15,5 @@
     "Oculus" : "*"
     },
   "presetGUID" : "5BA8AC11578E3D91C8DFE70D7547BBBF",
-  "code" : "require Oculus;
-
-dfgEntry {
-  value = ovrDebugHudStereo_EnumSize;
-}
-"
+  "code" : "require Oculus;\n\ndfgEntry {\n  value = ovrDebugHudStereo_EnumSize;\n}\n"
   }

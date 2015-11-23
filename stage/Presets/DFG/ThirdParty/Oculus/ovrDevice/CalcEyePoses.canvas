@@ -42,10 +42,5 @@
     "Oculus" : "*"
     },
   "presetGUID" : "8D53C65E14BA39CE840E9350D68E1D50",
-  "code" : "require Oculus;
-
-dfgEntry {
-  result = this.calcEyePoses(headPose, hmdToEyeViewOffset);
-}
-"
+  "code" : "require Oculus;\n\ndfgEntry {\n  result = this.calcEyePoses(headPose, hmdToEyeViewOffset);\n}\n"
   }

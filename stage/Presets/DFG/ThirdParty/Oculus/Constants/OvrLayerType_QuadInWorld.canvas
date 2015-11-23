@@ -15,10 +15,5 @@
     "Oculus" : "*"
     },
   "presetGUID" : "29EFB1961CBB235E57343F4DE4665BE3",
-  "code" : "require Oculus;
-
-dfgEntry {
-  value = ovrLayerType_QuadInWorld;
-}
-"
+  "code" : "require Oculus;\n\ndfgEntry {\n  value = ovrLayerType_QuadInWorld;\n}\n"
   }

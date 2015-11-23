@@ -15,10 +15,5 @@
     "Oculus" : "*"
     },
   "presetGUID" : "B015443E3ECBBEB97BEDBC742C44054A",
-  "code" : "require Oculus;
-
-dfgEntry {
-  value = ovrControllerType_RTouch;
-}
-"
+  "code" : "require Oculus;\n\ndfgEntry {\n  value = ovrControllerType_RTouch;\n}\n"
   }

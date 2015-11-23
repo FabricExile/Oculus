@@ -39,10 +39,5 @@
     "Oculus" : "*"
     },
   "presetGUID" : "AB39C43E0DF874486E88E7A68EF4C76F",
-  "code" : "require Oculus;
-
-dfgEntry {
-  result = this.getInt(propertyName, defaultValue);
-}
-"
+  "code" : "require Oculus;\n\ndfgEntry {\n  result = this.getInt(propertyName, defaultValue);\n}\n"
   }

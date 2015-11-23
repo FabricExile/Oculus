@@ -35,11 +35,5 @@
     "Oculus" : "*"
     },
   "presetGUID" : "B3AA4B63D9DE06000BC197488DA9A5FF",
-  "code" : "require Oculus;
-
-dfgEntry {
-  result.HasVrFocus = HasVrFocus;
-  result.HmdPresent = HmdPresent;
-}
-"
+  "code" : "require Oculus;\n\ndfgEntry {\n  result.HasVrFocus = HasVrFocus;\n  result.HmdPresent = HmdPresent;\n}\n"
   }

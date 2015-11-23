@@ -25,10 +25,5 @@
     "Oculus" : "*"
     },
   "presetGUID" : "995DDCDB2033F7A7C851C8D9BB8BB2A7",
-  "code" : "require Oculus;
-
-dfgEntry {
-  result = this.getEnabledCaps();
-}
-"
+  "code" : "require Oculus;\n\ndfgEntry {\n  result = this.getEnabledCaps();\n}\n"
   }

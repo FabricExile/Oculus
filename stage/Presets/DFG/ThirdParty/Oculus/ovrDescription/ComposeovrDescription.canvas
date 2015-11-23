@@ -155,29 +155,5 @@
     "Oculus" : "*"
     },
   "presetGUID" : "B3AA4B63D9DE06000BC197488DA9A5FF",
-  "code" : "require Oculus;
-
-dfgEntry {
-  result.Type = Type;
-  result.ProductName = ProductName;
-  result.Manufacturer = Manufacturer;
-  result.VendorId = VendorId;
-  result.ProductId = ProductId;
-  result.SerialNumber = SerialNumber;
-  result.FirmwareMajor = FirmwareMajor;
-  result.FirmwareMinor = FirmwareMinor;
-  result.CameraFrustumHFovInRadians = CameraFrustumHFovInRadians;
-  result.CameraFrustumVFovInRadians = CameraFrustumVFovInRadians;
-  result.CameraFrustumNearZInMeters = CameraFrustumNearZInMeters;
-  result.CameraFrustumFarZInMeters = CameraFrustumFarZInMeters;
-  result.AvailableHmdCaps = AvailableHmdCaps;
-  result.DefaultHmdCaps = DefaultHmdCaps;
-  result.AvailableTrackingCaps = AvailableTrackingCaps;
-  result.DefaultTrackingCaps = DefaultTrackingCaps;
-  result.DefaultEyeFov = DefaultEyeFov;
-  result.MaxEyeFov = MaxEyeFov;
-  result.Resolution = Resolution;
-  result.DisplayRefreshRate = DisplayRefreshRate;
-}
-"
+  "code" : "require Oculus;\n\ndfgEntry {\n  result.Type = Type;\n  result.ProductName = ProductName;\n  result.Manufacturer = Manufacturer;\n  result.VendorId = VendorId;\n  result.ProductId = ProductId;\n  result.SerialNumber = SerialNumber;\n  result.FirmwareMajor = FirmwareMajor;\n  result.FirmwareMinor = FirmwareMinor;\n  result.CameraFrustumHFovInRadians = CameraFrustumHFovInRadians;\n  result.CameraFrustumVFovInRadians = CameraFrustumVFovInRadians;\n  result.CameraFrustumNearZInMeters = CameraFrustumNearZInMeters;\n  result.CameraFrustumFarZInMeters = CameraFrustumFarZInMeters;\n  result.AvailableHmdCaps = AvailableHmdCaps;\n  result.DefaultHmdCaps = DefaultHmdCaps;\n  result.AvailableTrackingCaps = AvailableTrackingCaps;\n  result.DefaultTrackingCaps = DefaultTrackingCaps;\n  result.DefaultEyeFov = DefaultEyeFov;\n  result.MaxEyeFov = MaxEyeFov;\n  result.Resolution = Resolution;\n  result.DisplayRefreshRate = DisplayRefreshRate;\n}\n"
   }

@@ -18,10 +18,5 @@
     "Oculus" : "*"
     },
   "presetGUID" : "58900DAD47A03A0A6FB7742F95366A28",
-  "code" : "require Oculus;
-
-dfgEntry {
-  this.resetBackOfHeadTracking();
-}
-"
+  "code" : "require Oculus;\n\ndfgEntry {\n  this.resetBackOfHeadTracking();\n}\n"
   }

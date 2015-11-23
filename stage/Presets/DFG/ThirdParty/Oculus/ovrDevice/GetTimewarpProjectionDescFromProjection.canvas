@@ -42,10 +42,5 @@
     "Oculus" : "*"
     },
   "presetGUID" : "09D57C930AAD25243A8930268444D2D5",
-  "code" : "require Oculus;
-
-dfgEntry {
-  result = this.getTimewarpProjectionDescFromProjection(projection, projectionModFlags);
-}
-"
+  "code" : "require Oculus;\n\ndfgEntry {\n  result = this.getTimewarpProjectionDescFromProjection(projection, projectionModFlags);\n}\n"
   }

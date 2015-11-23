@@ -62,10 +62,5 @@
     "Oculus" : "*"
     },
   "presetGUID" : "39161F767714E19F2752D9F4142F1F37",
-  "code" : "require Oculus;
-
-dfgEntry {
-  result = this.getOrthoSubProjectionMat44(projection, orthoScale, orthoDistance, hmdToEyeViewOffsetX);
-}
-"
+  "code" : "require Oculus;\n\ndfgEntry {\n  result = this.getOrthoSubProjectionMat44(projection, orthoScale, orthoDistance, hmdToEyeViewOffsetX);\n}\n"
   }

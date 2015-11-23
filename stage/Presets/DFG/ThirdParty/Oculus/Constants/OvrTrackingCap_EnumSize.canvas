@@ -15,10 +15,5 @@
     "Oculus" : "*"
     },
   "presetGUID" : "7BB3817F50DC86FFF6C4D91CD229BD9A",
-  "code" : "require Oculus;
-
-dfgEntry {
-  value = ovrTrackingCap_EnumSize;
-}
-"
+  "code" : "require Oculus;\n\ndfgEntry {\n  value = ovrTrackingCap_EnumSize;\n}\n"
   }

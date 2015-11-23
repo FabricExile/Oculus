@@ -15,10 +15,5 @@
     "Oculus" : "*"
     },
   "presetGUID" : "47C49AC129FCC6E7AA764E614C312823",
-  "code" : "require Oculus;
-
-dfgEntry {
-  value = ovrButton_RShoulder;
-}
-"
+  "code" : "require Oculus;\n\ndfgEntry {\n  value = ovrButton_RShoulder;\n}\n"
   }

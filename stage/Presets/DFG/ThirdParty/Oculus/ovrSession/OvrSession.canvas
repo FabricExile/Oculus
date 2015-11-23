@@ -18,10 +18,5 @@
     "Oculus" : "*"
     },
   "presetGUID" : "C169623F60CD89071BAE29CF51A956F9",
-  "code" : "require Oculus;
-
-dfgEntry {
-  result = ovrSession();
-}
-"
+  "code" : "require Oculus;\n\ndfgEntry {\n  result = ovrSession();\n}\n"
   }

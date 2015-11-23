@@ -25,10 +25,5 @@
     "Oculus" : "*"
     },
   "presetGUID" : "35254071A56F260C4A64933EF9BB1A81",
-  "code" : "require Oculus;
-
-dfgEntry {
-  result = ovrViewportCallback(device);
-}
-"
+  "code" : "require Oculus;\n\ndfgEntry {\n  result = ovrViewportCallback(device);\n}\n"
   }

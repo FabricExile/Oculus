@@ -15,10 +15,5 @@
     "Oculus" : "*"
     },
   "presetGUID" : "B8E32A73B0516C3F2291FC8D2EB319FF",
-  "code" : "require Oculus;
-
-dfgEntry {
-  value = ovrProjection_FarLessThanNear;
-}
-"
+  "code" : "require Oculus;\n\ndfgEntry {\n  value = ovrProjection_FarLessThanNear;\n}\n"
   }

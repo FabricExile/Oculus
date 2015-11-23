@@ -15,10 +15,5 @@
     "Oculus" : "*"
     },
   "presetGUID" : "1F3032F86C3DD932232DFED3CBEBB93D",
-  "code" : "require Oculus;
-
-dfgEntry {
-  value = ovrStatus_OrientationTracked;
-}
-"
+  "code" : "require Oculus;\n\ndfgEntry {\n  value = ovrStatus_OrientationTracked;\n}\n"
   }

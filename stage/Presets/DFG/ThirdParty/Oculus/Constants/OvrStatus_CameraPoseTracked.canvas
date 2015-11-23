@@ -15,10 +15,5 @@
     "Oculus" : "*"
     },
   "presetGUID" : "F2E6CA6A3C097E5089450D11EA91274A",
-  "code" : "require Oculus;
-
-dfgEntry {
-  value = ovrStatus_CameraPoseTracked;
-}
-"
+  "code" : "require Oculus;\n\ndfgEntry {\n  value = ovrStatus_CameraPoseTracked;\n}\n"
   }

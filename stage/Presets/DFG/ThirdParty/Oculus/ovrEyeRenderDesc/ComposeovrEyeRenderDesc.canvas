@@ -92,14 +92,5 @@
     "Oculus" : "*"
     },
   "presetGUID" : "B3AA4B63D9DE06000BC197488DA9A5FF",
-  "code" : "require Oculus;
-
-dfgEntry {
-  result.Eye = Eye;
-  result.Fov = Fov;
-  result.DistortedViewport = DistortedViewport;
-  result.PixelsPerTanAngleAtCenter = PixelsPerTanAngleAtCenter;
-  result.HmdToEyeViewOffset = HmdToEyeViewOffset;
-}
-"
+  "code" : "require Oculus;\n\ndfgEntry {\n  result.Eye = Eye;\n  result.Fov = Fov;\n  result.DistortedViewport = DistortedViewport;\n  result.PixelsPerTanAngleAtCenter = PixelsPerTanAngleAtCenter;\n  result.HmdToEyeViewOffset = HmdToEyeViewOffset;\n}\n"
   }

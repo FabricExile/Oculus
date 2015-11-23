@@ -15,10 +15,5 @@
     "Oculus" : "*"
     },
   "presetGUID" : "E0B086C794DD3EE72979329612AA3D00",
-  "code" : "require Oculus;
-
-dfgEntry {
-  value = ovrLayerFlag_TextureOriginAtBottomLeft;
-}
-"
+  "code" : "require Oculus;\n\ndfgEntry {\n  value = ovrLayerFlag_TextureOriginAtBottomLeft;\n}\n"
   }

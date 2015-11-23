@@ -35,10 +35,5 @@
     "Oculus" : "*"
     },
   "presetGUID" : "A90D6B58A805A0F140FA7C51F92276FA",
-  "code" : "require Oculus;
-
-dfgEntry {
-  result = this.getPoseAsXfo(scale);
-}
-"
+  "code" : "require Oculus;\n\ndfgEntry {\n  result = this.getPoseAsXfo(scale);\n}\n"
   }

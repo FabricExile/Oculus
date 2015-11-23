@@ -15,10 +15,5 @@
     "Oculus" : "*"
     },
   "presetGUID" : "FD81F18678F397D504C5CBFF4904668B",
-  "code" : "require Oculus;
-
-dfgEntry {
-  value = ovrTrackingCap_MagYawCorrection;
-}
-"
+  "code" : "require Oculus;\n\ndfgEntry {\n  value = ovrTrackingCap_MagYawCorrection;\n}\n"
   }

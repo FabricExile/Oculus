@@ -18,10 +18,5 @@
     "Oculus" : "*"
     },
   "presetGUID" : "BAAE84E976FEAE907DED0124C787186A",
-  "code" : "require Oculus;
-
-dfgEntry {
-  this.resetMulticameraTracking();
-}
-"
+  "code" : "require Oculus;\n\ndfgEntry {\n  this.resetMulticameraTracking();\n}\n"
   }

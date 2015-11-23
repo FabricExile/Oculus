@@ -39,10 +39,5 @@
     "Oculus" : "*"
     },
   "presetGUID" : "1039FB50A4E5B2BC7B16F5C4A7AEF5C3",
-  "code" : "require Oculus;
-
-dfgEntry {
-  result = this.getRenderDesc(eye, fov);
-}
-"
+  "code" : "require Oculus;\n\ndfgEntry {\n  result = this.getRenderDesc(eye, fov);\n}\n"
   }

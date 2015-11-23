@@ -15,10 +15,5 @@
     "Oculus" : "*"
     },
   "presetGUID" : "9D26BFA21AA0FF97F5D35554D1A5EA7B",
-  "code" : "require Oculus;
-
-dfgEntry {
-  value = ovrLayerFlag_HighQuality;
-}
-"
+  "code" : "require Oculus;\n\ndfgEntry {\n  value = ovrLayerFlag_HighQuality;\n}\n"
   }

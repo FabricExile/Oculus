@@ -32,10 +32,5 @@
     "Oculus" : "*"
     },
   "presetGUID" : "91C6D5C1889C2E5A35DF60944BEC1AC6",
-  "code" : "require Oculus;
-
-dfgEntry {
-  result = this.getSessionStatus(sessionStatus);
-}
-"
+  "code" : "require Oculus;\n\ndfgEntry {\n  result = this.getSessionStatus(sessionStatus);\n}\n"
   }

@@ -28,10 +28,5 @@
     "Oculus" : "*"
     },
   "presetGUID" : "27B0BC7305683DE4809EEA819B4432E1",
-  "code" : "require Oculus;
-
-dfgEntry {
-  this.setScale(scale);
-}
-"
+  "code" : "require Oculus;\n\ndfgEntry {\n  this.setScale(scale);\n}\n"
   }

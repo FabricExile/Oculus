@@ -15,10 +15,5 @@
     "Oculus" : "*"
     },
   "presetGUID" : "7603E5563D6191884FE548A588E70291",
-  "code" : "require Oculus;
-
-dfgEntry {
-  value = ovrTouch_Y;
-}
-"
+  "code" : "require Oculus;\n\ndfgEntry {\n  value = ovrTouch_Y;\n}\n"
   }

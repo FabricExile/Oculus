@@ -25,10 +25,5 @@
     "Oculus" : "*"
     },
   "presetGUID" : "14E640E38D37067BE3665869D3FF03DB",
-  "code" : "require Oculus;
-
-dfgEntry {
-  result = this.isStereoEnabled();
-}
-"
+  "code" : "require Oculus;\n\ndfgEntry {\n  result = this.isStereoEnabled();\n}\n"
   }

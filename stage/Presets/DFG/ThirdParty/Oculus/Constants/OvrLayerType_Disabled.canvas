@@ -15,10 +15,5 @@
     "Oculus" : "*"
     },
   "presetGUID" : "3031408DEFC77A9297D824C1CF7DAA48",
-  "code" : "require Oculus;
-
-dfgEntry {
-  value = ovrLayerType_Disabled;
-}
-"
+  "code" : "require Oculus;\n\ndfgEntry {\n  value = ovrLayerType_Disabled;\n}\n"
   }

@@ -36,10 +36,5 @@
     "Oculus" : "*"
     },
   "presetGUID" : "A95DCA82A567F177F9EB750C387C263D",
-  "code" : "require Oculus;
-
-dfgEntry {
-  this.setBackgroundColor(color);
-}
-"
+  "code" : "require Oculus;\n\ndfgEntry {\n  this.setBackgroundColor(color);\n}\n"
   }

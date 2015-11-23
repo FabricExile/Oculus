@@ -2,7 +2,7 @@
 {
   "objectType" : "Func",
   "metadata" : {
-    "uiTooltip" : "----------------------------------------\nOVR_CAPI_0_7_0.h\n-----------------------------------------------------------------------------------------------------------------------------------------------------\nreturns the full description of this device\n\n Supported by ovrDevice"
+    "uiTooltip" : "----------------------------------------\nOVR_CAPI_0_8_0.h\n-----------------------------------------------------------------------------------------------------------------------------------------------------\nreturns the full description of this device\n\n Supported by ovrDevice"
     },
   "title" : "GetDescription",
   "ports" : [
@@ -25,10 +25,5 @@
     "Oculus" : "*"
     },
   "presetGUID" : "8DDA5993FA4A59415EC61B63A2B1C204",
-  "code" : "require Oculus;
-
-dfgEntry {
-  result = this.getDescription();
-}
-"
+  "code" : "require Oculus;\n\ndfgEntry {\n  result = this.getDescription();\n}\n"
   }

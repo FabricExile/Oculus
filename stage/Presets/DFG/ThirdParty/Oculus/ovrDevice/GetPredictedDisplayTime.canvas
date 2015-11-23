@@ -32,10 +32,5 @@
     "Oculus" : "*"
     },
   "presetGUID" : "976812C5CA64A428AA953D08A3405E14",
-  "code" : "require Oculus;
-
-dfgEntry {
-  result = this.getPredictedDisplayTime(frameIndex);
-}
-"
+  "code" : "require Oculus;\n\ndfgEntry {\n  result = this.getPredictedDisplayTime(frameIndex);\n}\n"
   }

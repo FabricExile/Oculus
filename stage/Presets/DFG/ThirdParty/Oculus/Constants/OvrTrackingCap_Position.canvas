@@ -15,10 +15,5 @@
     "Oculus" : "*"
     },
   "presetGUID" : "BC10CD6BF03CF608004A20398B878904",
-  "code" : "require Oculus;
-
-dfgEntry {
-  value = ovrTrackingCap_Position;
-}
-"
+  "code" : "require Oculus;\n\ndfgEntry {\n  value = ovrTrackingCap_Position;\n}\n"
   }

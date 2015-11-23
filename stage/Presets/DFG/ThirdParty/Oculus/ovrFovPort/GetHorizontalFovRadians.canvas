@@ -25,10 +25,5 @@
     "Oculus" : "*"
     },
   "presetGUID" : "C87430FAA24A3708A7FBC4734908806F",
-  "code" : "require Oculus;
-
-dfgEntry {
-  result = this.getHorizontalFovRadians();
-}
-"
+  "code" : "require Oculus;\n\ndfgEntry {\n  result = this.getHorizontalFovRadians();\n}\n"
   }

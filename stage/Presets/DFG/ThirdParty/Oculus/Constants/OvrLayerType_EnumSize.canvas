@@ -15,10 +15,5 @@
     "Oculus" : "*"
     },
   "presetGUID" : "FA7CD3BCC2F14775644B6038B400966A",
-  "code" : "require Oculus;
-
-dfgEntry {
-  value = ovrLayerType_EnumSize;
-}
-"
+  "code" : "require Oculus;\n\ndfgEntry {\n  value = ovrLayerType_EnumSize;\n}\n"
   }

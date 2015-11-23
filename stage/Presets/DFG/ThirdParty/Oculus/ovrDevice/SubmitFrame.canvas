@@ -46,10 +46,5 @@
     "Oculus" : "*"
     },
   "presetGUID" : "6DA49AE9F1115B8DBD353DE52D341468",
-  "code" : "require Oculus;
-
-dfgEntry {
-  result = this.submitFrame(frameIndex, scale, layer);
-}
-"
+  "code" : "require Oculus;\n\ndfgEntry {\n  result = this.submitFrame(frameIndex, scale, layer);\n}\n"
   }

@@ -51,13 +51,5 @@
     "Oculus" : "*"
     },
   "presetGUID" : "24CF49CE421968F9ACE0E2C85E48DC6D",
-  "code" : "require Oculus;
-
-dfgEntry {
-  UpTan = value.UpTan;
-  DownTan = value.DownTan;
-  LeftTan = value.LeftTan;
-  RightTan = value.RightTan;
-}
-"
+  "code" : "require Oculus;\n\ndfgEntry {\n  UpTan = value.UpTan;\n  DownTan = value.DownTan;\n  LeftTan = value.LeftTan;\n  RightTan = value.RightTan;\n}\n"
   }

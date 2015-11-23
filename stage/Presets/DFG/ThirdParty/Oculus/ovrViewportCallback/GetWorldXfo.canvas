@@ -28,10 +28,5 @@
     "Oculus" : "*"
     },
   "presetGUID" : "59A8216903EB2A4A1D30DCD34676FE10",
-  "code" : "require Oculus;
-
-dfgEntry {
-  result = this.getWorldXfo();
-}
-"
+  "code" : "require Oculus;\n\ndfgEntry {\n  result = this.getWorldXfo();\n}\n"
   }

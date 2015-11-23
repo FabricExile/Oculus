@@ -15,10 +15,5 @@
     "Oculus" : "*"
     },
   "presetGUID" : "CC970ECC1CDF42A6E9637898D664576C",
-  "code" : "require Oculus;
-
-dfgEntry {
-  value = ovrLayerType_EyeFov;
-}
-"
+  "code" : "require Oculus;\n\ndfgEntry {\n  value = ovrLayerType_EyeFov;\n}\n"
   }

@@ -25,10 +25,5 @@
     "Oculus" : "*"
     },
   "presetGUID" : "ED17B6C121DF6C7C6539D29A4252580C",
-  "code" : "require Oculus;
-
-dfgEntry {
-  this.setEnabled(enabled);
-}
-"
+  "code" : "require Oculus;\n\ndfgEntry {\n  this.setEnabled(enabled);\n}\n"
   }

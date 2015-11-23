@@ -18,10 +18,5 @@
     "Oculus" : "*"
     },
   "presetGUID" : "53FD9F787FFDEBB63CE615C42DA8CC91",
-  "code" : "require Oculus;
-
-dfgEntry {
-  this.recenterPose();
-}
-"
+  "code" : "require Oculus;\n\ndfgEntry {\n  this.recenterPose();\n}\n"
   }

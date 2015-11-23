@@ -41,7 +41,7 @@ function Boolean ovrDevice.valid() {
 function ~ovrDevice() = "ovrDevice_Destruct";
 
 ///----------------------------------------
-/// OVR_CAPI_0_7_0.h
+/// OVR_CAPI_0_8_0.h
 ///-----------------------------------------------------------------------------------------------------------------------------------------------------
 
 /// returns the full description of this device
