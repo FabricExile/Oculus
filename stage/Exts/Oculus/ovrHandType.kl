@@ -1,9 +1,0 @@
-/*
- *  Copyright 2010-2014 Fabric Software Inc. All rights reserved.
- */
-
-alias Integer ovrHandType;
-
-const ovrHandType ovrHand_Left  = 0;
-const ovrHandType ovrHand_Right = 1;
-const ovrHandType ovrHand_EnumSize = 0x7fffffff; ///< \internal Force type int32_t.
