@@ -43,7 +43,7 @@ Studio.initializeSceneAndRTR!() {
     );
 
   // move the camera
-  this.cameraRoot.setLocalTransform(Xfo(Vec3(40, 0, 0)).toMat44(), SGContext());
+  this.cameraRoot.setLocalTransform(Xfo(Vec3(40, 20, 0)).toMat44(), SGContext());
   report('Studio created.');
 }
 
