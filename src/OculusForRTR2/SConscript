@@ -1,0 +1,23 @@
+#
+# Copyright 2010-2014 Fabric Software Inc. All rights reserved.
+#
+import platform, json, os, shutil
+Import('parentEnv', 'kl2edk', 'kl', 'extSuffix', 'STAGE_DIR')
+
+extName = 'OculusForRTR2'
+
+env = parentEnv.Clone()
+
+sources = [
+  env.File('%s.fpm.json' % extName)
+]
+sources += env.Glob('*.kl')
+
+extStageDir = STAGE_DIR.Dir('Exts').Dir(extName)
+extensionFiles = env.Install(extStageDir, sources)
+extensionFiles = Flatten(extensionFiles)
+
+env.AlwaysBuild(extensionFiles)
+alias = env.Alias(extName, extensionFiles)
+
+Return('alias')

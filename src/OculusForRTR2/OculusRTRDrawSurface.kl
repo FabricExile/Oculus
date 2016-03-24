@@ -1,0 +1,168 @@
+/*
+ *  Copyright 2010-2014 Fabric Software Inc. All rights reserved.
+ */
+
+require RTR2;
+require Oculus;
+
+/// \dfgPresetOmit
+object OculusRTRDrawSurface : BaseVersioned, RTRDrawSurface {
+  
+  /// \internal
+  ovrDevice device;
+
+  /// \internal
+  String name;
+
+  /// \internal
+  ovrSize size;
+
+  /// \internal
+  ovrGLTextureBuffer tbuffer;
+
+  /// \internal
+  ovrGLDepthBuffer dbuffer;
+};
+
+inline OculusRTRDrawSurface(ovrDevice device, String name, ovrSize size, ovrGLTextureBuffer tbuffer, ovrGLDepthBuffer dbuffer) {
+  this.set(device, name, size, tbuffer, dbuffer);
+}
+
+inline OculusRTRDrawSurface.set!(ovrDevice device, String name, ovrSize size, ovrGLTextureBuffer tbuffer, ovrGLDepthBuffer dbuffer) {
+  this.device = device;
+  this.name = name;
+  this.size = size;
+  this.tbuffer = tbuffer;
+  this.dbuffer = dbuffer;
+}
+
+String OculusRTRDrawSurface.getName() {
+  return this.name;
+}
+
+inline ovrSize OculusRTRDrawSurface.getSize() {
+  return this.size;
+}
+
+inline OculusRTRDrawSurface.getSize( io Size width, io Size height, io Size pixelSampleWidth ) {
+  width = Size(this.size.w);
+  height = Size(this.size.h);
+  pixelSampleWidth = 1;
+}
+
+inline OculusRTRDrawSurface.setSize!( Size width, Size height, Size pixelSampleWidth ) {
+  report('OculusRTRDrawSurface.setSize not implemented!');
+}
+
+inline Size OculusRTRDrawSurface.getDepth() {
+  return 1; // not implemented
+}
+
+inline OculusRTRDrawSurface.setDepth!( Size depth ) {
+  report('OculusRTRDrawSurface.setDepth not implemented!');
+}
+
+inline Scalar OculusRTRDrawSurface.getWidthByHeightAspectRatio() {
+  return Scalar(this.size.w) / Scalar(this.size.h);
+}
+
+inline Boolean OculusRTRDrawSurface.isMain() {
+  return false;
+}
+
+inline Boolean OculusRTRDrawSurface.isTexture() {
+  return false;
+}
+
+inline OculusRTRDrawSurface.getType( 
+  io UInt32 imageType,
+  io Boolean isShadow,
+  io UInt32 componentType,
+  io UInt32 redBits,
+  io UInt32 greenBits,
+  io UInt32 blueBits,
+  io UInt32 alphaBits,
+  io UInt32 depthBits,
+  io UInt32 stencilBits 
+) {
+  report('OculusRTRDrawSurface.getType not implemented!');
+}
+
+Ref<Object> OculusRTRDrawSurface.getTargetValue() {
+  report('OculusRTRDrawSurface.getTargetValue not implemented!');
+  return null; // not implemented
+}
+
+inline OculusRTRDrawSurface.activate!(UInt32 readWriteMode, io Ref<RTRDrawContext> drawContext) {
+  if(!this.tbuffer) {
+    ovrGLTextureBuffer tbuffer = ovrGLTextureBuffer(this.device, true, true, this.getSize(), 1, 1);
+    ovrGLDepthBuffer dbuffer = ovrGLDepthBuffer(this.getSize(), 0);
+
+    this.device.textureBuffers.push(tbuffer);
+    this.device.depthBuffers.push(dbuffer);
+
+    this.tbuffer = tbuffer;
+    this.dbuffer = dbuffer;
+    this.incrementVersion();
+  }
+
+  // Clear our draw surface
+  this.tbuffer.setAndClearRenderSurface(this.dbuffer);
+  this.clearColor( Color(0.2, 0.2, 0.2), drawContext );
+  this.clearDepth( 1.0, drawContext );
+}
+
+inline OculusRTRDrawSurface.clearColor!( Color color, io Ref<RTRDrawContext> drawContext ) {
+  glClearColor(color.r, color.g, color.b, color.a);
+  glClear(GL_COLOR_BUFFER_BIT);
+}
+
+inline OculusRTRDrawSurface.clearUInt32!( UInt32 values[4], io Ref<RTRDrawContext> drawContext ) {
+  report('OculusRTRDrawSurface.clearUInt32 not implemented!');
+}
+
+inline OculusRTRDrawSurface.clearSInt32!( SInt32 values[4], io Ref<RTRDrawContext> drawContext ) {
+  report('OculusRTRDrawSurface.clearSInt32 not implemented!');
+}
+
+inline OculusRTRDrawSurface.clearDepth!( Scalar depth, io Ref<RTRDrawContext> drawContext ) {
+  glClearDepth(depth);
+  glClear(GL_DEPTH_BUFFER_BIT);
+}
+
+inline OculusRTRDrawSurface.clearDepthStencil!( Scalar depth, UInt32 stencil, io Ref<RTRDrawContext> drawContext ) {
+  report('OculusRTRDrawSurface.clearDepthStencil not implemented!');
+}
+
+inline Size OculusRTRDrawSurface.createAttachedColorSurface!( 
+  String name,
+  Boolean isTexture,
+  Boolean isShadow,
+  UInt32 imageType,
+  UInt32 componentType,
+  UInt32 redBits,
+  UInt32 greenBits,
+  UInt32 blueBits,
+  UInt32 alphaBits
+) {
+  report('OculusRTRDrawSurface.createAttachedColorSurface not implemented!');
+  return 0;
+}
+
+inline UInt32 OculusRTRDrawSurface.getAttachedColorSurfaceCount() {
+  report('OculusRTRDrawSurface.getAttachedColorSurfaceCount not implemented!');
+  return 0;
+}
+
+inline Ref<RTRDrawSurface> OculusRTRDrawSurface.getAttachedColorSurface( UInt32 index ) {
+  report('OculusRTRDrawSurface.getAttachedColorSurface not implemented!');
+  return null;
+}
+
+inline OculusRTRDrawSurface.attachSharedColorSurface!( UInt32 index, String name, Ref<Object> targetValue ) {
+  report('OculusRTRDrawSurface.attachSharedColorSurface not implemented!');
+}
+
+inline OculusRTRDrawSurface.detachColorSurface!( UInt32 index ) {
+  report('OculusRTRDrawSurface.detachColorSurface not implemented!');
+}

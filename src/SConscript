@@ -1,93 +1,11 @@
 #
-# Copyright 2010-2014 Fabric Software Inc. All rights reserved.
+# Copyright 2010-2016 Fabric Software Inc. All rights reserved.
 #
-import platform, json, os, shutil
-Import('parentEnv', 'kl2edk', 'kl', 'extSuffix', 'STAGE_DIR')
 
-extName = 'Oculus'
+Import('parentEnv', 'STAGE_DIR')
 
-env = parentEnv.Clone()
-env.Append(CPPPATH = [env.Dir('.').abspath])
-env.Append(LIBS = ['libovr'])
-env.Append(LIBS = ['libboost_thread-vc120-mt-s-1_55'])
-env.Append(CCFLAGS = ['/EHsc'])
+aliases = []
+aliases += SConscript('Oculus/SConscript', exports = {'parentEnv': parentEnv, 'STAGE_DIR': STAGE_DIR}, duplicate=0)
+aliases += SConscript('OculusForRTR2/SConscript', exports = {'parentEnv': parentEnv, 'STAGE_DIR': STAGE_DIR}, duplicate=0)
 
-env.Append(LIBS = [
-  'ws2_32.lib',
-  'opengl32.lib',
-  'Dbghelp.lib',
-  'winmm.lib',
-  'kernel32.lib',
-  'user32.lib',
-  'gdi32.lib',
-  'winspool.lib',
-  'comdlg32.lib',
-  'advapi32.lib',
-  'shell32.lib',
-  'ole32.lib',
-  'oleaut32.lib',
-  'uuid.lib',
-  'odbc32.lib',
-  'odbccp32.lib'
-])
-
-sources = [
-  env.File('Oculus.fpm.json')
-]
-sources += env.Glob('*.kl')
-
-env.VariantDir(
-  env.Dir('LibOVRKernel').Dir('src').Dir('Kernel'), 
-  os.path.join(os.environ['OCULUS_DIR'], 'LibOVRKernel', 'src', 'Kernel')
-)
-env.VariantDir(
-  env.Dir('LibOVRKernel').Dir('src').Dir('Util'), 
-  os.path.join(os.environ['OCULUS_DIR'], 'LibOVRKernel', 'src', 'Util')
-)
-
-env.Append(CPPDEFINES = ['GLEW_STATIC=1'])
-
-# directly link against the Oculus source files from lib kernel
-cppFiles = env.Glob(os.path.join(env.Dir('LibOVRKernel').Dir('src').Dir('Kernel').abspath, '*.cpp'))
-cppFiles += [env.Dir('LibOVRKernel').Dir('src').Dir('Util').File('Util_SystemGUI.cpp')]
-
-cppFiles += [
-  env.File('glew.c'),
-  env.File('conversion.cpp'),
-  env.File('ovrSession_functions.cpp'),
-  env.File('ovrDevice_functions.cpp'),
-  env.File('ovrGLTextureBuffer_functions.cpp'),
-  env.File('ovrGLDepthBuffer_functions.cpp'),
-  env.File('ovrGLMirrorTexture_functions.cpp')
-]
-
-headers = [
-  env.File('Oculus.h')
-]
-
-extData = json.loads(open(sources[0].srcnode().abspath, 'r').read())
-extVersion = extData['version']
-
-extStageDir = STAGE_DIR.Dir('Exts').Dir(extName)
-presetStageDir = STAGE_DIR.Dir('Presets').Dir('DFG').Dir('ThirdParty').Dir(extName)
-extensionFiles = env.Install(extStageDir, [env.File(extName+'.fpm.json')] + env.Glob('*.kl'))
-kl2dfgLogFile = presetStageDir.File('kl2dfg.log')
-kl2edkResults = env.RunKL2EDK(headers, sources)
-kl2dfgResults = env.RunKL2DFG([kl2dfgLogFile], extensionFiles)
-
-compounds = env.Glob(os.path.join(env.Dir('#').Dir('Presets').abspath, '*.canvas'))
-installedCompounds = env.Install(presetStageDir.Dir('Compounds'), compounds)
-
-extLibFileName = env.File(extName + '-' + extSuffix)
-libraryFiles = Flatten([env.SharedLibrary(extLibFileName, cppFiles)])
-env.Depends(cppFiles, kl2edkResults)
-env.Depends(kl2dfgResults, sources + cppFiles)
-extensionFiles += env.Install(extStageDir, libraryFiles[0])
-extensionFiles += Flatten(kl2dfgResults)
-extensionFiles += installedCompounds
-extensionFiles = Flatten(extensionFiles)
-
-env.AlwaysBuild(extensionFiles)
-alias = env.Alias(extName, extensionFiles)
-
-Return('alias')
+Return('aliases')

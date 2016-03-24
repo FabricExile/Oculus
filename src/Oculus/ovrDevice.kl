@@ -19,6 +19,8 @@ object ovrDevice {
   ovrGLDepthBuffer depthBuffers[];
   /// \internal
   ovrGLMirrorTexture mirrorTextures[];
+  /// \internal
+  Float32 scale;
 };
 
 alias Integer ovrTrackingCap;
@@ -26,6 +28,7 @@ alias Integer ovrTrackingCap;
 /// constructor using the first available device
 function ovrDevice() {
   this.construct(0);
+  this.scale = 1.0;
 }
 
 /// internal

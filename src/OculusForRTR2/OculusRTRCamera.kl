@@ -1,0 +1,143 @@
+/*
+ *  Copyright 2010-2014 Fabric Software Inc. All rights reserved.
+ */
+
+require RTR2;
+require SceneGraphWrappers;
+require SceneGraphToRTR;
+
+/// \internal
+struct OculusRTRCamera_perEyeData {
+
+  /// \internal
+  ovrEyeRenderDesc eye_rdesc;
+
+  /// \internal  
+  ovrPose pose;
+};
+
+/// \dfgPresetOmit
+object OculusRTRCamera : RTRStereoCameras {
+
+  /// \internal  
+  ovrDevice device;
+
+  /// \internal
+  ovrDescription desc;
+
+  /// \internal  
+  ovrInputState inputState;
+
+  /// \internal  
+  ovrTrackingState trackingState;
+
+  /// \internal  
+  ovrViewScaleDesc viewScaleDesc;
+
+  /// \internal
+  SGCamera head;
+
+  /// \internal
+  RTRCamera headRTRCam;
+
+  /// \internal  
+  OculusRTRCamera_perEyeData eyeData[2];
+
+};
+
+inline OculusRTRCamera(SGCamera head, ovrDevice device) {
+  this.set(head, device);
+}
+
+inline OculusRTRCamera.set!(SGCamera head, ovrDevice device) {
+
+  SGContext sgCtxt();
+
+  this.head = head;
+
+  SGCameraToRTR sgCameraToRTR();
+  sgCameraToRTR.updateSourceCamera( this.head, SGContext() );
+  this.headRTRCam = sgCameraToRTR;
+
+  this.device = device;
+  this.desc = this.device.getDescription();
+
+  for( Size side = 0; side < 2; ++side )
+    this.eyeData[side].eye_rdesc = this.device.getRenderDesc(side, this.desc.DefaultEyeFov[side]);
+
+  Float32 near = this.device.scale * 0.01;
+  Float32 far = this.device.scale * 1000.0;
+  this.head.setNearDistance(near, sgCtxt);
+  this.head.setFarDistance(far, sgCtxt);
+
+  // store the OculusRTRCamera inside the SGCamera
+  SGPropertyReference ref = this.head.getOrAddLocalPropertyReference( 'OculusRTRCamera' );
+  SGObjectProperty prop = this.head.getPropertyByReference( ref, sgCtxt );
+  prop.setValue(Object(this));
+}
+
+inline Ref<RTRCamera> OculusRTRCamera.getHeadRTRCamera() {
+  return this.headRTRCam;
+}
+
+inline OculusRTRCamera.updateCameras!(io Ref<RTRContext> context) {
+
+  SGContext sgCtxt;
+
+  Vec3 viewOffset[2];
+  viewOffset[0] = this.eyeData[0].eye_rdesc.HmdToEyeViewOffset;
+  viewOffset[1] = this.eyeData[1].eye_rdesc.HmdToEyeViewOffset;
+
+  this.trackingState = this.device.getTrackingState(0.0, false);
+  ovrInputState inputState;
+  if(this.device.getInputState(ovrControllerType_Touch, inputState))
+    this.inputState = inputState;
+  ovrPose poses[2] = this.device.calcEyePoses(this.trackingState.HeadPose.ThePose, viewOffset);
+
+  // todo: here we should be setting up the VRController state!
+
+  Scalar scale = this.device.scale;
+  Mat44 headPose = this.trackingState.HeadPose.getPoseAsMat44(scale);
+
+  Mat44 globalTransform = this.head.getGlobalTransform(sgCtxt);
+  Mat44 localTransform = this.head.getLocalTransform(sgCtxt);
+  Mat44 offsetTransform = globalTransform * localTransform.inverse();
+
+  this.head.setLocalTransform(headPose, sgCtxt);
+
+  Scalar focal = this.head.getFocalDistance(sgCtxt);
+  Scalar near = this.head.getNearDistance(sgCtxt);
+  Scalar far = this.head.getFarDistance(sgCtxt);
+
+  // compute a slightly bigger cone for the culling
+  this.head.setFovY( this.desc.DefaultEyeFov[0].getVerticalFovRadians() * 1.25, sgCtxt );
+  this.incrementVersion_();
+
+  for( Size side = 0; side < 2; ++side ) {
+
+    this.eyeData[side].pose = poses[side];
+
+    Xfo camXfo = this.eyeData[side].pose.getPoseAsXfo(scale);
+    Mat44 projection = this.device.getProjectionMat44(this.desc.DefaultEyeFov[side], near, far, ovrProjection_RightHanded);
+    this.stereoData[side].camera.setMatrices(offsetTransform * camXfo.toMat44(), projection);
+
+    if( !this.stereoData[side].context ) {
+      this.stereoData[side].context = context.createChildContext();
+      this.stereoData[side].context.setCamera( this.stereoData[side].camera );
+    }
+    
+    this.stereoData[side].context.synchronizeWithParentContext();
+
+    camXfo = this.stereoData[side].context.getCamera().getInvViewMatrix();
+  }
+
+  if( !this.augmentedCameraContext ) {
+    this.augmentedCameraContext = context.createChildContext();
+    this.augmentedCameraContext.setCamera(this.headRTRCam);
+  } else {
+    this.headRTRCam.update(this.augmentedCameraContext);
+  }
+  this.augmentedCameraContext.synchronizeWithParentContext();
+
+  context.setUserObject( RTRStereoCamerasUserObjectName, this );
+}

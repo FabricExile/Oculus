@@ -1,0 +1,153 @@
+/*
+ *  Copyright 2010-2014 Fabric Software Inc. All rights reserved.
+ */
+
+require RTR2;
+
+/// \dfgPresetOmit
+object OculusRTRMainViewport : GLStereoStandardRTRViewport {
+
+  /// \internal
+  SGCamera sgCamera;
+
+  /// \internal
+  ovrDevice device;
+
+  /// \internal
+  ovrViewScaleDesc viewScaleDesc;
+
+  /// \internal
+  ovrLayerEyeFov layerEyeFov;
+
+  /// \internal
+  ovrGLMirrorTexture mirror;
+
+  /// \internal
+  OculusRTRCamera ovrCamera;
+
+};
+
+OculusRTRMainViewport( ovrDevice device, SGCamera camera, io Ref<BaseRTR> rtr, Boolean clearViewport ) {
+  this.init( device, camera, rtr, clearViewport );
+}
+
+RTRStereoCameras OculusRTRMainViewport.constructStereoCameras!() {
+  this.ovrCamera = OculusRTRCamera(this.sgCamera, this.device);
+  return this.ovrCamera;
+}
+
+OculusRTRCamera OculusRTRMainViewport.getRTRCamera!() {
+  return this.ovrCamera;
+}
+
+GLStereoStandardRTRSubViewport OculusRTRMainViewport.constructSubViewport(
+  io Ref<BaseRTR> rtr,
+  Ref<BaseRTRViewport> owner,
+  Boolean clearViewport,
+  RTRStereoCameras stereoCameras,
+  UInt32 side,
+  Ref<RTRDrawSurface> drawSurface
+) {
+  return OculusRTREyeViewport( rtr, owner, false, stereoCameras, side, drawSurface );
+}
+
+OculusRTRMainViewport.init!(  ovrDevice device, SGCamera camera, io Ref<BaseRTR> rtr, Boolean clearViewport ) {
+  
+  this.sgCamera = camera;
+  this.device = device;
+
+  this.parent.init( rtr, clearViewport );
+
+  this.mirror = null;
+}
+
+/// \internal
+inline OculusRTRMainViewport.execute!(io Ref<RTRContext> context, io Ref<RTRScheduler> scheduler) {
+  AutoProfilingEvent autoPE("OculusRTR");
+
+  // skip the GLStereoStandardRTRViewport implementation
+  this.parent.parent.execute( context, scheduler );
+
+  // Update instances.
+  Ref<RTRContext> viewportContext = this.viewportContext;
+
+  this.stereoCameras.updateCameras( viewportContext );
+
+  Size width, height, pixelSampleWidth;
+  viewportContext.getDrawSurface().getSize( width, height, pixelSampleWidth );
+  if(!this.mirror || width != this.mirror.getSize().w || height != this.mirror.getSize().h) {
+
+    OculusRTRCamera camera = this.stereoCameras;
+
+    this.viewScaleDesc.HmdSpaceToWorldScaleInMeters = 1.0f;
+    this.viewScaleDesc.HmdToEyeViewOffset[0] = camera.eyeData[0].eye_rdesc.HmdToEyeViewOffset;
+    this.viewScaleDesc.HmdToEyeViewOffset[1] = camera.eyeData[1].eye_rdesc.HmdToEyeViewOffset;
+
+    this.layerEyeFov.Header.Type  = ovrLayerType_EyeFov;
+    this.layerEyeFov.Header.Flags = ovrLayerFlag_TextureOriginAtBottomLeft;   // Because OpenGL.
+
+    ovrSize windowSize(width, height);
+    this.device.mirrorTextures.resize(0);
+    this.mirror = null;
+
+    this.mirror = ovrGLMirrorTexture(this.device, windowSize);
+
+    this.device.mirrorTextures.push(this.mirror);
+
+  }
+
+  Ref<RTRContext> augmentedViewportContext = this.stereoCameras.augmentedCameraContext;
+  this.cullFromCameraTask.execute( augmentedViewportContext, scheduler );
+
+  Ref<RTRContext> mainContext = this.baseRTR.mainContext;
+  this.splitLitTask.execute( mainContext, scheduler );
+
+  // Update lit instances
+  // NOTE: the stereo task will access itself the stereo lights
+  this.litStereoSubInstanceTask.execute( viewportContext, scheduler );
+  this.splitTransparentUnlitTask.execute( mainContext, scheduler );
+
+  this.subViewports[0].executeTasks( 0, this.subViewports[0].getPassCount() - 1 );
+  this.subViewports[1].executeTasks( 0, this.subViewports[1].getPassCount() - 1 );
+
+  // Init draw surface
+  scheduler.addDrawTask( this, viewportContext );
+
+  this.endExecute( context, scheduler);
+
+}
+
+/// \internal
+inline OculusRTRMainViewport.draw!(io Ref<RTRContext> context, io Ref<RTRDrawContext> drawContext, Ref<RTRScheduler> scheduler) {
+
+  Ref<RTROGLDrawContext> glContext = drawContext;
+  glContext.stateCache.reset();
+
+  // Activate the main viewport.
+  //TODO: have an equivalent of push/pop context... we should not be cleaning up others' stuff
+  Ref<RTRDrawSurface> drawSurface = context.getDrawSurface();
+  drawSurface.activate(RTRDrawSurface_readWrite, drawContext);
+
+  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+  OculusRTRCamera camera = this.stereoCameras;
+  for(ovrEyeType eye=0; eye<ovrEye_Count; eye++) {
+    OculusRTREyeViewport vp               = this.subViewports[eye];
+    this.layerEyeFov.RenderPose[eye]   = camera.eyeData[eye].pose;
+    this.layerEyeFov.ColorTexture[eye] = vp.getTextureBuffer();
+    this.layerEyeFov.Viewport[eye]     = vp.eyeRes;
+    this.layerEyeFov.Fov[eye]          = vp.desc.DefaultEyeFov[eye];
+  }
+
+  this.device.submitFrame(0, this.viewScaleDesc, this.layerEyeFov);
+
+  this.mirror.blitTexture();
+
+  this.parent.draw(context, drawContext, scheduler);
+}
+
+OculusRTRMainViewport.notifyViewportClient!( io Ref<RTRViewportClient> client ) {
+  // Forward to sub-viewports
+  this.subViewports[0].notifyViewportClient( client  );
+  this.subViewports[1].notifyViewportClient( client );
+}

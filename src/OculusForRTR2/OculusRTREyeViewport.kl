@@ -1,0 +1,71 @@
+/*
+ *  Copyright 2010-2014 Fabric Software Inc. All rights reserved.
+ */
+
+require RTR2;
+
+/// \dfgPresetOmit
+object OculusRTREyeViewport : GLStereoStandardRTRSubViewport {
+
+  /// \internal
+  UInt32 side;
+  
+  /// \internal
+  ovrSize eyeRes;
+
+  /// \internal
+  ovrEyeRenderDesc eye_rdesc;
+
+  /// \internal
+  ovrDescription desc;
+
+  /// \internal
+  ovrDevice device;
+};
+
+OculusRTREyeViewport(
+  io Ref<BaseRTR> rtr,
+  Ref<BaseRTRViewport> owner,
+  Boolean clearViewport,
+  OculusRTRCamera stereoCameras,
+  UInt32 side,
+  Ref<RTRDrawSurface> drawSurface ) {
+  this.init( rtr, owner, clearViewport, stereoCameras,side, drawSurface );
+}
+
+OculusRTREyeViewport.init!( 
+  io Ref<BaseRTR> rtr,
+  Ref<BaseRTRViewport> owner,
+  Boolean clearViewport,
+  OculusRTRCamera stereoCameras,
+  UInt32 side,
+  Ref<RTRDrawSurface> drawSurface ) {
+
+  this.parent.init( rtr, owner, clearViewport, stereoCameras, side, drawSurface );
+
+  this.side = side;
+  this.device = stereoCameras.device;
+  this.desc = this.device.getDescription();
+  this.eye_rdesc = this.device.getRenderDesc(side, this.desc.DefaultEyeFov[side]);
+  this.eyeRes = this.device.getFovTextureSize(side, this.desc.DefaultEyeFov[side], 1);
+
+  this.targetSurface = OculusRTRDrawSurface(this.device, "OculusRTRDrawSurface_" + (this.side ? "R" : "L"), this.eyeRes, null, null);
+  this.stereoCameras.setDrawSurface( this.side, this.targetSurface );
+}
+
+/// \internal
+inline OculusRTREyeViewport.draw!(io Ref<RTRContext> context, io Ref<RTRDrawContext> drawContext, Ref<RTRScheduler> scheduler) {
+
+  Ref<RTROGLDrawContext> glContext = drawContext;
+  glContext.stateCache.reset();
+
+  this.targetSurface.activate(RTRDrawSurface_readWrite, drawContext);
+  this.targetSurface.clearColor( Color(0.0,0.0,0.0,0.0), drawContext );
+  this.targetSurface.clearDepth( 1.0, drawContext );
+}
+
+/// \internal
+inline ovrGLTextureBuffer OculusRTREyeViewport.getTextureBuffer() {
+  OculusRTRDrawSurface surface = this.targetSurface;
+  return surface.tbuffer;
+}

@@ -4,10 +4,6 @@ A KL extension for the Oculus Rift SDK
 
 Oculus allows you to read the head tracking information from the Oculus Rift, and adds functionality to the InlineDrawing realtime rendering for two eyed warped display.
 
-There's an additional extension available which can be used to use the Oculus within Fabric Engine's Realtime Renderer (RTR). It's located here:
-
-http://github.com/fabric-engine/OculusRTR
-
 extension status
 ================
 

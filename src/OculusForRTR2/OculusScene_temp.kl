@@ -1,0 +1,54 @@
+/*
+ *  Copyright 2010-2015 Fabric Software Inc. All rights reserved.
+ */
+
+require SceneHub;
+require Strokes;
+
+/**
+  ovrRTRSceneHub id the entry of ovrRTRSceneHub applcation.
+  It presents all the featues currently implemented.
+*/
+/// \dfgPresetOmit
+object ovrRTRSceneHub : SceneHubVR {
+  /// \internal
+  ovrDevice device;
+  /// \internal
+  ovrRTRMainViewport ovrVP;
+};
+
+/// Prepares the non OpenGL context.
+/// Overloads from SceneHubBase.
+ovrRTRSceneHub.initializeSceneAndRTR!() {
+
+  this.parent.initializeSceneAndRTR();
+
+  // initialize oculus
+  this.device = ovrDevice();
+
+  this.sgCamera.setFloat32Prop('ovrScale', 100.0);
+
+  // this.rtr.enableTracing(3);
+}
+
+Ref<BaseRTRViewport> ovrRTRSceneHub.getOrAddViewport!( UInt32 viewportID ) {
+  if( this.viewports.has( viewportID ) )
+    return this.viewports[viewportID];
+
+  Ref<BaseRTR> rtr = this.rtr;
+  this.ovrVP = ovrRTRMainViewport(this.device, this.sgCamera, rtr, false);
+  Ref<BaseRTRViewport> viewport = this.ovrVP;
+  this.viewports[viewportID] = viewport;
+  viewport.setName("Viewport "+viewportID);
+  this.initViewportCamera( viewport );
+  this.initViewportPasses( viewport );
+
+  return viewport;
+}
+
+protected ovrRTRSceneHub.initViewportCamera!( io Ref<BaseRTRViewport> viewport ) {
+
+  Ref<RTRCamera> cam = this.ovrVP.getRTRCamera().getHeadRTRCamera();
+  viewport.setCamera( cam, true );
+
+}

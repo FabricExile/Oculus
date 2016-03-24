@@ -1,0 +1,168 @@
+/*
+ *  Copyright 2010-2015 Fabric Software Inc. All rights reserved.
+ */
+
+require FileIO;
+require FabricVR;
+object OculusScene;
+
+object OculusRenderer : SHGLRenderer {
+  /// \internal
+  Ref<OculusScene> scene;
+};
+
+inline OculusRenderer(OculusScene scene) {
+  this.scene = scene;
+}
+
+Ref<BaseRTRViewport> OculusRenderer.getOrAddViewport!( UInt32 viewportID ) {
+  if( this.viewports.has( viewportID ) )
+    return this.viewports[viewportID];
+
+  if(viewportID > 0)
+    return this.parent.getOrAddViewport( viewportID );
+
+  Ref<BaseRTR> rtr = this.rtr;
+  this.scene.oculusVP = OculusRTRMainViewport(this.scene.device, this.scene.camera, rtr, false);
+  Ref<BaseRTRViewport> viewport = this.scene.oculusVP;
+  this.viewports[viewportID] = viewport;
+  viewport.setName("Viewport "+viewportID);
+  
+  Ref<RTRCamera> cam = this.scene.oculusVP.getRTRCamera().getHeadRTRCamera();
+  viewport.setCamera( cam, true );
+  viewport.viewportInitialized();
+
+  Ref<GLStandardRTR> standardRTR = rtr;
+  if( standardRTR )
+    standardRTR.setAmbientLight( Color(0.025,0.025,0.025), 1.0 );
+
+  return viewport;
+}
+
+interface OculusScene_Virtuals {
+
+  setScaling!(Float32 scale);
+
+};
+
+/**
+  OculusScene id the entry of OculusScene applcation.
+  It presents all the featues currently implemented.
+*/
+/// \dfgPresetOmit
+object OculusScene : VRScene, OculusScene_Virtuals {
+  /// \internal
+  ovrDevice device;
+  /// \internal
+  Float32 oculusScaling;  
+  /// \internal
+  OculusRTRMainViewport oculusVP;
+  /// \internal
+  SGInstance oculusControllers[2];
+};
+
+inline OculusScene() {
+  this.oculusScaling = 1.0;
+}
+
+/// Prepares the non OpenGL context.
+/// Overloads from SceneHubBase.
+OculusScene.initializeSceneAndRTR!() {
+
+  this.parent.initializeSceneAndRTR();
+
+  // create the ref to the scene
+  OculusRenderer shRTR = this.shRTR;
+  shRTR.scene = this;
+
+  SGContext sgContext();
+
+  Vec3 targetVector(0, 300, 150);
+  Scalar distanceToOrigin = targetVector.length();
+
+  this.camera.setNearDistance( distanceToOrigin * 0.02, sgContext );
+  this.camera.setFarDistance( distanceToOrigin * 50.0, sgContext );
+  this.camera.setFovY( Math_degToRad( 38.0 ), sgContext );
+  this.camera.setFocalDistance( distanceToOrigin, sgContext );
+
+  Xfo camXfo;
+  camXfo.ori.setFromDirectionAndUpvector(targetVector, Vec3(0, 1, 0));
+  this.camera.setLocalTransform(camXfo.toMat44(), sgContext);
+
+  this.initializeOculus();
+}
+
+Type OculusScene.getVRRendererType() {
+  return OculusRenderer;
+}
+
+inline OculusScene.initializeOculus!() {
+
+  SGContext sgContext();
+
+  // initialize the oculus
+  report('Initializing Oculus....');
+  this.device = ovrDevice();
+  this.device.scale = this.oculusScaling;
+
+  Size controllersRequired = this.getControllersRequiredCount();
+
+  // setup controllers & tools
+  if(controllersRequired > 0) {
+
+    // todo: controller setup
+    // for(Size i=0;i<controllersRequired;i++) {
+
+    //   String controllerName = 'controller'+(i+1);
+    //   Xfo xfo;
+    //   xfo.sc = this.getScaling();
+    //   xfo.tr.y = this.getScaling() * 0.5;
+    //   this.oculusControllers[i] = this.sg.addInstance(geometry, xfo.toMat44(), true, i==0);
+    //   this.sg.root.addChild( this.oculusControllers[i], controllerName, true );
+
+    //   SGObject wrapped = this.oculusControllers[i].getWrapped();
+    //   SGObjectProperty prop = wrapped.getOrAddLocalProperty("deviceID");
+    //   prop.setValue(SInt32(controllerIndex[i]));
+
+    //   wrapped = this.oculusControllers[i].getWrapped();
+
+    //   prop = wrapped.getOrAddLocalProperty("state");
+    //   VRControllerState vrState;
+    //   prop.setSimpleStructValue( VRControllerState, vrState.data(), vrState.dataSize() );
+
+    //   // store the OculusRTRCamera inside the SGCamera
+    //   wrapped = this.camera.getWrapped();
+    //   prop = wrapped.getOrAddLocalProperty( controllerName );
+    //   prop.setValue(this.oculusControllers[i]);
+
+    //   this.toolDispatcher.registerController(this.oculusControllers[i]);
+    // }
+  }
+
+  report('All hardware found.');
+}
+
+Boolean OculusScene.refreshAlways() {
+  return true;
+}
+
+Float32 OculusScene.getScaling() {
+  if(this.device)
+    return this.device.scale;
+  return this.oculusScaling;
+}
+
+OculusScene.setScaling!(Float32 scale) {
+  this.oculusScaling = scale;
+  if(this.device)
+    this.device.scale = scale;
+}
+
+Vec3 OculusScene.getRoomDimensions!() {
+  // todo: this is a fixed sized, given we can't walk
+  this.roomDimensions.x = 1.0; // in meters
+  this.roomDimensions.y = 2.5; // in meters
+  this.roomDimensions.z = 1.0; // in meters
+  return this.roomDimensions;
+}
+
